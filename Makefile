@@ -1,4 +1,4 @@
-NAME = easyfind
+NAME = ft_containers
 
 SRCS = main.cpp
 
