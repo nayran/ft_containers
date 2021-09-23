@@ -54,7 +54,7 @@ int main(int argc, char** argv) {
 	}
 	const int seed = atoi(argv[1]);
 	srand(seed);
-
+/*
 	ft::vector<std::string> vector_str;
 	ft::vector<int> vector_int;
 	ft::stack<int> stack_int;
@@ -112,5 +112,6 @@ int main(int argc, char** argv) {
 		std::cout << *it;
 	}
 	std::cout << std::endl;
+	*/
 	return (0);
 }
