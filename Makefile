@@ -1,20 +1,24 @@
 NAME = ft_containers
+NAME1 = std_containers
 
-SRCS = main.cpp
+SRCS = main.cpp original.cpp
 
 OBJS = $(SRCS:.cpp=.o)
 
 FLAGS = -Wall -Werror -Wextra -std=c++98
 
+all: $(NAME)
+
 $(NAME): $(OBJS)
-	@clang++ $(OBJS) -o $(NAME)
+	@clang++ main.o -o $(NAME)
+	@clang++ original.o -o $(NAME1)
 
 %.o: %.cpp $(HEAD)
 	@clang++ $(FLAGS) -c $< -o $@
 
 clean:
-	@rm -rf $(OBJS) $(NAME)
+	@rm -rf $(OBJS) $(NAME) $(NAME1)
 
-re: fclean all
+re: clean all
 
 .PHONY: all clean re

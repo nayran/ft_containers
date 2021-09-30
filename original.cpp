@@ -1,6 +1,8 @@
-#include "include/vector.hpp"
-//#include "include/map.hpp"
-//#include "include/stack.hpp"
+#include "include/utils.hpp"
+#include <map>
+#include <stack>
+#include <vector>
+namespace ft = std;
 
 int main()
 {
