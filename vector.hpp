@@ -1,10 +1,11 @@
 #ifndef VECTOR_HPP
 # define VECTOR_HPP
 
-#include "utils.hpp"
+#include "include/utils.hpp"
 
 /*
  *		https://www.cplusplus.com/reference/vector/vector/
+ *		https://en.cppreference.com/w/cpp/container/vector
  */
 
 namespace ft
@@ -12,30 +13,38 @@ namespace ft
 	template < class T, class Alloc = std::allocator<T> >
 	class vector
 	{
+		public:
 		/*
 		 *		MEMBER TYPES
 		 */
-		typedef T														value_type;
-		typedef Alloc													allocator_type;
-		typedef typename allocator_type::reference						reference;
-		typedef typename allocator_type::const_reference				const_reference;
-		typedef typename allocator_type::pointer						pointer;
-		typedef typename allocator_type::const_pointer					const_pointer;
-		typedef ft::random_access_iterator<value_type>					iterator;
-		typedef ft::random_access_iterator<const value_type>			const_iterator;
-		typedef ft::reverse_iterator<iterator>							reverse_iterator;
-		typedef ft::reverse_iterator<const_iterator>					const_reverse_iterator;
-		typedef typename ft::iterator_traits<iterator>::difference_type difference_type; 
-		typedef typename allocator_type::size_type						size_type;
+		typedef T															value_type;
+		typedef Alloc														allocator_type;
+		typedef typename allocator_type::reference							reference;
+		typedef typename allocator_type::const_reference					const_reference;
+		typedef typename allocator_type::pointer							pointer;
+		typedef typename allocator_type::const_pointer						const_pointer;
+		//typedef ft::random_access_iterator<value_type>					iterator;
+		//typedef ft::random_access_iterator<const value_type>				const_iterator;
+		//typedef ft::reverse_iterator<iterator>							reverse_iterator;
+		//typedef ft::reverse_iterator<const_iterator>						const_reverse_iterator;
+		//typedef typename ft::iterator_traits<iterator>::difference_type	difference_type; 
+		typedef typename allocator_type::size_type							size_type;
 
 		/*
 		 *		CONSTRUCTORS (default, fill, range, copy)
 		 *		DESTRUCTOR
 		 *		OPERATOR
 		 */
-		explicit vector (const allocator_type& alloc = allocator_type());
+		explicit vector (const allocator_type& alloc = allocator_type())
+		{
+			this->alloc = alloc;
+		}
+		
+		/*
 		explicit vector (size_type n, const value_type& val = value_type(),
-                 const allocator_type& alloc = allocator_type());
+                 const allocator_type& alloc = allocator_type())
+		{
+		}
 		template <class InputIterator>
          vector (InputIterator first, InputIterator last,
                  const allocator_type& alloc = allocator_type());
@@ -44,10 +53,12 @@ namespace ft
 		~vector();
 
 		vector& operator= (const vector& x);
+		*/
 
 		/*
 		 *		ITERATORS (begin, end, rbegin, rend)
 		 */
+		/*
 		iterator begin();
 		const_iterator begin() const;
 		
@@ -59,10 +70,10 @@ namespace ft
 
 		reverse_iterator rend();
 		const_reverse_iterator rend() const;
-		
-		/*
+
+		*
 		 *		CAPACITY (size, max_size, resize, capacity, empty, reserve)
-		 */
+		 *
 		size_type size() const;
 
 		size_type max_size() const;
@@ -75,9 +86,9 @@ namespace ft
 
 		void reserve (size_type n);
 		
-		/*
+		*
 		 *		ELEMENT ACCESS (operator[], at, front, back)
-		 */
+		 *
 		reference operator[] (size_type n);
 		const_reference operator[] (size_type n) const;
 		
@@ -90,9 +101,9 @@ namespace ft
 		reference back();
 		const_reference back() const;
 
-		/*
+		*
 		 *		MODIFIERS (assign, push_back, pop_back, insert, erase, swap, clear)
-		 */
+		 *
 		template <class InputIterator>
 			void assign (InputIterator first, InputIterator last);
 		void assign (size_type n, const value_type& val);
@@ -112,11 +123,19 @@ namespace ft
 		void swap (vector& x);
 
 		void clear();
+		*/
 
 		/*
 		 *		ALLOCATOR
 		 */
-		allocator_type get_allocator() const;
+		allocator_type get_allocator() const
+		{
+			return (alloc);
+		}
+		
+
+		private:
+			allocator_type  alloc;
 	};
 
 	/*

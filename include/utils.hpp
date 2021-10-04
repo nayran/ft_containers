@@ -5,12 +5,6 @@
 #include <stdlib.h>
 #include <string>
 #include <iostream>
-
-#define BUFFER_SIZE 4096
-struct Buffer
-{
-	int idx;
-	char buff[BUFFER_SIZE];
-};
+#include "iterators.hpp"
 
 #endif
