@@ -14,7 +14,7 @@
 
 
 /*		
- *		<vector>
+ *		<vector> vector2X
  *		<map>
  *		<stack>
  *
@@ -30,10 +30,10 @@
  *			advance, distance
  *
  *
- *		<type_traits>
+ *		<type_traits> X
  *		enable_if, is_integral
  *
- *		<algorithm>
+ *		<algorithm> X
  *		equal compare, lexicographical_compare
  *
  *		<utility>
