@@ -19,6 +19,7 @@
 
 #include <stddef.h>
 # include <typeinfo>
+#include "utils.hpp"
 
 namespace ft
 {
@@ -136,13 +137,12 @@ namespace ft
 		}
 		random_access_iterator&		operator+= (difference_type n)
 		{
-			if (n < 0)
-				return (*this -= (-n));
 			current += n;
 			return (*this);
 		}
 		random_access_iterator		operator- (difference_type n) const
 		{
+			std::cout << "entra";
 			return (current - n);
 		}
 		random_access_iterator&		operator--()
@@ -152,15 +152,12 @@ namespace ft
 		}
 		random_access_iterator		operator--(int)
 		{
-			random_access_iterator tmp = *this;
-			(*this)--;
-			return (tmp);
+			current--;
+			return (*this);
 		}
 		random_access_iterator&		operator-= (difference_type n)
 		{
-			if (n < 0)
-				return (*this += (-n));
-			current += n;
+			current -= n;
 			return (*this);
 		}
 		pointer						operator->() const
@@ -279,15 +276,12 @@ namespace ft
 		}
 		reverse_iterator		operator++(int)
 		{
-			reverse_iterator	tmp = *this;
-			(*this)--;
-			return (tmp);
+			current--;
+			return (*this);
 		}
 		reverse_iterator&		operator+= (difference_type n)
 		{
-			if (n < 0)
-				return (*this -= (-n));
-			current += n;
+			current -= n;
 			return (*this);
 		}
 		reverse_iterator		operator- (difference_type n) const
@@ -301,9 +295,8 @@ namespace ft
 		}
 		reverse_iterator		operator--(int)
 		{
-			reverse_iterator tmp = *this;
 			current++;
-			return (tmp);
+			return (*this);
 		}
 		reverse_iterator&		operator-= (difference_type n)
 		{
@@ -377,10 +370,32 @@ namespace ft
 	 *		Iterator operations: advance, distance
 	 */
 	template <typename InputIterator, typename Distance>
-	void advance (InputIterator& it, Distance n);
+	void advance (InputIterator& it, Distance n)
+	{
+		if (typeid(typename iterator_traits<InputIterator>::iterator_category) == typeid(random_access_iterator_tag))
+		{
+			it += n;
+		}
+		else
+		{
+			while (n-- > 0)
+				it++;
+			while (n++ > 0)
+				it--;
+		}
+	}
 
 	template<typename InputIterator>
-	typename iterator_traits<InputIterator>::difference_type distance (InputIterator first, InputIterator last);
+	typename iterator_traits<InputIterator>::difference_type distance (InputIterator first, InputIterator last)
+	{
+		typename ft::iterator_traits<InputIterator>::difference_type result = 0;
+		while (first != last)
+		{
+			++result;
+			++first;
+		}
+		return (result);
+	}
 
 }
 

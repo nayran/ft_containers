@@ -19,7 +19,7 @@
  *		<stack>
  *
  *
- *		<iterator>
+ *		<iterator>	OK
  *		Iterator Classes
  *			Iterator
  *				Categoriy tags
