@@ -4,9 +4,7 @@
 
 #include <memory>
 #include <stdexcept>
-#include "include/iterator.hpp"
-#include "algorithm.hpp"
-#include "type_traits.hpp"
+#include "include/utils.hpp"
 
 namespace ft
 {

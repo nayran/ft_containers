@@ -6,6 +6,8 @@
 #include <string>
 #include <iostream>
 #include "iterator.hpp"
+#include "algorithm.hpp"
+#include "type_traits.hpp"
 
 /*
  *		https://en.cppreference.com/w/cpp/container
@@ -14,27 +16,26 @@
 
 
 /*		
- *		<vector> vector2X
- *		<map>
- *		<stack>
+ *		<iterator>		OK
+ *			Iterator Classes
+ *				Iterator
+ *					Categoriy tags
+ *					Random access iterator
+ *					Reverse iterator
+ *				Iterator traits
+ *			ft::advance
+ *			ft::distance
  *
- *
- *		<iterator>	OK
- *		Iterator Classes
- *			Iterator
- *				Categoriy tags
- *				Random access iterator
- *				Reverse iterator
- *			Iterator traits
- *		Functions
- *			advance, distance
- *
+ *		<algorithm>		OK
+ *			ft::equal
+ *			ft::lexicographical_compare
  *
  *		<type_traits> X
  *		enable_if, is_integral
  *
- *		<algorithm> X
- *		equal compare, lexicographical_compare
+ *		<vector> vector2X
+ *		<map>
+ *		<stack>
  *
  *		<utility>
  *		std::pair, std::make_pair
