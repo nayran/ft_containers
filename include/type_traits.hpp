@@ -1,43 +1,49 @@
-#ifndef TYPE_TRAITS_HPP
- #define TYPE_TRAITS_HPP
+#ifndef TYPE_TRAITS_HPP 
+# define TYPE_TRAITS_HPP
+
+/*
+ *		TYPE_TRAITS
+ *			Funcoes obrigatorias: enable_if, is_integral
+ *
+ *		https://en.cppreference.com/w/cpp/types/enable_if
+ *		https://www.cplusplus.com/reference/type_traits/enable_if/
+ *		https://www.cplusplus.com/reference/type_traits/is_integral/
+ *		https://www.cplusplus.com/reference/type_traits/integral_constant/
+ */
+
+#include <iostream>
 
 namespace ft
 {
 	/*
-		enable_if class templates below
-		The type T is enabled as member type enable_if::type if Cond is true
-		https://www.cplusplus.com/reference/type_traits/enable_if/?kw=enable_if
-	*/
-	template<bool Cond, typename T = void>
-	struct enable_if {};
+	 *		ENABLE_IF
+	 *			Tipo T eh liberado como membro se Cond == true
+	 */
 
-	template<typename T>
-	struct enable_if<true, T>
-	{
-		typedef T	type;
-	};
+	template<bool Cond, class T = void>
+	struct enable_if {};
+	
+	template<class T>
+	struct enable_if<true, T> { typedef T type; };
+
 	/*
-		integral_constant class template below
-		This template is designed to provide compile-time constants as types
-		https://www.cplusplus.com/reference/type_traits/integral_constant/
-	*/
-	template <typename T, T v>
-	struct integral_constant
-	{
+	 *		IS_INTEGRAL
+	 *			Identifica se tipo T eh um integral type
+	 *
+	 *		Integral constant <- is_integral
+	 *		Tipos fundamentais: bool, char, char16_t, char32_t, wchar_t, signed char, short int,
+	 *							int, long int, long long int, unsigned char, unsigned short int,
+	 *							unsigned int, unsigned long int, unsigned long long int
+	 */
+	template <class T, T v>
+	struct integral_constant {
 		static const T value = v;
 		typedef T value_type;
 		typedef integral_constant<T,v> type;
-
-		operator T()
-		{
-			return (v);
+		operator const T(){
+			return v;
 		}
 	};
-	/*
-		is_integral class template and its specializations below
-		Trait class that identifies whether T is an integral type
-		https://www.cplusplus.com/reference/type_traits/is_integral/
-	*/
 	template<typename T>
 	struct is_integral : public integral_constant<bool, false> {} ;
 
@@ -46,6 +52,12 @@ namespace ft
 
 	template<>
 	struct is_integral<char> : public integral_constant<bool, true> {} ;
+
+	template<>
+	struct is_integral<char16_t> : public integral_constant<bool, true> {} ;
+
+	template<>
+	struct is_integral<char32_t> : public integral_constant<bool, true> {} ;
 
 	template<>
 	struct is_integral<wchar_t> : public integral_constant<bool, true> {} ;
@@ -80,5 +92,4 @@ namespace ft
 	template<>
 	struct is_integral<unsigned long long int> : public integral_constant<bool, true> {} ;
 }
-
 #endif

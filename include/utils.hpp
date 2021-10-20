@@ -30,8 +30,9 @@
  *			ft::equal
  *			ft::lexicographical_compare
  *
- *		<type_traits> X
- *		enable_if, is_integral
+ *		<type_traits>	OK
+ *			ft::enable_if
+ *			ft::is_integral
  *
  *		<vector> vector2X
  *		<map>

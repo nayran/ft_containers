@@ -11,7 +11,7 @@
  *		https://en.cppreference.com/w/cpp/algorithm/lexicographical_compare
  */
 
-#include "utils.hpp"
+#include <iostream>
 
 namespace ft
 {

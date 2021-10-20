@@ -18,8 +18,8 @@
  */
 
 #include <stddef.h>
-# include <typeinfo>
-#include "utils.hpp"
+#include <typeinfo>
+#include <iostream>
 
 namespace ft
 {
