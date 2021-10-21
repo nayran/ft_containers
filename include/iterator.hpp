@@ -2,6 +2,8 @@
 # define ITERATOR_HPP
 
 /*
+ *		[ ITERATOR ]
+ *
  *		Iterator Classes
  *			Iterator
  *				Categoriy tags
@@ -9,7 +11,7 @@
  *				Reverse iterator
  *			Iterator traits
  *		Functions
- *			advance, distance
+ *			Advance, distance
  *
  *		https://en.cppreference.com/w/c/types/ptrdiff_t
  *		https://www.cplusplus.com/reference/iterator/

@@ -3,7 +3,25 @@
 
 #include "include/utils.hpp"
 
-/*
+/*		
+ *		[ VECTOR ]
+ *
+ *		Member types
+ *		Member functions
+ *			Constructors, destructor, operator
+ *			Iterators
+ *				Begin, end, rbegin, rend
+ *			Capacity
+ *				Size, max_size, resize, capacity, empty, reserve
+ *			Element Access
+ *				Operator[], at, front, back
+ *			Modifiers
+ *				Assign, push_back, pop_back, insert, erase, swap, clear
+ *			Allocator
+ *				Get_allocator
+ *		Non-member functions
+ *			Relational Operators (==, !=, <, <=, >, >=)
+ *
  *		https://www.cplusplus.com/reference/vector/vector/
  *		https://en.cppreference.com/w/cpp/container/vector
  */
@@ -35,31 +53,44 @@ namespace ft
 		 *		DESTRUCTOR
 		 *		OPERATOR
 		 */
+
+		// Default: Constroi um container vazio com o allocator padrao.
 		explicit vector (const allocator_type& alloc = allocator_type())
 		{
 			this->alloc = alloc;
 		}
-		
-		/*
+		// Fill: Constroi um container com n elementos, cada elemento eh uma copia de val.
 		explicit vector (size_type n, const value_type& val = value_type(),
                  const allocator_type& alloc = allocator_type())
 		{
+			iterator it;
+			vec = alloc.allocate(n);
+			it = vec.begin();
+			while (it != vec.end())
+			{
+				it = val;
+				it++;
+			}
 		}
 		template <class InputIterator>
-         vector (InputIterator first, InputIterator last,
-                 const allocator_type& alloc = allocator_type());
-		vector (const vector& x);
+        vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type())
+		{
+		}
 
-		~vector();
+		vector (const vector& x){};
+
+		~vector() {};
 
 		vector& operator= (const vector& x);
-		*/
 
 		/*
 		 *		ITERATORS (begin, end, rbegin, rend)
 		 */
 		/*
-		iterator begin();
+		iterator begin()
+		{
+		}
+
 		const_iterator begin() const;
 		
 		iterator end();
@@ -136,6 +167,7 @@ namespace ft
 
 	private:
 		allocator_type  alloc;
+		pointer			vec;
 	};
 
 	/*

@@ -16,25 +16,42 @@
 
 
 /*		
- *		<iterator>		OK
+ *		<iterator>
  *			Iterator Classes
  *				Iterator
  *					Categoriy tags
  *					Random access iterator
  *					Reverse iterator
  *				Iterator traits
- *			ft::advance
- *			ft::distance
+ *			Functions
+ *				Advance, distance
  *
- *		<algorithm>		OK
+ *		<algorithm>
  *			ft::equal
  *			ft::lexicographical_compare
  *
- *		<type_traits>	OK
+ *		<type_traits>
  *			ft::enable_if
  *			ft::is_integral
  *
- *		<vector> vector2X
+ *		<vector>
+ *			Member types
+ *			Member functions
+ *				Constructors, destructor, operator
+ *				Iterators
+ *					Begin, end, rbegin, rend
+ *				Capacity
+ *					Size, max_size, resize, capacity, empty, reserve
+ *				Element Access
+ *					Operator[], at, front, back
+ *				Modifiers
+ *					Assign, push_back, pop_back, insert, erase, swap, clear
+ *				Allocator
+ *					Get_allocator
+ *			Non-member functions
+ *				Relational Operators (==, !=, <, <=, >, >=)
+ *				Swap
+ *			
  *		<map>
  *		<stack>
  *

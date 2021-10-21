@@ -1,5 +1,4 @@
-#include "vector2.hpp"
-#include "include/utils.hpp"
+#include "vector.hpp"
 //#include "map.hpp"
 //#include "stack.hpp"
 #include <exception>
@@ -21,6 +20,7 @@ typename ft::enable_if<ft::is_integral<T>::value,bool>::type is_even (T i)
 
 int main()
 {
+	/*
 	ft::vector<int> mylist;
 	for (int i=0; i<10; i++)
 		mylist.push_back (i*10);
@@ -103,15 +103,11 @@ int main()
 	std::cout << "\tenable_if::is_even(1): " << is_even(1) << std::endl;
 	std::cout << "\tis_integral<char>::value: " << ft::is_integral<char>::value << std::endl;
 	std::cout << "\tis_integral<float>::value: " << ft::is_integral<float>::value << std::endl;
+*/
 
-
-
-
-
-
-	ft::vector<std::string> vector_str;
-	ft::vector<char> vector_char;
-	ft::vector<int> vector_int;
+	//ft::vector<int> vector_int;
+	//ft::vector<char> vector_char;
+	//ft::vector<std::string> vector_str;
   
 
 	return (0);
