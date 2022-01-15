@@ -2,9 +2,13 @@
 # define VECTOR_HPP
 
 #include "include/utils.hpp"
+#include <memory>
 
 /*		
  *		[ VECTOR ]
+ *
+ *			Container sequencial que representa ponteiros que são dinamicamente alocados.
+ *		Consomem mais memoria devido ao fato de gerenciar o armazenamento e crescer dinamicamente.
  *
  *		Member types
  *		Member functions
@@ -41,8 +45,8 @@ namespace ft
 		typedef typename allocator_type::const_reference					const_reference;
 		typedef typename allocator_type::pointer							pointer;
 		typedef typename allocator_type::const_pointer						const_pointer;
-		typedef ft::random_access_iterator<value_type>						iterator;
-		typedef ft::random_access_iterator<const value_type>				const_iterator;
+		typedef ft::random_access_iterator<pointer>						iterator;
+		typedef ft::random_access_iterator<const_pointer>				const_iterator;
 		typedef ft::reverse_iterator<iterator>								reverse_iterator;
 		typedef ft::reverse_iterator<const_iterator>						const_reverse_iterator;
 		typedef typename ft::iterator_traits<iterator>::difference_type		difference_type; 
@@ -55,54 +59,92 @@ namespace ft
 		 */
 
 		// Default: Constroi um container vazio com o allocator padrao.
-		explicit vector (const allocator_type& alloc = allocator_type())
-		{
-			this->alloc = alloc;
-		}
+		explicit vector(const allocator_type & alloc = allocator_type())
+			: _alloc(alloc), _vec(NULL), _size(0) {}
 		// Fill: Constroi um container com n elementos, cada elemento eh uma copia de val.
 		explicit vector (size_type n, const value_type& val = value_type(),
                  const allocator_type& alloc = allocator_type())
+			: _alloc(alloc), _size(n)
 		{
 			iterator it;
-			vec = alloc.allocate(n);
-			it = vec.begin();
-			while (it != vec.end())
+
+			_vec = _alloc.allocate(n);
+			it = begin();
+			while (it != end())
 			{
-				it = val;
+				_alloc.construct(&(*it), val);
 				it++;
 			}
 		}
+
+		// Range: Constroi um container com a quantidade de elementos do range (primeiro - ultimo),
+		//		  cada elemento construido corresponde a ordem do range.
+		/*
 		template <class InputIterator>
         vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type())
+			: _alloc(alloc), _size(ft::distance(first, last)), _vec(_alloc.allocate(_size))
 		{
+			iterator	it;
+			
+			it = _alloc.allocate(_size);
+			while (first != last)
+			{
+				_alloc.construct(&(*it), *first);
+				first++;
+				it++;
+			}
+		}
+		*/
+		/*
+		// Copy: Faz a copia de cada elemento em x na mesma ordem.
+		vector (const vector& x)
+		{
+			iterator	it;
+			iterator	x2;
+			
+			x2 = x.begin();
+			it = alloc.allocate(x.size());
+			while (x2 != vec.end())
+			{
+				it = x2;
+				x2++;
+				it++;
+			}
 		}
 
-		vector (const vector& x){};
-
+		// MUDAR
 		~vector() {};
 
-		vector& operator= (const vector& x);
-
+		vector& operator= (const vector& x)
+		{
+			this = x;
+			return (*this);
+		};
+*/
 		/*
 		 *		ITERATORS (begin, end, rbegin, rend)
 		 */
-		/*
 		iterator begin()
-		{
-		}
+		{ return (iterator(_vec)); };
 
-		const_iterator begin() const;
+		const_iterator begin() const
+		{ return (const_iterator(_vec)); };
 		
-		iterator end();
-		const_iterator end() const;
+		iterator end()
+		{ return (iterator(_vec + _size)); };
 
+		const_iterator end() const
+		{ return (const_iterator(_vec + _size)); };
+
+		/*
 		reverse_iterator rbegin();
 		const_reverse_iterator rbegin() const;
 
 		reverse_iterator rend();
 		const_reverse_iterator rend() const;
+		*/
 
-		*
+		/*
 		 *		CAPACITY (size, max_size, resize, capacity, empty, reserve)
 		 *
 		size_type size() const;
@@ -161,13 +203,14 @@ namespace ft
 		 */
 		allocator_type get_allocator() const
 		{
-			return (alloc);
+			return (_alloc);
 		}
 		
 
 	private:
-		allocator_type  alloc;
-		pointer			vec;
+		allocator_type  _alloc;
+		pointer			_vec;
+		size_type		_size;
 	};
 
 	/*
