@@ -105,23 +105,24 @@ int main()
 	std::cout << "\tis_integral<float>::value: " << ft::is_integral<float>::value << std::endl;
 */
 
-	//ft::vector<int> vector_int;
-	//ft::vector<char> vector_char;
-	//ft::vector<std::string> vector_str;
-  
+
+	/*
+	 *		VECTOR
+	 */
+
+	// Vector constructors
 	ft::vector<int>	first;
 	ft::vector<int> second (4,100);
-	//ft::vector<int> third (second.begin(),second.end());
-	//ft::vector<int> fourth (third);
-
-	/*int myints[] = {16,2,77,29};
-	ft::vector<int> fifth (myints, myints + sizeof(myints) / sizeof(int) );
-
-	std::cout << "The contents of fifth are:";
-	for (ft::vector<int>::iterator it = fifth.begin(); it != fifth.end(); ++it)
-		std::cout << ' ' << *it;
-	std::cout << '\n';
-	*/
+	ft::vector<int> third (second.begin(),second.end());
+	ft::vector<int> fourth (third);
+	// Vector operator =
+	ft::vector<int> aux(6,0);
+	for (ft::vector<int>::iterator it = aux.begin(); it != aux.end(); it++)
+		std::cout << *it << " ";
+	std::cout << std::endl;
+	aux = second;
+	for (ft::vector<int>::iterator it = aux.begin(); it != aux.end(); it++)
+		std::cout << *it << " ";
 
 	return (0);
 }

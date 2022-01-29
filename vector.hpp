@@ -2,7 +2,6 @@
 # define VECTOR_HPP
 
 #include "include/utils.hpp"
-#include <memory>
 
 /*		
  *		[ VECTOR ]
@@ -60,7 +59,7 @@ namespace ft
 
 		// Default: Constroi um container vazio com o allocator padrao.
 		explicit vector(const allocator_type & alloc = allocator_type())
-			: _alloc(alloc), _vec(NULL), _size(0) {}
+			: _alloc(alloc), _size(0), _vec(NULL){}
 		// Fill: Constroi um container com n elementos, cada elemento eh uma copia de val.
 		explicit vector (size_type n, const value_type& val = value_type(),
                  const allocator_type& alloc = allocator_type())
@@ -78,15 +77,15 @@ namespace ft
 		}
 
 		// Range: Constroi um container com a quantidade de elementos do range (primeiro - ultimo),
-		//		  cada elemento construido corresponde a ordem do range.
-		/*
+		//		  cada elemento construido corresponde a ordem do range. Tem que checar se recebe
+		//		  iterador ou size_t para nao confundir com o Fill.
 		template <class InputIterator>
-        vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type())
-			: _alloc(alloc), _size(ft::distance(first, last)), _vec(_alloc.allocate(_size))
+		vector (InputIterator first, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type last, const allocator_type& alloc = allocator_type())
+			: _alloc(alloc), _size(static_cast<size_type>(ft::distance(first, last))), _vec(_alloc.allocate(_size)) 
 		{
-			iterator	it;
-			
-			it = _alloc.allocate(_size);
+			iterator it;
+
+			it = begin();
 			while (first != last)
 			{
 				_alloc.construct(&(*it), *first);
@@ -94,33 +93,63 @@ namespace ft
 				it++;
 			}
 		}
-		*/
-		/*
+
 		// Copy: Faz a copia de cada elemento em x na mesma ordem.
 		vector (const vector& x)
+			: _alloc(x._alloc), _size(x._size), _vec(_alloc.allocate(_size))
 		{
-			iterator	it;
-			iterator	x2;
+			iterator it = begin();
+			const_iterator x2 = x.begin();
 			
-			x2 = x.begin();
-			it = alloc.allocate(x.size());
-			while (x2 != vec.end())
+			while (x2 != x.end())
 			{
-				it = x2;
-				x2++;
+				_alloc.construct(&(*it), *x2);
 				it++;
+				x2++;
 			}
 		}
 
-		// MUDAR
-		~vector() {};
+		// Destructor: destroi todos elementos do container e desaloca toda o armazenamento alocado.
+		~vector() 
+		{
+			iterator it = begin();
 
+			while (it != end())
+			{
+				_alloc.destroy(&(*it));
+				it++;
+			}
+			_alloc.deallocate(_vec, _size);
+		};
+
+		// operator=: substitui o conteudo do container pelo conteudo de x.
 		vector& operator= (const vector& x)
 		{
-			this = x;
+			if (this != &x)
+			{
+				iterator it = begin();
+				const_iterator x2 = x.begin();
+				while (it != end())
+				{
+					_alloc.destroy(&(*it));
+					it++;
+				}
+				_alloc.deallocate(_vec, _size);
+				_alloc = x._alloc;
+				_size = x._size;
+				_vec = _alloc.allocate(_size);
+				it = begin();
+				while (x2 != x.end())
+				{
+					_alloc.construct(&(*it), *x2);
+					it++;
+					x2++;
+				}
+			}
 			return (*this);
 		};
-*/
+
+
 		/*
 		 *		ITERATORS (begin, end, rbegin, rend)
 		 */
@@ -209,8 +238,8 @@ namespace ft
 
 	private:
 		allocator_type  _alloc;
-		pointer			_vec;
 		size_type		_size;
+		pointer			_vec;
 	};
 
 	/*
