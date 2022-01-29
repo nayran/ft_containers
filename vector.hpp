@@ -63,11 +63,10 @@ namespace ft
 		// Fill: Constroi um container com n elementos, cada elemento eh uma copia de val.
 		explicit vector (size_type n, const value_type& val = value_type(),
                  const allocator_type& alloc = allocator_type())
-			: _alloc(alloc), _size(n)
+			: _alloc(alloc), _size(n), _vec(_alloc.allocate(n))
 		{
 			iterator it;
 
-			_vec = _alloc.allocate(n);
 			it = begin();
 			while (it != end())
 			{
@@ -160,7 +159,7 @@ namespace ft
 		{ return (const_iterator(_vec)); };
 		
 		iterator end()
-		{ return (iterator(_vec + _size)); };
+		{ return (iterator(_vec + (_size))); };
 
 		const_iterator end() const
 		{ return (const_iterator(_vec + _size)); };

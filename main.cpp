@@ -110,6 +110,7 @@ int main()
 	 *		VECTOR
 	 */
 
+	/*
 	// Vector constructors
 	ft::vector<int>	first;
 	ft::vector<int> second (4,100);
@@ -123,6 +124,20 @@ int main()
 	aux = second;
 	for (ft::vector<int>::iterator it = aux.begin(); it != aux.end(); it++)
 		std::cout << *it << " ";
+	std::cout << std::endl;
+	*/
+	// Begin
+	int myints[] = {16,2,77,29};
+	ft::vector<int> aux (myints, myints + sizeof(myints) / sizeof(int) );
+	for (ft::vector<int>::iterator it = aux.begin(); it != aux.end(); it++)
+		std::cout << *it << " ";
+	ft::vector<int>::iterator it = aux.begin();
+	ft::vector<int>::const_iterator it2 = aux.begin();
+	std::cout << "\nBegin: " << *it << "\tConst begin: " << *it2 << std::endl;
+	// End  -- um elemento apos o fim da sequencia (quase sempre nulo)
+	it = aux.end();
+	it2 = aux.end();
+	std::cout << "End: " << *it << "\t\tConst end: " << *it2 << std::endl;
 
 	return (0);
 }
