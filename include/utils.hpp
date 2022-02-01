@@ -42,7 +42,7 @@
  *				Iterators
  *					Begin, end, rbegin, rend
  *				Capacity
- *					Size, max_size, resize, capacity, empty, reserve
+ *					Size, max_size, resize, capacity, empty, reserve  // FALTA RESIZE
  *				Element Access
  *					Operator[], at, front, back
  *				Modifiers
@@ -60,5 +60,12 @@
  *		std::pair, std::make_pair
  *
  */
+
+class out_of_range : public std::exception {
+	public:
+		virtual const char* what() const throw(){
+			return ("Out of range");
+		}
+};
 
 #endif

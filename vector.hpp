@@ -59,11 +59,12 @@ namespace ft
 
 		// Default: Constroi um container vazio com o allocator padrao.
 		explicit vector(const allocator_type & alloc = allocator_type())
-			: _alloc(alloc), _size(0), _vec(NULL){}
+			: _alloc(alloc), _size(0), _capacity(0), _vec(NULL){}
+
 		// Fill: Constroi um container com n elementos, cada elemento eh uma copia de val.
 		explicit vector (size_type n, const value_type& val = value_type(),
                  const allocator_type& alloc = allocator_type())
-			: _alloc(alloc), _size(n), _vec(_alloc.allocate(n))
+			: _alloc(alloc), _size(n), _capacity(n), _vec(_alloc.allocate(_capacity))
 		{
 			iterator it;
 
@@ -80,7 +81,7 @@ namespace ft
 		//		  iterador ou size_t para nao confundir com o Fill.
 		template <class InputIterator>
 		vector (InputIterator first, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type last, const allocator_type& alloc = allocator_type())
-			: _alloc(alloc), _size(static_cast<size_type>(ft::distance(first, last))), _vec(_alloc.allocate(_size)) 
+			: _alloc(alloc), _size(static_cast<size_type>(ft::distance(first, last))), _capacity(_size), _vec(_alloc.allocate(_capacity)) 
 		{
 			iterator it;
 
@@ -95,7 +96,7 @@ namespace ft
 
 		// Copy: Faz a copia de cada elemento em x na mesma ordem.
 		vector (const vector& x)
-			: _alloc(x._alloc), _size(x._size), _vec(_alloc.allocate(_size))
+			: _alloc(x._alloc), _size(x._size), _capacity(_size), _vec(_alloc.allocate(_capacity))
 		{
 			iterator it = begin();
 			const_iterator x2 = x.begin();
@@ -118,7 +119,7 @@ namespace ft
 				_alloc.destroy(&(*it));
 				it++;
 			}
-			_alloc.deallocate(_vec, _size);
+			_alloc.deallocate(_vec, _capacity);
 		};
 
 		// operator=: substitui o conteudo do container pelo conteudo de x.
@@ -133,10 +134,11 @@ namespace ft
 					_alloc.destroy(&(*it));
 					it++;
 				}
-				_alloc.deallocate(_vec, _size);
+				_alloc.deallocate(_vec, _capacity);
 				_alloc = x._alloc;
 				_size = x._size;
-				_vec = _alloc.allocate(_size);
+				_capacity = x._capacity;
+				_vec = _alloc.allocate(_capacity);
 				it = begin();
 				while (x2 != x.end())
 				{
@@ -164,38 +166,99 @@ namespace ft
 		const_iterator end() const
 		{ return (const_iterator(_vec + _size)); };
 
-		/*
-		reverse_iterator rbegin();
-		const_reverse_iterator rbegin() const;
+		reverse_iterator rbegin()
+		{ return (reverse_iterator(end())); };
+		
+		const_reverse_iterator rbegin() const
+		{ return (const_reverse_iterator(end())); };
 
-		reverse_iterator rend();
-		const_reverse_iterator rend() const;
-		*/
+		reverse_iterator rend()
+		{ return (reverse_iterator(begin())); };
+
+		const_reverse_iterator rend() const
+		{ return (const_reverse_iterator(begin())); };
 
 		/*
 		 *		CAPACITY (size, max_size, resize, capacity, empty, reserve)
-		 *
-		size_type size() const;
+		 */
+		size_type size() const
+		{ return (_size); };
 
-		size_type max_size() const;
+		// Deve ser menor do que a quantidade de RAM disponivel.
+		size_type max_size() const
+		{ return (_alloc.max_size());};
 
-		void resize (size_type n, value_type val = value_type());
+		/*
+		void resize (size_type n, value_type val = value_type())
+		{
+			// if n > size()  insert no final
+			// else if n < size () erase no final
+		};
+		*/
 
-		size_type capacity() const;
+		size_type capacity() const
+		{ return (_capacity); };
 
-		bool empty() const;
+		bool empty() const
+		{ 
+			if (_size != 0)
+				return (false);
+			return (true);
+		};
 
-		void reserve (size_type n);
+		// Realoca o vector para o indicado de memoria requerida (n) mas mantem intacto seus elementos e tamanho.
+		void reserve (size_type n)
+		{
+			if (n > _capacity)
+			{
+				vector aux(*this);
+				iterator itaux = aux.begin();
+				iterator it = begin();
+
+				while (it != end())
+				{
+					_alloc.destroy(&(*it));
+					it++;
+				}
+				_alloc.deallocate(_vec, _capacity);
+				_vec = _alloc.allocate(n);
+				_capacity = n;
+				it = begin();
+				while (itaux != aux.end())
+				{
+					_alloc.construct(&(*it), *itaux);
+					it++;
+					itaux++;
+				}
+			}
+		};
 		
-		*
+		/*
 		 *		ELEMENT ACCESS (operator[], at, front, back)
-		 *
-		reference operator[] (size_type n);
-		const_reference operator[] (size_type n) const;
+		 */
 		
-		reference at (size_type n);
-		const_reference at (size_type n) const;
+		// Nao checa se esta fora do range
+		reference operator[] (size_type n)
+		{ return (*(_vec + n)); };
 
+		const_reference operator[] (size_type n) const
+		{ return (const_reference(*(_vec + n))); };
+		
+		reference at (size_type n)
+		{ 
+			if (n >= _size)
+				throw out_of_range();
+			return (*(_vec + n));
+		};
+
+		const_reference at (size_type n) const
+		{ 
+			if (n >= _size)
+				throw out_of_range();
+			return (*(_vec + n));
+		};
+
+		/*
 		reference front();
 		const_reference front() const;
 
@@ -223,8 +286,18 @@ namespace ft
 
 		void swap (vector& x);
 
-		void clear();
 		*/
+		void clear()
+		{
+			iterator it = begin();
+
+			while (it != end())
+			{
+				_alloc.destroy(&(*it));
+				it++;
+			}
+			_size = 0;
+		};
 
 		/*
 		 *		ALLOCATOR
@@ -238,6 +311,7 @@ namespace ft
 	private:
 		allocator_type  _alloc;
 		size_type		_size;
+		size_type		_capacity;
 		pointer			_vec;
 	};
 
@@ -245,6 +319,8 @@ namespace ft
 	 *		RELATIONAL OPERATORS	
 	 *		SWAP
 	 */
+
+	/*
 	template <class T, class Alloc>
 		bool operator== (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs);
 	template <class T, class Alloc>
@@ -259,7 +335,7 @@ namespace ft
 		bool operator>= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs);
 
 	template <class T, class Alloc>
-		void swap (vector<T,Alloc>& x, vector<T,Alloc>& y);
+		void swap (vector<T,Alloc>& x, vector<T,Alloc>& y);*/
 }
 
 #endif

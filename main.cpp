@@ -110,34 +110,80 @@ int main()
 	 *		VECTOR
 	 */
 
-	/*
+	std::cout << "VECTOR\n";
 	// Vector constructors
 	ft::vector<int>	first;
-	ft::vector<int> second (4,100);
+	ft::vector<int> second (7,100);
 	ft::vector<int> third (second.begin(),second.end());
 	ft::vector<int> fourth (third);
 	// Vector operator =
-	ft::vector<int> aux(6,0);
-	for (ft::vector<int>::iterator it = aux.begin(); it != aux.end(); it++)
-		std::cout << *it << " ";
-	std::cout << std::endl;
-	aux = second;
-	for (ft::vector<int>::iterator it = aux.begin(); it != aux.end(); it++)
-		std::cout << *it << " ";
-	std::cout << std::endl;
-	*/
-	// Begin
 	int myints[] = {16,2,77,29};
-	ft::vector<int> aux (myints, myints + sizeof(myints) / sizeof(int) );
-	for (ft::vector<int>::iterator it = aux.begin(); it != aux.end(); it++)
+	ft::vector<int> vec(myints, myints + sizeof(myints) / sizeof(int) );
+	std::cout << "VEC: ";
+	for (ft::vector<int>::iterator it = vec.begin(); it != vec.end(); it++)
 		std::cout << *it << " ";
-	ft::vector<int>::iterator it = aux.begin();
-	ft::vector<int>::const_iterator it2 = aux.begin();
-	std::cout << "\nBegin: " << *it << "\tConst begin: " << *it2 << std::endl;
+	/*
+	std::cout << "\n\tVector operator = \n";
+	std::cout << "aux: ";
+	for (ft::vector<int>::iterator it = second.begin(); it != second.end(); it++)
+		std::cout << *it << " ";
+	second = vec;
+	std::cout << "\naux = vec: ";
+	for (ft::vector<int>::iterator it = second.begin(); it != second.end(); it++)
+		std::cout << *it << " ";
+	std::cout << std::endl;
+
+	//	Vector iterators 
+	std::cout << "\n\tVector iterators\n";
+	// Begin
+	ft::vector<int>::iterator it = vec.begin();
+	ft::vector<int>::const_iterator it2 = vec.begin();
+	std::cout << "Begin: " << *it << "\tConst begin: " << *it2 << std::endl;
 	// End  -- um elemento apos o fim da sequencia (quase sempre nulo)
-	it = aux.end();
-	it2 = aux.end();
+	it = vec.end();
+	it2 = vec.end();
 	std::cout << "End: " << *it << "\t\tConst end: " << *it2 << std::endl;
+	//Rbegin
+	ft::vector<int>::reverse_iterator it3;
+	it3 = vec.rbegin();
+	ft::vector<int>::const_reverse_iterator it4;
+	it4 = vec.rbegin();
+	std::cout << "Rbegin: " << *it3 << "\tConst rbegin: " << *it4 << std::endl;
+	//Rend
+	it3 = vec.rend();
+	it4 = vec.rend();
+	std::cout << "Rend: " << *it3 << "\tConst rend: " << *it4 << std::endl;
+	//	CAPACITY
+	std::cout << "\n\tVector capacity\n";
+	std::cout << "Size: " << vec.size() << std::endl;
+	std::cout << "Max_size: " << vec.max_size() << std::endl;
+	//vec.resize(5);
+	//for (ft::vector<int>::iterator it = vec.begin(); it != vec.end(); it++)
+	//	std::cout << *it << " ";
+	//std::cout << "Resize(5): " << vec.size() << std::endl;
+	//vec.resize(4);
+	std::cout << "Empty:" << fourth.empty();
+	fourth.clear();
+	std::cout << "\tEmpty:" << fourth.empty() << std::endl;
+
+
+	std::cout << "\nCapacity: " << vec.capacity() << std::endl;
+	vec.reserve(8);
+	std::cout << "Reserve new capacity (8): " << vec.capacity() << std::endl;
+	
+*/
+
+	//	ELEMENT ACCESS
+	std::cout << "\n\tElement access\n";
+	
+	std::cout << "vec[2]: " << vec[2] << std::endl;
+	try {
+		std::cout << "vec.at(2): " << vec.at(2) << std::endl;
+		std::cout << "vec.at(4): " << vec.at(4) << std::endl;
+	}
+	catch (std::exception& out) {
+		std::cout << out.what() << std::endl;
+	}
 
 	return (0);
 }
