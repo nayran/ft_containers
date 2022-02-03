@@ -44,8 +44,8 @@ namespace ft
 		typedef typename allocator_type::const_reference					const_reference;
 		typedef typename allocator_type::pointer							pointer;
 		typedef typename allocator_type::const_pointer						const_pointer;
-		typedef ft::random_access_iterator<pointer>						iterator;
-		typedef ft::random_access_iterator<const_pointer>				const_iterator;
+		typedef ft::random_access_iterator<pointer>							iterator;
+		typedef ft::random_access_iterator<const_pointer>					const_iterator;
 		typedef ft::reverse_iterator<iterator>								reverse_iterator;
 		typedef ft::reverse_iterator<const_iterator>						const_reverse_iterator;
 		typedef typename ft::iterator_traits<iterator>::difference_type		difference_type; 
@@ -59,7 +59,7 @@ namespace ft
 
 		// Default: Constroi um container vazio com o allocator padrao.
 		explicit vector(const allocator_type & alloc = allocator_type())
-			: _alloc(alloc), _size(0), _capacity(0), _vec(NULL){}
+			: _alloc(alloc), _size(0), _capacity(0), _vec(NULL){};
 
 		// Fill: Constroi um container com n elementos, cada elemento eh uma copia de val.
 		explicit vector (size_type n, const value_type& val = value_type(),
@@ -74,7 +74,7 @@ namespace ft
 				_alloc.construct(&(*it), val);
 				it++;
 			}
-		}
+		};
 
 		// Range: Constroi um container com a quantidade de elementos do range (primeiro - ultimo),
 		//		  cada elemento construido corresponde a ordem do range. Tem que checar se recebe
@@ -92,7 +92,7 @@ namespace ft
 				first++;
 				it++;
 			}
-		}
+		};
 
 		// Copy: Faz a copia de cada elemento em x na mesma ordem.
 		vector (const vector& x)
@@ -107,7 +107,7 @@ namespace ft
 				it++;
 				x2++;
 			}
-		}
+		};
 
 		// Destructor: destroi todos elementos do container e desaloca toda o armazenamento alocado.
 		~vector() 
@@ -215,11 +215,7 @@ namespace ft
 				iterator itaux = aux.begin();
 				iterator it = begin();
 
-				while (it != end())
-				{
-					_alloc.destroy(&(*it));
-					it++;
-				}
+				clear();
 				_alloc.deallocate(_vec, _capacity);
 				_vec = _alloc.allocate(n);
 				_capacity = n;
@@ -237,13 +233,14 @@ namespace ft
 		 *		ELEMENT ACCESS (operator[], at, front, back)
 		 */
 		
-		// Nao checa se esta fora do range
+		// operator[] Nao checa se esta fora do range
 		reference operator[] (size_type n)
 		{ return (*(_vec + n)); };
 
 		const_reference operator[] (size_type n) const
 		{ return (const_reference(*(_vec + n))); };
 		
+		// at checa se esta fora do range
 		reference at (size_type n)
 		{ 
 			if (n >= _size)
@@ -258,35 +255,153 @@ namespace ft
 			return (*(_vec + n));
 		};
 
+
+		reference front()
+		{
+			reference ref(*(_vec));
+			return (ref);
+		};
+
+		const_reference front() const
+		{
+			const_reference ref(*(_vec));
+			return (ref);
+		};
+
+		reference back()
+		{
+			reference ref(*(_vec + _size - 1));
+			return (ref);
+		};
+
+		const_reference back() const
+		{
+			const_reference ref(*(_vec + _size - 1));
+			return (ref);
+		};
+
 		/*
-		reference front();
-		const_reference front() const;
-
-		reference back();
-		const_reference back() const;
-
-		*
 		 *		MODIFIERS (assign, push_back, pop_back, insert, erase, swap, clear)
-		 *
+		 */
+
+		// assign: atribui novos conteudos ao vetor (substitui se necessario) e modifica o seu size de acordo.
+		// assign range: troca os valores pelo range(first - last)
 		template <class InputIterator>
-			void assign (InputIterator first, InputIterator last);
-		void assign (size_type n, const value_type& val);
+		void assign (InputIterator first, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type last)
+		{
+			iterator it = begin();
+			while (it != end())
+			{
+				_alloc.destroy(&(*it));
+				it++;
+			}
+			_alloc.deallocate(_vec, _capacity);
+			_size = ft::distance(first, last);
+			if (_capacity < _size)
+				_capacity = _size;
+			_vec = _alloc.allocate(_capacity);
+			it = begin();
+			while (first != last)
+			{
+				_alloc.construct(&(*it), *first);
+				it++;
+				first++;
+			}
+		};
+
+		// assign fill: troca os valores por val
+		void assign (size_type n, const value_type& val)
+		{
+			iterator it = begin();
+			size_type x = -1;
+
+			while (it != end())
+			{
+				_alloc.destroy(&(*it));
+				it++;
+			}
+			_alloc.deallocate(_vec, _capacity);
+			_size = n;
+			if (_capacity < _size)
+				_capacity = _size;
+			_vec = _alloc.allocate(_capacity);
+			it = begin();
+			while (++x < n)
+			{
+				_alloc.construct(&(*it), val);
+				it++;
+			}
+		};
 		
-		void push_back (const value_type& val);
+		// adiciona val no fim do vector
+		void push_back (const value_type& val)
+		{
+			while (_capacity <= _size)
+				reserve(_capacity + 1);
+			_alloc.construct(&(*end()), val);
+			_size++;
+		};
 
-		void pop_back();
+		// remove o ultimo elemento
+		void pop_back()
+		{
+			_alloc.destroy(&(*end()));
+			if (_size > 0)
+				_size--;
+		};
 
-		iterator insert (iterator position, const value_type& val);
-		void insert (iterator position, size_type n, const value_type& val);
-		template <class InputIterator>
-			void insert (iterator position, InputIterator first, InputIterator last);
+		// insere novos elementos (val) antes do elemento especificado por position e aumenta o size, retorna iterator do primeiro elemento adicionado
+		// single element: apenas um elemento
 
+
+		/*
+		iterator insert (iterator position, const value_type& val)
+		{
+			iterator it = end();
+
+			while (_capacity <= _size)
+				reserve(_capacity + 1);
+			while (it != position)
+			{
+				_alloc.construct(&(*it), *(it - 1));
+				it--;
+			}
+			_alloc.construct(&(*it), val);
+			_size++;
+			return (it);
+		};
+		*/
+
+		/*
+		// fill: n elementos val
+		void insert (iterator position, size_type n, const value_type& val)
+		{
+			iterator it = begin();
+			//size_type x = -1;
+
+			reserve(_capacity + n);
+			std::cout << *it << " " << val;
+			while (_capacity <= _size)
+				reserve(_capacity + 1);
+			while (it != position)
+				it++;
+			while (++x < n)
+			{
+				insert(it, val);
+			}
+
+			//_size += n;
+		}*/
+		// range: do first ao last
+		//template <class InputIterator>
+		//	void insert (iterator position, InputIterator first, InputIterator last);
+
+		/*
 		iterator erase (iterator position);
 		iterator erase (iterator first, iterator last);
 
 		void swap (vector& x);
-
-		*/
+*/
 		void clear()
 		{
 			iterator it = begin();

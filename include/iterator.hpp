@@ -125,7 +125,7 @@ namespace ft
 		}
 		random_access_iterator		operator+ (difference_type n) const
 		{
-			return (current + n);
+			return (random_access_iterator(current + n));
 		}
 		random_access_iterator&		operator++()
 		{
@@ -144,8 +144,7 @@ namespace ft
 		}
 		random_access_iterator		operator- (difference_type n) const
 		{
-			std::cout << "entra";
-			return (current - n);
+			return (random_access_iterator(current - n));
 		}
 		random_access_iterator&		operator--()
 		{
@@ -269,7 +268,7 @@ namespace ft
 		}
 		reverse_iterator		operator+ (difference_type n) const
 		{
-			return (current - n);
+			return (reverse_iterator(current - n));
 		}
 		reverse_iterator&		operator++()
 		{
@@ -288,7 +287,7 @@ namespace ft
 		}
 		reverse_iterator		operator- (difference_type n) const
 		{
-			return (current + n);
+			return (reverse_iterator(current + n));
 		}
 		reverse_iterator&		operator--()
 		{
