@@ -306,7 +306,6 @@ int main()
 
 
 
-	/*
 	// STACK
 	ft::stack<int> s; 
 	ft::stack<int, ft::vector<int> > stack(vec); 
@@ -342,6 +341,5 @@ int main()
 	std::cout << "stack > stack2: " << (stack > auxstack) << std::endl;
 	std::cout << "stack <= auxstack: " << (stack >= auxstack) << std::endl;
 	std::cout << "stack <= stack2: " << (stack >= stack2) << std::endl;
-	*/
 	return (0);
 }

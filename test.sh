@@ -1,10 +1,8 @@
-x=0
-while [x < 10] do
-	make re ;
-	./ft_containers > out
-	if $? != 0
+for (( x=0; x <= 10; x++ )); do
+	make re ; ./ft_containers > out
+	echo "$x: $?"
+	if [ $? -ne 0 ]
 	then
 		break
 	fi
-	x++
 done
