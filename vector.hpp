@@ -354,54 +354,97 @@ namespace ft
 		// single element: apenas um elemento
 
 
-		/*
 		iterator insert (iterator position, const value_type& val)
 		{
 			iterator it = end();
-
-			while (_capacity <= _size)
-				reserve(_capacity + 1);
+			while (_capacity <= _size + 1)
+				reserve(_capacity++);
 			while (it != position)
 			{
 				_alloc.construct(&(*it), *(it - 1));
+				_alloc.destroy(&(*(it - 1)));
 				it--;
 			}
 			_alloc.construct(&(*it), val);
 			_size++;
 			return (it);
 		};
-		*/
 
-		/*
 		// fill: n elementos val
 		void insert (iterator position, size_type n, const value_type& val)
 		{
-			iterator it = begin();
-			//size_type x = -1;
+			iterator it = end();
 
-			reserve(_capacity + n);
-			std::cout << *it << " " << val;
-			while (_capacity <= _size)
-				reserve(_capacity + 1);
+			while (_capacity <= _size + n + 1)
+				reserve(_capacity++);
 			while (it != position)
-				it++;
-			while (++x < n)
-			{
+				it--;
+			while (n--)
 				insert(it, val);
-			}
+		};
 
-			//_size += n;
-		}*/
 		// range: do first ao last
-		//template <class InputIterator>
-		//	void insert (iterator position, InputIterator first, InputIterator last);
+		template <class InputIterator>
+		void insert(iterator position, InputIterator first, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type last)
+		{
+			iterator it = end();
+			size_type s = ft::distance(first, last);
 
-		/*
-		iterator erase (iterator position);
-		iterator erase (iterator first, iterator last);
+			while (_capacity <= _size + s + 1)
+				reserve(_capacity++);
+			while (it != position)
+				it--;
+			while (s--)
+			{
+				insert(it, *first);
+				first++;
+				it++;
+			}
+		};
 
-		void swap (vector& x);
-*/
+		// Erase: remove posicao ou range do vector. Retorna o elemento que viria seguinte ao que foi apagado.
+		iterator erase (iterator position)
+		{
+			_alloc.destroy(&(*(position)));
+			iterator it = position;
+			while (it != end())
+			{
+				_alloc.construct(&(*it), *(it + 1));
+				_alloc.destroy(&(*(it + 1)));
+				it++;
+			}
+			_size--;
+			return (position);
+		};
+
+		// erase range
+		iterator erase (iterator first, iterator last)
+		{
+			iterator it = first;
+			while (it != last)
+			{
+				erase(it);
+				last--;
+			}
+			return (first);
+		};
+
+		// swap: troca o vector por x e vice-versa. ambos devem ser do mesmo tipo (n precisa do alloc).
+		void swap (vector& x)
+		{
+			//vector aux(x);
+			size_type	aux_size = x._size;
+				size_type	aux_capacity = x._capacity;
+				pointer		aux_vec = x._vec;
+			x._vec = _vec;
+			x._capacity= _capacity;
+			x._size = _size;
+			_vec = aux_vec;
+			_capacity = aux_capacity;
+			_size = aux_size;
+		};
+
+		// clear: limpa todo vector
 		void clear()
 		{
 			iterator it = begin();

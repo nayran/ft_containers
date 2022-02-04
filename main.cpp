@@ -122,6 +122,9 @@ int main()
 	std::cout << "VEC: ";
 	for (ft::vector<int>::iterator it = vec.begin(); it != vec.end(); it++)
 		std::cout << *it << " ";
+	std::cout << "\nSecond: ";
+	for (ft::vector<int>::iterator it = second.begin(); it != second.end(); it++)
+		std::cout << *it << " ";
 	/*
 	std::cout << "\n\tVector operator = \n";
 	std::cout << "aux: ";
@@ -189,10 +192,11 @@ int main()
 	std::cout << "vec.back(): " << vec.back() << std::endl;
 */
 	
+
+/*
 	//	MODIFIERS
 	std::cout << "\n\tModifiers\n";
 
-	/*
 	second.assign(vec.begin(), vec.end());
 	std::cout << "assign range(vec.begin(), vec.end()): ";
 	for (ft::vector<int>::iterator it = second.begin(); it != second.end(); it++)
@@ -220,41 +224,59 @@ int main()
 	std::cout << "\npop_back() empty vector: ";
 	for (ft::vector<int>::iterator it = a.begin(); it != a.end(); it++)
 		std::cout << *it << " ";
-
-	std::cout << "\ninsert single: insert(a.begin(), 1000), insert(a.begin(), 100, insert(a.begin(), 10))\n";
 	a.clear();
-	a.insert(a.begin(), 1000);
+
+	std::cout << "\ninsert single: insert(a.begin(), 300), insert(a.begin(), 100, insert(a.begin() + 1, 200))\n";
+	a.clear();
+	a.insert(a.begin(), 300);
 	a.insert(a.begin(), 100);
-	a.insert(a.begin(), 10);
-	ft::vector<int>::iterator it = a.begin();
-	it++;
+	a.insert(a.begin() + 1, 200);
 	for (ft::vector<int>::iterator it = a.begin(); it != a.end(); it++)
 		std::cout << *it << " ";
 	std::cout << std::endl;
-	it = a.insert(it, 1000);
-	std::cout << "insert single: a.insert(it[1], 1000) -- inicio no iterador retornado\n";
+	ft::vector<int>::iterator it = a.begin();
+	it = a.insert(it + 1, 110);
+	std::cout << "insert single: a.insert(it[1], 110) -- inicio no iterador retornado\n";
 	for (; it != a.end(); it++)
 		std::cout << *it << " ";
-	std::cout << "\ninsert single: a.insert(it[1], 1000) -- mostra todo o vector\n";
+	std::cout << "\ninsert single: a.insert(it[1], 110) -- mostra todo o vector\n";
 	for (ft::vector<int>::iterator it = a.begin(); it != a.end(); it++)
 		std::cout << *it << " ";
-	*/
+	a.insert(a.begin() + 1, 2, 101);
+	std::cout << "\ninsert fill: a.insert(it[1], 2, 101)\n";
+	for (ft::vector<int>::iterator it = a.begin(); it != a.end(); it++)
+		std::cout << *it << " ";
 
-	//a.clear();
 	
-	INSERT
-	/*
-	ft::vector<int>a;
-	a.insert(a.begin(), 1000);
-	a.insert(a.begin(), 100);
-	a.insert(a.begin(), 10);
-	ft::vector<int>::iterator it = a.begin();
-	it = a.begin();
-	it++;
-	//a.insert(it, 2, 111);
-	std::cout << "\ninsert fill: a.insert(it[1], 2, 111)\n";
+	int i[] = {105, 106, 107};
+	a.insert(a.begin() + 3, i, i+3);
+	std::cout << "\ninsert range: a.insert(a.begin() + 3, i, i + 3)\t i = {105, 106, 107}\n";
 	for (ft::vector<int>::iterator it = a.begin(); it != a.end(); it++)
 		std::cout << *it << " ";
-		*/
+	std::cout << "\nerase single element: a.erase(a.begin() + 3) -- inicio do iterador retornado\n";
+	it = a.erase(a.begin() + 3);
+	for (; it != a.end(); it++)
+		std::cout << *it << " ";
+	std::cout << "\nerase single element: a.erase(a.begin() + 3) -- mostra todo o vector\n";
+	for (ft::vector<int>::iterator it = a.begin(); it != a.end(); it++)
+		std::cout << *it << " ";
+
+	it = a.erase(a.begin() + 1, a.begin() + 4);
+	std::cout << "\nerase range: a.erase(a.begin() + 1, a.begin() + 4) -- inicio do iterador retornado\n";
+	for (; it != a.end(); it++)
+		std::cout << *it << " ";
+	std::cout << "\nerase range: a.erase(a.begin() + 1, a.begin() + 4) -- mostra todo o vector\n";
+	for (ft::vector<int>::iterator it = a.begin(); it != a.end(); it++)
+		std::cout << *it << " ";
+
+*/
+
+	vec.swap(second);
+	std::cout << "\nVEC: ";
+	for (ft::vector<int>::iterator it = vec.begin(); it != vec.end(); it++)
+		std::cout << *it << " ";
+	std::cout << "\nSecond: ";
+	for (ft::vector<int>::iterator it = second.begin(); it != second.end(); it++)
+		std::cout << *it << " ";
 	return (0);
 }
