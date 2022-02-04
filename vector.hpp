@@ -188,17 +188,21 @@ namespace ft
 		size_type max_size() const
 		{ return (_alloc.max_size());};
 
-		/*
+		// muda o tamanho do vector
+		// se n > size: realoca com size n, preenchendo com 0 ou val se especificado
+		// se n < size: destroi tudo a partir de n
 		void resize (size_type n, value_type val = value_type())
 		{
-			// if n > size()  insert no final
-			// else if n < size () erase no final
+			if (n > size())
+				insert(end(), n - size(), val);
+			else if (n < size())
+				erase(begin() + n,end());
 		};
-		*/
-
+		
 		size_type capacity() const
 		{ return (_capacity); };
 
+		// true se vazio, senao false
 		bool empty() const
 		{ 
 			if (_size != 0)
@@ -432,16 +436,7 @@ namespace ft
 		// swap: troca o vector por x e vice-versa. ambos devem ser do mesmo tipo (n precisa do alloc).
 		void swap (vector& x)
 		{
-			//vector aux(x);
-			size_type	aux_size = x._size;
-				size_type	aux_capacity = x._capacity;
-				pointer		aux_vec = x._vec;
-			x._vec = _vec;
-			x._capacity= _capacity;
-			x._size = _size;
-			_vec = aux_vec;
-			_capacity = aux_capacity;
-			_size = aux_size;
+			std::swap(*this, x);
 		};
 
 		// clear: limpa todo vector
@@ -463,7 +458,7 @@ namespace ft
 		allocator_type get_allocator() const
 		{
 			return (_alloc);
-		}
+		};
 		
 
 	private:
@@ -478,22 +473,44 @@ namespace ft
 	 *		SWAP
 	 */
 
-	/*
 	template <class T, class Alloc>
-		bool operator== (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs);
-	template <class T, class Alloc>
-		bool operator!= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs);
-	template <class T, class Alloc>
-		bool operator<  (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs);
-	template <class T, class Alloc>
-		bool operator<= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs);
-	template <class T, class Alloc>
-		bool operator>  (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs);
-	template <class T, class Alloc>
-		bool operator>= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs);
+		bool operator== (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+		{
+			return (ft::equal(lhs.begin(), lhs.end(), rhs.begin()) && lhs.size() == rhs.size());
+		};
 
 	template <class T, class Alloc>
-		void swap (vector<T,Alloc>& x, vector<T,Alloc>& y);*/
+		bool operator!= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+		{
+			return (!(lhs == rhs));
+		};
+	template <class T, class Alloc>
+		bool operator<  (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+		{
+			return (ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
+		};
+	template <class T, class Alloc>
+		bool operator<= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+		{
+			return (lhs < rhs || lhs == rhs);
+		}
+	template <class T, class Alloc>
+		bool operator>  (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+		{
+			return (ft::lexicographical_compare(rhs.begin(), rhs.end(), lhs.begin(), lhs.end()));
+		}
+	template <class T, class Alloc>
+		bool operator>= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+		{
+			return (rhs < lhs || lhs == rhs);
+		}
+
+	// swap x por y
+	template <class T, class Alloc>
+		void swap (vector<T,Alloc>& x, vector<T,Alloc>& y)
+		{
+			x.swap(y);
+		};
 }
 
 #endif

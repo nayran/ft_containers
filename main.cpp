@@ -156,25 +156,32 @@ int main()
 	it3 = vec.rend();
 	it4 = vec.rend();
 	std::cout << "Rend: " << *it3 << "\tConst rend: " << *it4 << std::endl;
+*/
 	//	CAPACITY
 	std::cout << "\n\tVector capacity\n";
 	std::cout << "Size: " << vec.size() << std::endl;
 	std::cout << "Max_size: " << vec.max_size() << std::endl;
-	//vec.resize(5);
-	//for (ft::vector<int>::iterator it = vec.begin(); it != vec.end(); it++)
-	//	std::cout << *it << " ";
-	//std::cout << "Resize(5): " << vec.size() << std::endl;
-	//vec.resize(4);
-	std::cout << "Empty:" << fourth.empty();
+	vec.resize(5);
+	std::cout << "Resize(5): " << vec.size() << std::endl;
+	for (ft::vector<int>::iterator it = vec.begin(); it != vec.end(); it++)
+		std::cout << *it << " ";
+	vec.resize(7, 5);
+	std::cout << "\nResize(7, 5): " << vec.size() << std::endl;
+	for (ft::vector<int>::iterator it = vec.begin(); it != vec.end(); it++)
+		std::cout << *it << " ";
+	vec.resize(4);
+	std::cout << "\nResize(4): " << vec.size() << std::endl;
+	for (ft::vector<int>::iterator it = vec.begin(); it != vec.end(); it++)
+		std::cout << *it << " ";
+	std::cout << "\nEmpty:" << fourth.empty();
 	fourth.clear();
 	std::cout << "\tEmpty:" << fourth.empty() << std::endl;
 
 
 	std::cout << "Capacity: " << vec.capacity() << std::endl;
-	vec.reserve(8);
-	std::cout << "Reserve new capacity (8): " << vec.capacity() << std::endl;
+	vec.reserve(10);
+	std::cout << "Reserve new capacity (10): " << vec.capacity() << std::endl;
 	
-*/
 
 	//	ELEMENT ACCESS
 /*
@@ -269,7 +276,6 @@ int main()
 	for (ft::vector<int>::iterator it = a.begin(); it != a.end(); it++)
 		std::cout << *it << " ";
 
-*/
 
 	vec.swap(second);
 	std::cout << "\nVEC: ";
@@ -278,5 +284,26 @@ int main()
 	std::cout << "\nSecond: ";
 	for (ft::vector<int>::iterator it = second.begin(); it != second.end(); it++)
 		std::cout << *it << " ";
+
+	//RELATIONAL OPERATORS
+	
+	
+	ft::vector<int> aux(vec);
+	std::cout << "\nAUX: ";
+	for (ft::vector<int>::iterator it = aux.begin(); it != aux.end(); it++)
+		std::cout << *it << " ";
+	std::cout << "\nvec == aux: " << (vec == aux) << std::endl;
+	std::cout << "vec == second: " << (vec == second) << std::endl;
+	std::cout << "vec != second: " << (vec != second) << std::endl;
+	std::cout << "vec < second: " << (vec < second) << std::endl;
+	std::cout << "vec <= second: " << (vec <= second) << std::endl;
+	std::cout << "vec <= aux: " << (vec <= aux) << std::endl;
+	std::cout << "vec > aux: " << (vec > second) << std::endl;
+	std::cout << "vec <= second: " << (vec >= second) << std::endl;
+	std::cout << "vec <= aux: " << (vec >= aux) << std::endl;
+
+	// Swap public;
+	swap(vec, second);
+*/
 	return (0);
 }
