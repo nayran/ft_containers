@@ -67,7 +67,6 @@ int main()
 	ft::vector<char> vector_char;
 	ft::vector<int> vector_int;
   
-*/
 
 
 	std::cout << "VECTOR\n";
@@ -154,7 +153,46 @@ std::cout << "\n\tModifiers\n";
 	for (ft::vector<int>::iterator it = a.begin(); it != a.end(); it++)
 		std::cout << *it << " ";
 
+*/
 
+	std::cout << "VECTOR\n";
+	// Vector constructors
+	ft::vector<int>	first;
+	ft::vector<int> second (7,100);
+	ft::vector<int> third (second.begin(),second.end());
+	ft::vector<int> fourth (third);
+	// Vector operator =
+	int myints[] = {16,2,77,29};
+	ft::vector<int> vec(myints, myints + sizeof(myints) / sizeof(int) );
+	std::cout << "VEC: ";
+	for (ft::vector<int>::iterator it = vec.begin(); it != vec.end(); it++)
+		std::cout << *it << " ";
+	std::cout << "\nSecond: ";
+	for (ft::vector<int>::iterator it = second.begin(); it != second.end(); it++)
+		std::cout << *it << " ";
+
+	ft::stack<int> s; 
+	ft::stack<int, ft::vector<int> > stack(vec); 
+	ft::stack<int, ft::vector<int> > stack2(vec); 
+	ft::stack<int, ft::vector<int> > auxstack(second); 
+
+	std::cout << "\n\nSTACK:\n";
+	
+	// ELEMENT ACCESS
+	std::cout << "\ntop\nstack.top(): " << stack.top() << std::endl;
+
+	// CAPACITY
+	ft::stack<int> teste;
+	std::cout << "\nempty and size\nteste.empty(): " << teste.empty() << std::endl;
+	std::cout << "teste.size(): " << teste.size() << std::endl;
+	std::cout << "stack.empty(): " << stack.empty() << std::endl;
+	std::cout << "stack.size(): " << stack.size() << std::endl;
+
+	// MODIFIERS
+	stack.push(5);
+	std::cout << "\nstack.push(5); stack.top(): " << stack.top() << " stack.size(): " << stack.size() << std::endl;
+	stack.pop();
+	std::cout << "stack.pop(); stack.top(): " << stack.top() << " stack.size(): " << stack.size() << std::endl;
 
 	return (0);
 }

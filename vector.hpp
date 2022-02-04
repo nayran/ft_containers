@@ -10,8 +10,10 @@
  *		Consomem mais memoria devido ao fato de gerenciar o armazenamento e crescer dinamicamente.
  *
  *		Member types
+ *			value_type, allocator_type, reference, const_reference, pointer, const_pointer, iterator,
+ *			const_iterator, reverse_iterator, const_reverse_iterator, difference_type, size_type.
  *		Member functions
- *			Constructors, destructor, operator
+ *			Constructors, destructor, operator=
  *			Iterators
  *				Begin, end, rbegin, rend
  *			Capacity
@@ -54,7 +56,7 @@ namespace ft
 		/*
 		 *		CONSTRUCTORS (default, fill, range, copy)
 		 *		DESTRUCTOR
-		 *		OPERATOR
+		 *		OPERATOR=
 		 */
 
 		// Default: Constroi um container vazio com o allocator padrao.
@@ -161,7 +163,7 @@ namespace ft
 		{ return (const_iterator(_vec)); };
 		
 		iterator end()
-		{ return (iterator(_vec + (_size))); };
+		{ return (iterator(_vec + _size)); };
 
 		const_iterator end() const
 		{ return (const_iterator(_vec + _size)); };
@@ -216,19 +218,16 @@ namespace ft
 			if (n > _capacity)
 			{
 				vector aux(*this);
-				iterator itaux = aux.begin();
-				iterator it = begin();
+				iterator it = aux.begin();
 
 				clear();
 				_alloc.deallocate(_vec, _capacity);
 				_vec = _alloc.allocate(n);
 				_capacity = n;
-				it = begin();
-				while (itaux != aux.end())
+				while (it != aux.end())
 				{
-					_alloc.construct(&(*it), *itaux);
+					push_back(*it);
 					it++;
-					itaux++;
 				}
 			}
 		};
@@ -274,13 +273,13 @@ namespace ft
 
 		reference back()
 		{
-			reference ref(*(_vec + _size - 1));
+			reference ref(*(end() - 1));
 			return (ref);
 		};
 
 		const_reference back() const
 		{
-			const_reference ref(*(_vec + _size - 1));
+			const_reference ref(*(end() - 1));
 			return (ref);
 		};
 
@@ -356,8 +355,6 @@ namespace ft
 
 		// insere novos elementos (val) antes do elemento especificado por position e aumenta o size, retorna iterator do primeiro elemento adicionado
 		// single element: apenas um elemento
-
-
 		iterator insert (iterator position, const value_type& val)
 		{
 			iterator it = end();
@@ -436,7 +433,15 @@ namespace ft
 		// swap: troca o vector por x e vice-versa. ambos devem ser do mesmo tipo (n precisa do alloc).
 		void swap (vector& x)
 		{
-			std::swap(*this, x);
+		size_type		aux_size = _size;
+		size_type		aux_capacity = _capacity;
+		pointer			aux_vec = _vec;
+			_vec = x._vec;
+			_capacity = x._capacity;
+			_size = x._size;
+			x._vec = aux_vec;
+			x._capacity = aux_capacity;
+			x._size = aux_size;
 		};
 
 		// clear: limpa todo vector
@@ -460,7 +465,6 @@ namespace ft
 			return (_alloc);
 		};
 		
-
 	private:
 		allocator_type  _alloc;
 		size_type		_size;
@@ -475,42 +479,27 @@ namespace ft
 
 	template <class T, class Alloc>
 		bool operator== (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
-		{
-			return (ft::equal(lhs.begin(), lhs.end(), rhs.begin()) && lhs.size() == rhs.size());
-		};
-
+		{ return (ft::equal(lhs.begin(), lhs.end(), rhs.begin()) && lhs.size() == rhs.size()); };
 	template <class T, class Alloc>
 		bool operator!= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
-		{
-			return (!(lhs == rhs));
-		};
+		{ return (!(lhs == rhs)); };
 	template <class T, class Alloc>
 		bool operator<  (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
-		{
-			return (ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
-		};
+		{ return (ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end())); };
 	template <class T, class Alloc>
 		bool operator<= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
-		{
-			return (lhs < rhs || lhs == rhs);
-		}
+		{ return (lhs < rhs || lhs == rhs); };
 	template <class T, class Alloc>
 		bool operator>  (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
-		{
-			return (ft::lexicographical_compare(rhs.begin(), rhs.end(), lhs.begin(), lhs.end()));
-		}
+		{ return (ft::lexicographical_compare(rhs.begin(), rhs.end(), lhs.begin(), lhs.end())); };
 	template <class T, class Alloc>
 		bool operator>= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
-		{
-			return (rhs < lhs || lhs == rhs);
-		}
+		{ return (rhs < lhs || lhs == rhs); };
 
 	// swap x por y
 	template <class T, class Alloc>
 		void swap (vector<T,Alloc>& x, vector<T,Alloc>& y)
-		{
-			x.swap(y);
-		};
-}
+		{ x.swap(y); };
+};
 
 #endif

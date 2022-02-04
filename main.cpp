@@ -1,6 +1,6 @@
 #include "vector.hpp"
+#include "stack.hpp"
 //#include "map.hpp"
-//#include "stack.hpp"
 #include <exception>
 
 bool mycomp (char c1, char c2)
@@ -118,14 +118,16 @@ int main()
 	ft::vector<int> fourth (third);
 	// Vector operator =
 	int myints[] = {16,2,77,29};
-	ft::vector<int> vec(myints, myints + sizeof(myints) / sizeof(int) );
+	ft::vector<int> vec2(myints, myints + sizeof(myints) / sizeof(int) );
+	ft::vector<int> vec(vec2);
 	std::cout << "VEC: ";
 	for (ft::vector<int>::iterator it = vec.begin(); it != vec.end(); it++)
 		std::cout << *it << " ";
 	std::cout << "\nSecond: ";
 	for (ft::vector<int>::iterator it = second.begin(); it != second.end(); it++)
 		std::cout << *it << " ";
-	/*
+	
+
 	std::cout << "\n\tVector operator = \n";
 	std::cout << "aux: ";
 	for (ft::vector<int>::iterator it = second.begin(); it != second.end(); it++)
@@ -156,7 +158,6 @@ int main()
 	it3 = vec.rend();
 	it4 = vec.rend();
 	std::cout << "Rend: " << *it3 << "\tConst rend: " << *it4 << std::endl;
-*/
 	//	CAPACITY
 	std::cout << "\n\tVector capacity\n";
 	std::cout << "Size: " << vec.size() << std::endl;
@@ -184,9 +185,9 @@ int main()
 	
 
 	//	ELEMENT ACCESS
-/*
 	std::cout << "\n\tElement access\n";
 	
+	//vec = vec2;
 	std::cout << "vec[2]: " << vec[2] << std::endl;
 	try {
 		std::cout << "vec.at(2): " << vec.at(2) << std::endl;
@@ -197,10 +198,8 @@ int main()
 	}
 	std::cout << "vec.front(): " << vec.front() << std::endl;
 	std::cout << "vec.back(): " << vec.back() << std::endl;
-*/
 	
 
-/*
 	//	MODIFIERS
 	std::cout << "\n\tModifiers\n";
 
@@ -241,8 +240,7 @@ int main()
 	for (ft::vector<int>::iterator it = a.begin(); it != a.end(); it++)
 		std::cout << *it << " ";
 	std::cout << std::endl;
-	ft::vector<int>::iterator it = a.begin();
-	it = a.insert(it + 1, 110);
+	it = a.insert(a.begin() + 1, 110);
 	std::cout << "insert single: a.insert(it[1], 110) -- inicio no iterador retornado\n";
 	for (; it != a.end(); it++)
 		std::cout << *it << " ";
@@ -295,6 +293,7 @@ int main()
 	std::cout << "\nvec == aux: " << (vec == aux) << std::endl;
 	std::cout << "vec == second: " << (vec == second) << std::endl;
 	std::cout << "vec != second: " << (vec != second) << std::endl;
+	std::cout << "vec != aux: " << (vec != aux) << std::endl;
 	std::cout << "vec < second: " << (vec < second) << std::endl;
 	std::cout << "vec <= second: " << (vec <= second) << std::endl;
 	std::cout << "vec <= aux: " << (vec <= aux) << std::endl;
@@ -304,6 +303,45 @@ int main()
 
 	// Swap public;
 	swap(vec, second);
-*/
+
+
+
+	/*
+	// STACK
+	ft::stack<int> s; 
+	ft::stack<int, ft::vector<int> > stack(vec); 
+	ft::stack<int, ft::vector<int> > stack2(vec); 
+	ft::stack<int, ft::vector<int> > auxstack(second); 
+
+	std::cout << "\n\nSTACK:\n";
+	
+	// ELEMENT ACCESS
+	std::cout << "\ntop\nstack.top(): " << stack.top() << std::endl;
+
+	// CAPACITY
+	ft::stack<int> teste;
+	std::cout << "\nempty and size\nteste.empty(): " << teste.empty() << std::endl;
+	std::cout << "teste.size(): " << teste.size() << std::endl;
+	std::cout << "stack.empty(): " << stack.empty() << std::endl;
+	std::cout << "stack.size(): " << stack.size() << std::endl;
+
+	// MODIFIERS
+	stack.push(99);
+	std::cout << "\nstack.push(99); stack.top(): " << stack.top() << " stack.size(): " << stack.size() << std::endl;
+	stack.pop();
+	std::cout << "stack.pop(); stack.top(): " << stack.top() << " stack.size(): " << stack.size() << std::endl;
+	//RELATIONAL OPERATORS
+	
+	std::cout << "\nRelational operators\n";
+	std::cout << "stack == stack2: " << (stack == stack2) << std::endl;
+	std::cout << "stack == auxstack: " << (stack == auxstack) << std::endl;
+	std::cout << "stack != auxstack: " << (stack != auxstack) << std::endl;
+	std::cout << "stack < auxstack: " << (stack < auxstack) << std::endl;
+	std::cout << "stack <= auxstack: " << (stack <= auxstack) << std::endl;
+	std::cout << "stack <= stack2: " << (stack <= stack2) << std::endl;
+	std::cout << "stack > stack2: " << (stack > auxstack) << std::endl;
+	std::cout << "stack <= auxstack: " << (stack >= auxstack) << std::endl;
+	std::cout << "stack <= stack2: " << (stack >= stack2) << std::endl;
+	*/
 	return (0);
 }

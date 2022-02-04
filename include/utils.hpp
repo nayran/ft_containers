@@ -37,12 +37,15 @@
  *
  *		<vector>
  *			Member types
+ *				value_type, allocator_type, reference, const_reference, pointer,
+ *				const_pointer, iterator, const_iterator, reverse_iterator,
+ *				const_reverse_iterator, difference_type, size_type.
  *			Member functions
- *				Constructors, destructor, operator
+ *				Constructors, destructor, operator=
  *				Iterators
  *					Begin, end, rbegin, rend
  *				Capacity
- *					Size, max_size, resize, capacity, empty, reserve  // FALTA RESIZE
+ *					Size, max_size, resize, capacity, empty, reserve
  *				Element Access
  *					Operator[], at, front, back
  *				Modifiers
@@ -53,11 +56,26 @@
  *				Relational Operators (==, !=, <, <=, >, >=)
  *				Swap
  *			
- *		<map>
  *		<stack>
+ *			Member types
+ *				value_type, container_type, size_type
+ *			Member functions
+ *				Constructor, destructor
+ *				Element Access
+ *					top
+ *				Capacity
+ *					empty, size
+ *				Modifiers
+ *					push, pop
+ *			Member objects
+ *				Container C
+ *			Non-member functions
+ *				Relational Operators (==, !=, <, <=, >, >=)
+ *
+ *		<map>
  *
  *		<utility>
- *		std::pair, std::make_pair
+ *			ft::pair, ft::make_pair
  *
  */
 
