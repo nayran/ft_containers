@@ -1,13 +1,13 @@
 #include <iostream>
-#include <string>
-#include <stdlib.h>
-#include <deque>
-#include <map>
-#include <stack>
-#include <vector>
-#include <iterator>
-#include <exception>
-namespace ft = std;
+		  #include <string>
+		  #include <stdlib.h>
+		  #include <deque>
+		  #include <map>
+		  #include <stack>
+		  #include <vector>
+		  #include <iterator>
+		  #include <exception>
+		  namespace ft = std;
 
 bool mycomp (char c1, char c2)
 { return c1 < c2; }

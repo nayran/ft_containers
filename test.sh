@@ -1,4 +1,15 @@
-for (( x=0; x <= 10; x++ )); do
+for (( x=0; x <= 0; x++ )); do
+	echo "#include <iostream>
+		  #include <string>
+		  #include <stdlib.h>
+		  #include <deque>
+		  #include <map>
+		  #include <stack>
+		  #include <vector>
+		  #include <iterator>
+		  #include <exception>
+		  namespace ft = std;" > original.cpp
+	tail -n +5 main.cpp >> original.cpp
 	make re ; ./ft_containers > out_ft
 	echo "$x: $?"
 	if [ $? -ne 0 ]
@@ -12,3 +23,5 @@ for (( x=0; x <= 10; x++ )); do
 		break
 	fi
 done
+rm out_ft
+rm out_std

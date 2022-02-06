@@ -3,3 +3,5 @@
 .DS_Store
 ft_containers
 std_containers
+out_std
+out_ft
