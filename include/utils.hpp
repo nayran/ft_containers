@@ -82,7 +82,7 @@
 class out_of_range : public std::exception {
 	public:
 		virtual const char* what() const throw(){
-			return ("Out of range");
+			return ("vector");
 		}
 };
 

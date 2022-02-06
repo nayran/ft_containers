@@ -112,21 +112,20 @@ int main()
 
 	std::cout << "VECTOR\n";
 	// Vector constructors
-	ft::vector<int>	first;
+	//ft::vector<int>	first;
 	ft::vector<int> second (7,100);
 	ft::vector<int> third (second.begin(),second.end());
 	ft::vector<int> fourth (third);
 	// Vector operator =
 	int myints[] = {16,2,77,29};
-	ft::vector<int> vec2(myints, myints + sizeof(myints) / sizeof(int) );
-	ft::vector<int> vec(vec2);
+	ft::vector<int> vec(myints, myints + sizeof(myints) / sizeof(int) );
+	ft::vector<int> vec2(vec);
 	std::cout << "VEC: ";
 	for (ft::vector<int>::iterator it = vec.begin(); it != vec.end(); it++)
 		std::cout << *it << " ";
 	std::cout << "\nSecond: ";
 	for (ft::vector<int>::iterator it = second.begin(); it != second.end(); it++)
 		std::cout << *it << " ";
-	
 
 	std::cout << "\n\tVector operator = \n";
 	std::cout << "aux: ";
@@ -136,8 +135,12 @@ int main()
 	std::cout << "\naux = vec: ";
 	for (ft::vector<int>::iterator it = second.begin(); it != second.end(); it++)
 		std::cout << *it << " ";
+	second = third;
+	std::cout << "\naux = aux2: ";
+	for (ft::vector<int>::iterator it = second.begin(); it != second.end(); it++)
+		std::cout << *it << " ";
 	std::cout << std::endl;
-
+	
 	//	Vector iterators 
 	std::cout << "\n\tVector iterators\n";
 	// Begin
@@ -225,7 +228,7 @@ int main()
 	std::cout << "\npush_back(1) empty vector: ";
 	for (ft::vector<int>::iterator it = a.begin(); it != a.end(); it++)
 		std::cout << *it << " ";
-	a.clear();
+	//:a.clear();
 	a.pop_back();
 	std::cout << "\npop_back() empty vector: ";
 	for (ft::vector<int>::iterator it = a.begin(); it != a.end(); it++)
@@ -275,8 +278,14 @@ int main()
 		std::cout << *it << " ";
 
 
+	std::cout << "\nSwap\nbefore VEC: ";
+	for (ft::vector<int>::iterator it = vec.begin(); it != vec.end(); it++)
+		std::cout << *it << " ";
+	std::cout << "\nbefore Second: ";
+	for (ft::vector<int>::iterator it = second.begin(); it != second.end(); it++)
+		std::cout << *it << " ";
 	vec.swap(second);
-	std::cout << "\nVEC: ";
+	std::cout << "\n\nVEC: ";
 	for (ft::vector<int>::iterator it = vec.begin(); it != vec.end(); it++)
 		std::cout << *it << " ";
 	std::cout << "\nSecond: ";
@@ -302,9 +311,22 @@ int main()
 	std::cout << "vec <= aux: " << (vec >= aux) << std::endl;
 
 	// Swap public;
+	std::cout << "\nPublic swap\nbefore VEC: ";
+	for (ft::vector<int>::iterator it = vec.begin(); it != vec.end(); it++)
+		std::cout << *it << " ";
+	std::cout << "\nbefore Second: ";
+	for (ft::vector<int>::iterator it = second.begin(); it != second.end(); it++)
+		std::cout << *it << " ";
 	swap(vec, second);
+	std::cout << "\nVEC: ";
+	for (ft::vector<int>::iterator it = vec.begin(); it != vec.end(); it++)
+		std::cout << *it << " ";
+	std::cout << "\nSecond: ";
+	for (ft::vector<int>::iterator it = second.begin(); it != second.end(); it++)
+		std::cout << *it << " ";
 
 
+		/*
 
 	// STACK
 	ft::stack<int> s; 
@@ -341,5 +363,6 @@ int main()
 	std::cout << "stack > stack2: " << (stack > auxstack) << std::endl;
 	std::cout << "stack <= auxstack: " << (stack >= auxstack) << std::endl;
 	std::cout << "stack <= stack2: " << (stack >= stack2) << std::endl;
+	*/
 	return (0);
 }

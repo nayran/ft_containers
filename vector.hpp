@@ -98,7 +98,7 @@ namespace ft
 
 		// Copy: Faz a copia de cada elemento em x na mesma ordem.
 		vector (const vector& x)
-			: _alloc(x._alloc), _size(x._size), _capacity(_size), _vec(_alloc.allocate(_capacity))
+			: _alloc(x._alloc), _size(x._size), _capacity(x._capacity), _vec(_alloc.allocate(_capacity))
 		{
 			iterator it = begin();
 			const_iterator x2 = x.begin();
@@ -127,28 +127,26 @@ namespace ft
 		// operator=: substitui o conteudo do container pelo conteudo de x.
 		vector& operator= (const vector& x)
 		{
-			if (this != &x)
+			if (this == &x)
+				return (*this);
+			if (x.size() >= _capacity)
 			{
-				iterator it = begin();
-				const_iterator x2 = x.begin();
-				while (it != end())
-				{
-					_alloc.destroy(&(*it));
-					it++;
-				}
+				clear();
 				_alloc.deallocate(_vec, _capacity);
-				_alloc = x._alloc;
-				_size = x._size;
-				_capacity = x._capacity;
-				_vec = _alloc.allocate(_capacity);
-				it = begin();
-				while (x2 != x.end())
-				{
-					_alloc.construct(&(*it), *x2);
-					it++;
-					x2++;
-				}
+				_vec = _alloc.allocate(x._capacity);
 			}
+			while (_size > x._size)
+				pop_back();
+			_size = x._size;
+			_capacity = x._capacity;
+			iterator it = begin();
+			const_iterator xit = x.begin();
+			while (xit != x.end())
+			{
+				_alloc.construct(&(*it), *xit);
+				it++;
+				xit++;
+			}	
 			return (*this);
 		};
 
@@ -349,8 +347,8 @@ namespace ft
 		void pop_back()
 		{
 			_alloc.destroy(&(*end()));
-			if (_size > 0)
-				_size--;
+			//if (_size > 0)
+			_size--;
 		};
 
 		// insere novos elementos (val) antes do elemento especificado por position e aumenta o size, retorna iterator do primeiro elemento adicionado
@@ -358,7 +356,7 @@ namespace ft
 		iterator insert (iterator position, const value_type& val)
 		{
 			iterator it = end();
-			while (_capacity <= _size + 1)
+			while (_capacity <= _size)
 				reserve(_capacity++);
 			while (it != position)
 			{
@@ -376,7 +374,7 @@ namespace ft
 		{
 			iterator it = end();
 
-			while (_capacity <= _size + n + 1)
+			while (_capacity <= _size + n)
 				reserve(_capacity++);
 			while (it != position)
 				it--;
@@ -391,7 +389,7 @@ namespace ft
 			iterator it = end();
 			size_type s = ft::distance(first, last);
 
-			while (_capacity <= _size + s + 1)
+			while (_capacity <= _size + s)
 				reserve(_capacity++);
 			while (it != position)
 				it--;

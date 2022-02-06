@@ -1,0 +1,41 @@
+VECTOR
+VEC: 16 2 77 29 
+Second: 100 100 100 100 100 100 100 
+	Vector operator = 
+aux: 100 100 100 100 100 100 100 
+aux = vec: 16 2 77 29 
+aux = aux2: 100 100 100 100 100 100 100 
+
+	Vector iterators
+Begin: 16	Const begin: 16
+End: 16		Const end: 16
+Rbegin: 29	Const rbegin: 29
+Rend: 110	Const rend: 110
+
+	Vector capacity
+Size: 4
+Max_size: 4611686018427387903
+Resize(5): 5
+16 2 77 29 0 
+Resize(7, 5): 7
+16 2 77 29 0 5 5 
+Resize(4): 4
+16 2 77 29 
+Empty:0	Empty:1
+Capacity: 8
+Reserve new capacity (10): 10
+
+	Element access
+vec[2]: 77
+vec.at(2): 77
+vec.at(4): vector
+vec.front(): 16
+vec.back(): 29
+
+	Modifiers
+assign range(vec.begin(), vec.end()): 16 2 77 29 
+assign fill(5, 1):	1 1 1 1 1 
+push_back(2):		1 1 1 1 1 2 
+pop_back():		1 1 1 1 1 
+push_back(1) empty vector: 1 
+pop_back() empty vector: 
