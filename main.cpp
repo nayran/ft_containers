@@ -326,7 +326,6 @@ int main()
 		std::cout << *it << " ";
 
 
-		/*
 
 	// STACK
 	ft::stack<int> s; 
@@ -363,6 +362,5 @@ int main()
 	std::cout << "stack > stack2: " << (stack > auxstack) << std::endl;
 	std::cout << "stack <= auxstack: " << (stack >= auxstack) << std::endl;
 	std::cout << "stack <= stack2: " << (stack >= stack2) << std::endl;
-	*/
 	return (0);
 }

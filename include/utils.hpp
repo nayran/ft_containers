@@ -77,6 +77,9 @@
  *		<utility>
  *			ft::pair, ft::make_pair
  *
+ *
+ *			// CHAR16_T e CHAR32_T no workspace
+ *
  */
 
 class out_of_range : public std::exception {
