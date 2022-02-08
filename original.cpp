@@ -116,6 +116,7 @@ int main()
 	 *		VECTOR
 	 */
 
+	/*
 	std::cout << "VECTOR\n";
 	// Vector constructors
 	//ft::vector<int>	first;
@@ -368,5 +369,21 @@ int main()
 	std::cout << "stack > stack2: " << (stack > auxstack) << std::endl;
 	std::cout << "stack <= auxstack: " << (stack >= auxstack) << std::endl;
 	std::cout << "stack <= stack2: " << (stack >= stack2) << std::endl;
+	
+	*/
+
+
+	// Vector operator =
+	int myints[] = {16,2,77,29};
+	ft::vector<int> vec(myints, myints + sizeof(myints) / sizeof(int) );
+	std::cout << "VEC: ";
+	for (ft::vector<int>::iterator it = vec.begin(); it != vec.end(); it++)
+		std::cout << *it << " ";
+	ft::vector<int>::reverse_iterator it3;
+	ft::vector<int>::const_reverse_iterator it4;
+	it3 = vec.rend();
+	it4 = vec.rend();
+	std::cout << "\nRend: " << *it3 << "\tConst rend: " << *it4 << std::endl;
+
 	return (0);
 }

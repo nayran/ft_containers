@@ -1,4 +1,4 @@
-for (( x=0; x <= 0; x++ )); do
+for (( x=0; x <= 24; x++ )); do
 	echo "#include <iostream>
 		  #include <string>
 		  #include <stdlib.h>

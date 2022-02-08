@@ -61,7 +61,7 @@ namespace ft
 
 		// Default: Constroi um container vazio com o allocator padrao.
 		explicit vector(const allocator_type & alloc = allocator_type())
-			: _alloc(alloc), _size(0), _capacity(0), _vec(NULL){};
+			: _alloc(alloc), _size(0), _capacity(0), _vec(NULL){clear();};
 
 		// Fill: Constroi um container com n elementos, cada elemento eh uma copia de val.
 		explicit vector (size_type n, const value_type& val = value_type(),
