@@ -24,7 +24,7 @@ for (( x=1; x <= $y; x++ )); do
 	#echo "$x: $?"
 	if [ $? -ne 0 ]
 	then
-		echo -e "\e[1;31m    KO \e[0m"
+		echo -e "\033[31m    KO \033[m"
 		y=-1
 		break
 	fi
@@ -32,17 +32,17 @@ for (( x=1; x <= $y; x++ )); do
 	diff out_ft out_std
 	if [ $? -ne 0 ]
 	then
-		echo -e "\e[1;31m   KO \e[0m"
+		echo -e "\033[31m    KO \033[m"
 		y=-1
 		break
 	fi
-	echo -ne "\e[1;32m \t   $x/$y OK \e[0m"\\r
+	echo -ne "\033[32m \t   $x/$y OK \033[m"\\r
 done
 clear
 
-if [ $y -ne -1]
+if [ $y -ne -1 ]
 then
-	echo -e "\e[1;32m/*************************\ \n|*			 *| \n|*      Congrats	 *| \n|*	$y/$y		 *| \n|*			 *| \n\\*************************/ \e[0m"
+	echo -e "\033[32m/*************************\ \n|*			 *| \n|*      Congrats	 *| \n|*	$y/$y		 *| \n|*			 *| \n\\*************************/ \033[m"
 fi
 
 rm out_ft
