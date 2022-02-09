@@ -1,4 +1,5 @@
 y=10
+x=1
 clear
 echo "
  _____ _____   ____ ___  _   _ _____  _    ___ _   _ _____ ____  ____  
@@ -8,7 +9,9 @@ echo "
 |_|     |_|___\____\___/|_| \_| |_/_/   \_\___|_| \_|_____|_| \_\____/ 
          |_____|                                                       "
 echo
-for (( x=1; x <= $y; x++ )); do
+
+while [ $x -le $y ]
+do
 	echo "#include <iostream>
 		  #include <string>
 		  #include <stdlib.h>
@@ -37,11 +40,12 @@ for (( x=1; x <= $y; x++ )); do
 		break
 	fi
 	echo -ne "\033[32m \t   $x/$y OK \033[m"\\r
+	x=$(( x + 1 ))
 done
-clear
 
 if [ $y -ne -1 ]
 then
+	clear
 	echo -e "\033[32m/*************************\ \n|*			 *| \n|*      Congrats	 *| \n|*	$y/$y		 *| \n|*			 *| \n\\*************************/ \033[m"
 fi
 

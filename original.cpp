@@ -117,7 +117,6 @@ int main()
 	 *		VECTOR
 	 */
 
-	/*
 	std::cout << "VECTOR\n";
 	// Vector constructors
 	//ft::vector<int>	first;
@@ -177,10 +176,12 @@ int main()
 	std::cout << "Resize(5): " << vec.size() << std::endl;
 	for (ft::vector<int>::iterator it = vec.begin(); it != vec.end(); it++)
 		std::cout << *it << " ";
+/*
 	vec.resize(7, 5);
 	std::cout << "\nResize(7, 5): " << vec.size() << std::endl;
 	for (ft::vector<int>::iterator it = vec.begin(); it != vec.end(); it++)
 		std::cout << *it << " ";
+		*/
 	vec.resize(4);
 	std::cout << "\nResize(4): " << vec.size() << std::endl;
 	for (ft::vector<int>::iterator it = vec.begin(); it != vec.end(); it++)
@@ -200,6 +201,7 @@ int main()
 	
 	//vec = vec2;
 	std::cout << "vec[2]: " << vec[2] << std::endl;
+	/*
 	try {
 		std::cout << "vec.at(2): " << vec.at(2) << std::endl;
 		std::cout << "vec.at(4): " << vec.at(4) << std::endl;
@@ -370,21 +372,6 @@ int main()
 	std::cout << "stack > stack2: " << (stack > auxstack) << std::endl;
 	std::cout << "stack <= auxstack: " << (stack >= auxstack) << std::endl;
 	std::cout << "stack <= stack2: " << (stack >= stack2) << std::endl;
-	
 	*/
-
-
-	// Vector operator =
-	int myints[] = {16,2,77,29};
-	ft::vector<int> vec(myints, myints + sizeof(myints) / sizeof(int) );
-	std::cout << "VEC: ";
-	for (ft::vector<int>::iterator it = vec.begin(); it != vec.end(); it++)
-		std::cout << *it << " ";
-	ft::vector<int>::reverse_iterator it3;
-	ft::vector<int>::const_reverse_iterator it4;
-	it3 = vec.rend();
-	it4 = vec.rend();
-	std::cout << "\nRend: " << *it3 << "\tConst rend: " << *it4 << std::endl;
-
 	return (0);
 }

@@ -114,13 +114,15 @@ namespace ft
 		// Destructor: destroi todos elementos do container e desaloca toda o armazenamento alocado.
 		~vector() 
 		{
+			/*
 			iterator it = begin();
 
 			while (it != end())
 			{
 				_alloc.destroy(&(*it));
 				it++;
-			}
+			}*/
+			clear();
 			_alloc.deallocate(_vec, _capacity);
 		};
 
@@ -215,18 +217,16 @@ namespace ft
 		{
 			if (n > _capacity)
 			{
-				vector aux(*this);
-				iterator it = aux.begin();
-
-				clear();
-				_alloc.deallocate(_vec, _capacity);
-				_vec = _alloc.allocate(n);
-				_capacity = n;
-				while (it != aux.end())
+				vector aux(n, 0);
+				iterator it = begin();
+				iterator itaux = aux.begin();
+				while (it != end())
 				{
-					push_back(*it);
+					_alloc.construct(&(*itaux), *it);
 					it++;
+					itaux++;
 				}
+				*this = aux;
 			}
 		};
 		
@@ -290,12 +290,13 @@ namespace ft
 		template <class InputIterator>
 		void assign (InputIterator first, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type last)
 		{
-			iterator it = begin();
+			iterator it; /*= begin();
 			while (it != end())
 			{
 				_alloc.destroy(&(*it));
 				it++;
-			}
+			}*/
+			clear();
 			_alloc.deallocate(_vec, _capacity);
 			_size = ft::distance(first, last);
 			if (_capacity < _size)
@@ -313,14 +314,16 @@ namespace ft
 		// assign fill: troca os valores por val
 		void assign (size_type n, const value_type& val)
 		{
-			iterator it = begin();
+			iterator it; //= begin();
 			size_type x = -1;
-
+/*
 			while (it != end())
 			{
 				_alloc.destroy(&(*it));
 				it++;
 			}
+*/			
+			clear();
 			_alloc.deallocate(_vec, _capacity);
 			_size = n;
 			if (_capacity < _size)
@@ -356,7 +359,8 @@ namespace ft
 		iterator insert (iterator position, const value_type& val)
 		{
 			iterator it = end();
-			while (_capacity <= _size)
+			// Mac version: while (_capacity <= _size)
+			while (_capacity < _size * 2)
 				reserve(_capacity++);
 			while (it != position)
 			{
@@ -372,10 +376,9 @@ namespace ft
 		// fill: n elementos val
 		void insert (iterator position, size_type n, const value_type& val)
 		{
-			iterator it = end();
-
 			while (_capacity <= _size + n)
 				reserve(_capacity++);
+			iterator it = end();
 			while (it != position)
 				it--;
 			while (n--)
