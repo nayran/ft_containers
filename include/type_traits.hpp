@@ -53,12 +53,13 @@ namespace ft
 	template<>
 	struct is_integral<char> : public integral_constant<bool, true> {} ;
 
+	/*
 	template<>
 	struct is_integral<char16_t> : public integral_constant<bool, true> {} ;
 
 	template<>
 	struct is_integral<char32_t> : public integral_constant<bool, true> {} ;
-
+*/
 	template<>
 	struct is_integral<wchar_t> : public integral_constant<bool, true> {} ;
 

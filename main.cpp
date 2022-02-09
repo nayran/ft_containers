@@ -3,6 +3,7 @@
 //#include "map.hpp"
 #include <exception>
 
+/*
 bool mycomp (char c1, char c2)
 { return c1 < c2; }
 
@@ -16,7 +17,7 @@ typename ft::enable_if<ft::is_integral<T>::value,bool>::type is_odd (T i)
 template <class T>
 typename ft::enable_if<ft::is_integral<T>::value,bool>::type is_even (T i)
 { return bool(!(i%2)); }
-
+*/
 
 int main()
 {
