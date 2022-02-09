@@ -11,7 +11,8 @@
  *		https://www.cplusplus.com/reference/type_traits/integral_constant/
  */
 
-#include <iostream>
+//#include <iostream>
+//#include <uchar.h>
 
 namespace ft
 {
@@ -54,12 +55,16 @@ namespace ft
 	struct is_integral<char> : public integral_constant<bool, true> {} ;
 
 	/*
-	template<>
-	struct is_integral<char16_t> : public integral_constant<bool, true> {} ;
+	 *	char16_t e char32_t foram introduzidos no c++11, impossivel rodar com 
+	 *	a flag c++98
+	 *
+	 * template<>
+	 * struct is_integral<char16_t> : public integral_constant<bool, true> {} ;
+	 *
+	 * template<>
+	 * struct is_integral<char32_t> : public integral_constant<bool, true> {} ;
+	 */
 
-	template<>
-	struct is_integral<char32_t> : public integral_constant<bool, true> {} ;
-*/
 	template<>
 	struct is_integral<wchar_t> : public integral_constant<bool, true> {} ;
 
