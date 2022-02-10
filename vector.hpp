@@ -217,16 +217,18 @@ namespace ft
 		{
 			if (n > _capacity)
 			{
-				vector aux(n, 0);
-				iterator it = begin();
+				vector aux(*this);
+
+				clear();
+				_alloc.deallocate(_vec, _capacity);
+				_vec = _alloc.allocate(n);
+				_capacity = n;
 				iterator itaux = aux.begin();
-				while (it != end())
+				while (itaux != aux.end())
 				{
-					_alloc.construct(&(*itaux), *it);
-					it++;
+					push_back(*itaux);
 					itaux++;
 				}
-				*this = aux;
 			}
 		};
 		
@@ -290,12 +292,7 @@ namespace ft
 		template <class InputIterator>
 		void assign (InputIterator first, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type last)
 		{
-			iterator it; /*= begin();
-			while (it != end())
-			{
-				_alloc.destroy(&(*it));
-				it++;
-			}*/
+			iterator it;
 			clear();
 			_alloc.deallocate(_vec, _capacity);
 			_size = ft::distance(first, last);
@@ -314,15 +311,8 @@ namespace ft
 		// assign fill: troca os valores por val
 		void assign (size_type n, const value_type& val)
 		{
-			iterator it; //= begin();
+			iterator it;
 			size_type x = -1;
-/*
-			while (it != end())
-			{
-				_alloc.destroy(&(*it));
-				it++;
-			}
-*/			
 			clear();
 			_alloc.deallocate(_vec, _capacity);
 			_size = n;
@@ -358,11 +348,12 @@ namespace ft
 		// single element: apenas um elemento
 		iterator insert (iterator position, const value_type& val)
 		{
+			difference_type	diff = position - begin();
 			iterator it = end();
 			// Mac version: while (_capacity <= _size)
 			while (_capacity < _size * 2)
 				reserve(_capacity++);
-			while (it != position)
+			while (it != begin() + diff) //position)
 			{
 				_alloc.construct(&(*it), *(it - 1));
 				_alloc.destroy(&(*(it - 1)));
@@ -371,11 +362,32 @@ namespace ft
 			_alloc.construct(&(*it), val);
 			_size++;
 			return (it);
+			/*
+			difference_type	diff = position - begin();
+				
+				if (_size + 1 > _capacity)
+				{
+					if (_size * 2 > _size + 1)
+						reserve(_size * 2);
+					else
+						reserve(_size + 1);
+				}
+				iterator	iter = end();
+				for (; iter != begin() + diff; iter--)
+				{
+					_alloc.construct(&(*iter), *(iter - 1));
+					_alloc.destroy(&(*(iter - 1)));
+				}
+				_alloc.construct(&(*iter), val);
+				_size++;
+				return (iter);
+			*/
 		};
 
 		// fill: n elementos val
 		void insert (iterator position, size_type n, const value_type& val)
 		{
+			/*
 			while (_capacity <= _size + n)
 				reserve(_capacity++);
 			iterator it = end();
@@ -383,6 +395,26 @@ namespace ft
 				it--;
 			while (n--)
 				insert(it, val);
+				*/
+			difference_type	diff = position - begin();
+
+				if (!n)
+					return ;
+				if (_size + n > _capacity)
+				{
+					/* MACOS
+					if (m_capacity * 2 > m_size + n)
+						reserve(m_capacity * 2);
+					else
+						reserve(m_size + n);
+					*/
+					if (_size * 2 > _size + n)
+						reserve(_size * 2);
+					else
+						reserve(_size + n);
+				}
+				while (n--)
+					insert(begin() + diff, val);
 		};
 
 		// range: do first ao last

@@ -119,7 +119,7 @@ int main()
 
 	std::cout << "VECTOR\n";
 	// Vector constructors
-	//ft::vector<int>	first;
+	ft::vector<int>	first;
 	ft::vector<int> second (7,100);
 	ft::vector<int> third (second.begin(),second.end());
 	ft::vector<int> fourth (third);
@@ -148,6 +148,12 @@ int main()
 		std::cout << *it << " ";
 	std::cout << std::endl;
 	
+
+
+	/*
+	 *		Para fins de comparacao, o valor retornado pode variar entao eh
+	 *		impossivel comparar com outra saida
+	 *
 	//	Vector iterators 
 	std::cout << "\n\tVector iterators\n";
 	// Begin
@@ -168,6 +174,9 @@ int main()
 	it3 = vec.rend();
 	it4 = vec.rend();
 	std::cout << "Rend: " << *it3 << "\tConst rend: " << *it4 << std::endl;
+
+	*/
+
 	//	CAPACITY
 	std::cout << "\n\tVector capacity\n";
 	std::cout << "Size: " << vec.size() << std::endl;
@@ -176,12 +185,14 @@ int main()
 	std::cout << "Resize(5): " << vec.size() << std::endl;
 	for (ft::vector<int>::iterator it = vec.begin(); it != vec.end(); it++)
 		std::cout << *it << " ";
-/*
+	
+
 	vec.resize(7, 5);
 	std::cout << "\nResize(7, 5): " << vec.size() << std::endl;
 	for (ft::vector<int>::iterator it = vec.begin(); it != vec.end(); it++)
 		std::cout << *it << " ";
-		*/
+
+		
 	vec.resize(4);
 	std::cout << "\nResize(4): " << vec.size() << std::endl;
 	for (ft::vector<int>::iterator it = vec.begin(); it != vec.end(); it++)
@@ -189,19 +200,20 @@ int main()
 	std::cout << "\nEmpty:" << fourth.empty();
 	fourth.clear();
 	std::cout << "\tEmpty:" << fourth.empty() << std::endl;
-
-
 	std::cout << "Capacity: " << vec.capacity() << std::endl;
 	vec.reserve(10);
 	std::cout << "Reserve new capacity (10): " << vec.capacity() << std::endl;
 	
-
+	std::cout << "\nAQUI" << std::endl;
+	for (ft::vector<int>::iterator it = vec.begin(); it != vec.end(); it++)
+		std::cout << *it << " ";
+	std::cout << std::endl;
+	
 	//	ELEMENT ACCESS
 	std::cout << "\n\tElement access\n";
 	
 	//vec = vec2;
 	std::cout << "vec[2]: " << vec[2] << std::endl;
-	/*
 	try {
 		std::cout << "vec.at(2): " << vec.at(2) << std::endl;
 		std::cout << "vec.at(4): " << vec.at(4) << std::endl;
@@ -213,6 +225,7 @@ int main()
 	std::cout << "vec.back(): " << vec.back() << std::endl;
 	
 
+	/*
 	//	MODIFIERS
 	std::cout << "\n\tModifiers\n";
 
