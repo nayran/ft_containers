@@ -7,7 +7,9 @@ echo "
 | |_    | |  | |  | | | |  \| | | | / _ \  | ||  \| |  _| | |_) \___ \ 
 |  _|   | |  | |__| |_| | |\  | | |/ ___ \ | || |\  | |___|  _ < ___) |
 |_|     |_|___\____\___/|_| \_| |_/_/   \_\___|_| \_|_____|_| \_\____/ 
-         |_____|                                                       "
+         |_____|                                                       
+
+		valgrind"
 echo
 
 while [ $x -le $y ]
@@ -24,14 +26,14 @@ do
 		  namespace ft = std;" > original.cpp
 	tail -n +5 main.cpp >> original.cpp
 	make re ;
-	valgrind ./ft_containers > out_ft
+	./ft_containers > out_ft
 	if [ $? -ne 0 ]
 	then
 		echo -e "\033[31m    KO \033[m"
 		y=-1
 		break
 	fi
-	valgrind ./std_containers > out_std
+	./std_containers > out_std
 	diff out_ft out_std
 	if [ $? -ne 0 ]
 	then

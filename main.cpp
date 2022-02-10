@@ -246,16 +246,16 @@ int main()
 	std::cout << "\npop_back() empty vector: ";
 	for (ft::vector<int>::iterator it = a.begin(); it != a.end(); it++)
 		std::cout << *it << " ";
-	//a.clear();
+	a.clear();
 
 	std::cout << "\ninsert single: insert(a.begin(), 300), insert(a.begin(), 100, insert(a.begin() + 1, 200))\n";
-	//a.insert(a.begin(), 300);
-	//a.insert(a.begin(), 100);
-	//a.insert(a.begin() + 1, 200);
-	/*
+	a.insert(a.begin(), 300);
+	a.insert(a.begin(), 100);
+	a.insert(a.begin() + 1, 200);
 	std::cout << "Capacity: " << vec.capacity() << std::endl;
 	for (ft::vector<int>::iterator it = a.begin(); it != a.end(); it++)
 		std::cout << *it << " ";
+	/*
 	std::cout << std::endl;
 	ft::vector<int>::iterator it = vec.begin();
 	it = a.insert(a.begin() + 1, 110);

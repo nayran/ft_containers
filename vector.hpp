@@ -349,43 +349,53 @@ namespace ft
 		// single element: apenas um elemento
 		iterator insert (iterator position, const value_type& val)
 		{
-			/*
-			difference_type	diff = position - begin();
+			//difference_type	diff = position - begin();
 			//size_type n = 0;
 			
 			// Mac version: while (_capacity <= _size)
 			//while (_capacity < _size )
-			if (_capacity <= _size)
+			/*if (_capacity <= _size)
 				reserve(_size + 1);
-			iterator it = end();
-			while (it != )
-			{
-				std::cout << "\n " << *it << "  " << *(begin() + diff) << std::endl;
-				_alloc.construct(&(*it), *(it - 1));
-				_alloc.destroy(&(*(it - 1)));
-				it--;
-			}
+			iterator it = begin();
+			while (it != position)
+				it++;
 			_alloc.construct(&(*it), val);
+			while (it != end())
+			{
+				_alloc.construct(&(*it), *(it + 1));
+				_alloc.destroy(&(*(it + 1)));
+				it++;
+			}
 			_size++;
 			return (it);
 			*/
+			if (size() == 0)
+			{
+				push_back(val);
+				return (begin());
+			}
+			difference_type	diff = position - begin();
+			vector aux(this->_size + 1, 0);
+			while (aux._capacity <= aux._size)
+				aux.reserve(aux._capacity + 1);
 
-			size_type i = 0;
-				iterator it = begin();
-				while (it + i != position && i < _size)
-					i++;
-				if (_capacity < _size + 1)
-					reserve(_size + 1);
-				size_type j = _size - 1;
-				while (j > i)
+			iterator itaux = aux.begin();
+			iterator it = begin();
+			while (it != end())
+			{
+				_alloc.destroy(&(*(itaux)));
+				_alloc.construct(&(*itaux), *(it));
+				itaux++;
+				it++;
+				if (it == begin() + diff)
 				{
-					_vec[j] = _vec[j - 1];
-					j--;
+					_alloc.destroy(&(*(itaux)));
+					_alloc.construct(&(*itaux), val);
+					itaux++;
 				}
-				_vec[i] = val;
-				_size++;
-				return (iterator(&_vec[i]));
-
+			}
+			*this = aux;
+			return (begin() + diff);
 		};
 
 		// fill: n elementos val
@@ -394,7 +404,7 @@ namespace ft
 			if (n)
 			{
 				difference_type diff = position - begin();
-				if (_capacity <= _size + n)
+				if (_capacity <= _size + n + 1)
 					reserve(_size + n + 1);
 				while (n--)
 					insert(begin() + diff, val);
@@ -410,7 +420,7 @@ namespace ft
 
 			//while (_capacity <= _size + s)
 			if (_capacity <= _size + s)
-				reserve(_size + s);
+				reserve(_size + s + 1);
 			while (it != position)
 				it--;
 			while (s--)
