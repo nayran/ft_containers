@@ -185,7 +185,7 @@ int main()
 	std::cout << "\nResize(7, 5): " << vec.size() << std::endl;
 	for (ft::vector<int>::iterator it = vec.begin(); it != vec.end(); it++)
 		std::cout << *it << " ";
-	/*
+	std::cout << "Capacity: " << vec.capacity() << std::endl;
 
 		
 	vec.resize(4);
@@ -199,11 +199,6 @@ int main()
 	vec.reserve(10);
 	std::cout << "Reserve new capacity (10): " << vec.capacity() << std::endl;
 	
-	std::cout << "\nAQUI" << std::endl;
-	for (ft::vector<int>::iterator it = vec.begin(); it != vec.end(); it++)
-		std::cout << *it << " ";
-	std::cout << std::endl;
-	
 	//	ELEMENT ACCESS
 	std::cout << "\n\tElement access\n";
 	
@@ -211,7 +206,7 @@ int main()
 	std::cout << "vec[2]: " << vec[2] << std::endl;
 	try {
 		std::cout << "vec.at(2): " << vec.at(2) << std::endl;
-		std::cout << "vec.at(4): " << vec.at(4) << std::endl;
+		//std::cout << "vec.at(4): " << vec.at(4) << std::endl;
 	}
 	catch (std::exception& out) {
 		std::cout << out.what() << std::endl;
@@ -235,6 +230,7 @@ int main()
 	std::cout << "\npush_back(2):\t\t";
 	for (ft::vector<int>::iterator it = second.begin(); it != second.end(); it++)
 		std::cout << *it << " ";
+	std::cout << "Capacity: " << vec.capacity() << std::endl;
 	second.pop_back();
 	std::cout << "\npop_back():\t\t";
 	for (ft::vector<int>::iterator it = second.begin(); it != second.end(); it++)
@@ -245,21 +241,23 @@ int main()
 	std::cout << "\npush_back(1) empty vector: ";
 	for (ft::vector<int>::iterator it = a.begin(); it != a.end(); it++)
 		std::cout << *it << " ";
-	//:a.clear();
+	std::cout << "Capacity: " << vec.capacity() << std::endl;
 	a.pop_back();
 	std::cout << "\npop_back() empty vector: ";
 	for (ft::vector<int>::iterator it = a.begin(); it != a.end(); it++)
 		std::cout << *it << " ";
-	a.clear();
+	//a.clear();
 
 	std::cout << "\ninsert single: insert(a.begin(), 300), insert(a.begin(), 100, insert(a.begin() + 1, 200))\n";
-	a.clear();
-	a.insert(a.begin(), 300);
-	a.insert(a.begin(), 100);
-	a.insert(a.begin() + 1, 200);
+	//a.insert(a.begin(), 300);
+	//a.insert(a.begin(), 100);
+	//a.insert(a.begin() + 1, 200);
+	/*
+	std::cout << "Capacity: " << vec.capacity() << std::endl;
 	for (ft::vector<int>::iterator it = a.begin(); it != a.end(); it++)
 		std::cout << *it << " ";
 	std::cout << std::endl;
+	ft::vector<int>::iterator it = vec.begin();
 	it = a.insert(a.begin() + 1, 110);
 	std::cout << "insert single: a.insert(it[1], 110) -- inicio no iterador retornado\n";
 	for (; it != a.end(); it++)
@@ -271,6 +269,7 @@ int main()
 	std::cout << "\ninsert fill: a.insert(it[1], 2, 101)\n";
 	for (ft::vector<int>::iterator it = a.begin(); it != a.end(); it++)
 		std::cout << *it << " ";
+	std::cout << "Capacity: " << vec.capacity() << std::endl;
 
 	
 	int i[] = {105, 106, 107};
@@ -278,6 +277,7 @@ int main()
 	std::cout << "\ninsert range: a.insert(a.begin() + 3, i, i + 3)\t i = {105, 106, 107}\n";
 	for (ft::vector<int>::iterator it = a.begin(); it != a.end(); it++)
 		std::cout << *it << " ";
+	std::cout << "Capacity: " << vec.capacity() << std::endl;
 	std::cout << "\nerase single element: a.erase(a.begin() + 3) -- inicio do iterador retornado\n";
 	it = a.erase(a.begin() + 3);
 	for (; it != a.end(); it++)
@@ -285,6 +285,7 @@ int main()
 	std::cout << "\nerase single element: a.erase(a.begin() + 3) -- mostra todo o vector\n";
 	for (ft::vector<int>::iterator it = a.begin(); it != a.end(); it++)
 		std::cout << *it << " ";
+	std::cout << "Capacity: " << vec.capacity() << std::endl;
 
 	it = a.erase(a.begin() + 1, a.begin() + 4);
 	std::cout << "\nerase range: a.erase(a.begin() + 1, a.begin() + 4) -- inicio do iterador retornado\n";
@@ -379,6 +380,8 @@ int main()
 	std::cout << "stack > stack2: " << (stack > auxstack) << std::endl;
 	std::cout << "stack <= auxstack: " << (stack >= auxstack) << std::endl;
 	std::cout << "stack <= stack2: " << (stack >= stack2) << std::endl;
+
 	*/
+
 	return (0);
 }

@@ -330,8 +330,9 @@ namespace ft
 		// adiciona val no fim do vector
 		void push_back (const value_type& val)
 		{
-			while (_capacity <= _size)
-				reserve(_capacity + 1);
+			//while (_capacity <= _size)
+			if (_capacity < _size + 1)
+				reserve(_size + 1);
 			_alloc.construct(&(*end()), val);
 			_size++;
 		};
@@ -348,13 +349,18 @@ namespace ft
 		// single element: apenas um elemento
 		iterator insert (iterator position, const value_type& val)
 		{
+			/*
 			difference_type	diff = position - begin();
-			iterator it = end();
+			//size_type n = 0;
+			
 			// Mac version: while (_capacity <= _size)
-			while (_capacity < _size * 2)
-				reserve(_capacity++);
-			while (it != begin() + diff) //position)
+			//while (_capacity < _size )
+			if (_capacity <= _size)
+				reserve(_size + 1);
+			iterator it = end();
+			while (it != )
 			{
+				std::cout << "\n " << *it << "  " << *(begin() + diff) << std::endl;
 				_alloc.construct(&(*it), *(it - 1));
 				_alloc.destroy(&(*(it - 1)));
 				it--;
@@ -362,59 +368,37 @@ namespace ft
 			_alloc.construct(&(*it), val);
 			_size++;
 			return (it);
-			/*
-			difference_type	diff = position - begin();
-				
-				if (_size + 1 > _capacity)
-				{
-					if (_size * 2 > _size + 1)
-						reserve(_size * 2);
-					else
-						reserve(_size + 1);
-				}
-				iterator	iter = end();
-				for (; iter != begin() + diff; iter--)
-				{
-					_alloc.construct(&(*iter), *(iter - 1));
-					_alloc.destroy(&(*(iter - 1)));
-				}
-				_alloc.construct(&(*iter), val);
-				_size++;
-				return (iter);
 			*/
+
+			size_type i = 0;
+				iterator it = begin();
+				while (it + i != position && i < _size)
+					i++;
+				if (_capacity < _size + 1)
+					reserve(_size + 1);
+				size_type j = _size - 1;
+				while (j > i)
+				{
+					_vec[j] = _vec[j - 1];
+					j--;
+				}
+				_vec[i] = val;
+				_size++;
+				return (iterator(&_vec[i]));
+
 		};
 
 		// fill: n elementos val
 		void insert (iterator position, size_type n, const value_type& val)
 		{
-			/*
-			while (_capacity <= _size + n)
-				reserve(_capacity++);
-			iterator it = end();
-			while (it != position)
-				it--;
-			while (n--)
-				insert(it, val);
-				*/
-			difference_type	diff = position - begin();
-
-				if (!n)
-					return ;
-				if (_size + n > _capacity)
-				{
-					/* MACOS
-					if (m_capacity * 2 > m_size + n)
-						reserve(m_capacity * 2);
-					else
-						reserve(m_size + n);
-					*/
-					if (_size * 2 > _size + n)
-						reserve(_size * 2);
-					else
-						reserve(_size + n);
-				}
+			if (n)
+			{
+				difference_type diff = position - begin();
+				if (_capacity <= _size + n)
+					reserve(_size + n + 1);
 				while (n--)
 					insert(begin() + diff, val);
+			}
 		};
 
 		// range: do first ao last
@@ -424,8 +408,9 @@ namespace ft
 			iterator it = end();
 			size_type s = ft::distance(first, last);
 
-			while (_capacity <= _size + s)
-				reserve(_capacity++);
+			//while (_capacity <= _size + s)
+			if (_capacity <= _size + s)
+				reserve(_size + s);
 			while (it != position)
 				it--;
 			while (s--)

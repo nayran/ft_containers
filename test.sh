@@ -1,4 +1,4 @@
-y=10
+y=3
 x=1
 clear
 echo "
@@ -23,15 +23,15 @@ do
 		  #include <exception>
 		  namespace ft = std;" > original.cpp
 	tail -n +5 main.cpp >> original.cpp
-	make re ; ./ft_containers > out_ft
-	#echo "$x: $?"
+	make re ;
+	valgrind ./ft_containers > out_ft
 	if [ $? -ne 0 ]
 	then
 		echo -e "\033[31m    KO \033[m"
 		y=-1
 		break
 	fi
-	./std_containers > out_std
+	valgrind ./std_containers > out_std
 	diff out_ft out_std
 	if [ $? -ne 0 ]
 	then
