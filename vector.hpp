@@ -362,35 +362,7 @@ namespace ft
 		// single element: apenas um elemento
 		iterator insert (iterator position, const value_type& val)
 		{
-
-			/* WORKING
-			difference_type	diff = position - begin();
-			
-			// Mac version: while (_capacity <= _size)
-			//while (_capacity < _size )
-			vector aux(*this);
-			clear();
-			if (_capacity <= _size)
-				reserve(_size + 1);
-			iterator it = begin();
-			iterator itaux = aux.begin();
-			while (itaux != begin() + diff)
-			{
-				_alloc.construct(&(*(it)), *itaux);
-				it++;
-				itaux++;
-			}
-			//_alloc.construct(&(*(it)), val);
-			push_back(val);
-			while (itaux != end() - 1)
-			{
-				push_back(*itaux);
-				itaux++;
-			}
-			//_size++;
-			return (it);
-			*/
-			difference_type	diff = position - begin();
+			difference_type	diff = begin() - position;
 
 			while (_capacity <= _size)
 				reserve(_capacity + 1);
@@ -408,13 +380,12 @@ namespace ft
 		// fill: n elementos val
 		void insert (iterator position, size_type n, const value_type& val)
 		{
-			// AQUI
 			if (n)
 			{
-				difference_type diff = position - begin();
+				difference_type diff = begin() - position;
 				if (_capacity <= _size + n)
-					reserve(_capacity + n + 1);
-				while (--n)
+					reserve(_size + n + 1);
+				while (n--)
 					insert(begin() + diff, val);
 			}
 		};
@@ -424,18 +395,19 @@ namespace ft
 		void insert(iterator position, InputIterator first, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type last)
 		{
 			iterator it = end();
-			size_type s = ft::distance(first, last);
+			size_type dist = ft::distance(first, last);
+			difference_type diff = begin() - position;
 
 			//while (_capacity <= _size + s)
-			if (_capacity <= _size + s)
-				reserve(_size + s + 1);
-			while (it != position)
-				it--;
-			while (s--)
+			if (_capacity <= _size + dist)
+				reserve(_size + dist + 1);
+			dist = 0;
+			while (first != last)
 			{
-				insert(it, *first);
+				insert(begin() + diff + dist, *first);
 				first++;
 				it++;
+				dist++;
 			}
 		};
 
