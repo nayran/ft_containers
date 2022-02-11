@@ -23,6 +23,7 @@ do
 		  #include <vector>
 		  #include <iterator>
 		  #include <exception>
+		  #include <type_traits>
 		  namespace ft = std;" > original.cpp
 	tail -n +5 main.cpp >> original.cpp
 	make re ;

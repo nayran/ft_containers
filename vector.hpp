@@ -217,18 +217,28 @@ namespace ft
 		{
 			if (n > _capacity)
 			{
-				vector aux(*this);
+				/*vector aux(*this);
 
 				clear();
 				_alloc.deallocate(_vec, _capacity);
 				_vec = _alloc.allocate(n);
 				_capacity = n;
 				iterator itaux = aux.begin();
+				iterator it = begin();
 				while (itaux != aux.end())
 				{
-					push_back(*itaux);
+					//push_back(*itaux);
+					_alloc.construct(&(*it), *itaux);
+					it++;
 					itaux++;
-				}
+				}*/
+				size_type x = -1;
+				pointer aux = _alloc.allocate(n);
+				_capacity = n;
+				while (++x < _size)
+					aux[x] = _vec[x];
+				_alloc.deallocate(_vec, _capacity);
+				_vec = aux;
 			}
 		};
 		
@@ -349,26 +359,24 @@ namespace ft
 		// single element: apenas um elemento
 		iterator insert (iterator position, const value_type& val)
 		{
-			//difference_type	diff = position - begin();
+			difference_type	diff = position - begin();
 			//size_type n = 0;
 			
 			// Mac version: while (_capacity <= _size)
 			//while (_capacity < _size )
-			/*if (_capacity <= _size)
+			if (_capacity <= _size)
 				reserve(_size + 1);
-			iterator it = begin();
-			while (it != position)
-				it++;
-			_alloc.construct(&(*it), val);
-			while (it != end())
+			iterator it = end();
+			while (it != begin() + diff)
 			{
-				_alloc.construct(&(*it), *(it + 1));
-				_alloc.destroy(&(*(it + 1)));
-				it++;
+				_alloc.construct(&(*it), *(it - 1));
+				_alloc.destroy(&(*(it - 1)));
+				it--;
 			}
+			_alloc.construct(&(*it), val);
 			_size++;
 			return (it);
-			*/
+			/*
 			if (size() == 0)
 			{
 				push_back(val);
@@ -383,19 +391,23 @@ namespace ft
 			iterator it = begin();
 			while (it != end())
 			{
-				_alloc.destroy(&(*(itaux)));
-				_alloc.construct(&(*itaux), *(it));
-				itaux++;
-				it++;
 				if (it == begin() + diff)
 				{
 					_alloc.destroy(&(*(itaux)));
 					_alloc.construct(&(*itaux), val);
-					itaux++;
+					//itaux++;
 				}
+				else
+				{
+				_alloc.destroy(&(*(itaux)));
+				_alloc.construct(&(*itaux), *(it));
+				}
+				itaux++;
+				it++;
 			}
 			*this = aux;
 			return (begin() + diff);
+			*/
 		};
 
 		// fill: n elementos val

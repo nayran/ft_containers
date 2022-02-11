@@ -3,7 +3,6 @@
 //#include "map.hpp"
 #include <exception>
 
-/*
 bool mycomp (char c1, char c2)
 { return c1 < c2; }
 
@@ -17,11 +16,9 @@ typename ft::enable_if<ft::is_integral<T>::value,bool>::type is_odd (T i)
 template <class T>
 typename ft::enable_if<ft::is_integral<T>::value,bool>::type is_even (T i)
 { return bool(!(i%2)); }
-*/
 
 int main()
 {
-	/*
 	ft::vector<int> mylist;
 	for (int i=0; i<10; i++)
 		mylist.push_back (i*10);
@@ -64,13 +61,13 @@ int main()
 	ft::vector<int>::iterator it_int = mylist.begin();
 	ft::advance (it_int,0);
 	std::cout << "\tFirst element in mylist is: " << *it_int;
-	std::cout << ", distance until last element is: " << ft::distance(it_int,last) << std::endl;
+	std::cout << ", distance until end: " << ft::distance(it_int,last) << std::endl;
 	ft::advance (it_int,5);
 	std::cout << "\tSixth element in mylist is: " << *it_int;
-	std::cout << ", distance until last element is: " << ft::distance(it_int,last) << std::endl;
-	ft::advance (it_int,5);
+	std::cout << ", distance until end: " << ft::distance(it_int,last) << std::endl;
+	ft::advance (it_int,4);
 	std::cout << "\tLast element in mylist is: " << *it_int;
-	std::cout << ", distance until last element is: " << ft::distance(it_int,last) << std::endl;
+	std::cout << ", distance until end: " << ft::distance(it_int,last) << std::endl;
 	
 	//  Equal and Lexicographical_compare
 	std::cout << "\nEqual and Lexicographical_compare\n";
@@ -104,7 +101,6 @@ int main()
 	std::cout << "\tenable_if::is_even(1): " << is_even(1) << std::endl;
 	std::cout << "\tis_integral<char>::value: " << ft::is_integral<char>::value << std::endl;
 	std::cout << "\tis_integral<float>::value: " << ft::is_integral<float>::value << std::endl;
-*/
 
 
 	/*
@@ -247,15 +243,14 @@ int main()
 	for (ft::vector<int>::iterator it = a.begin(); it != a.end(); it++)
 		std::cout << *it << " ";
 	a.clear();
-
 	std::cout << "\ninsert single: insert(a.begin(), 300), insert(a.begin(), 100, insert(a.begin() + 1, 200))\n";
 	a.insert(a.begin(), 300);
 	a.insert(a.begin(), 100);
+/*
 	a.insert(a.begin() + 1, 200);
 	std::cout << "Capacity: " << vec.capacity() << std::endl;
 	for (ft::vector<int>::iterator it = a.begin(); it != a.end(); it++)
 		std::cout << *it << " ";
-	/*
 	std::cout << std::endl;
 	ft::vector<int>::iterator it = vec.begin();
 	it = a.insert(a.begin() + 1, 110);

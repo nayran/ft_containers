@@ -373,17 +373,15 @@ namespace ft
 	template <typename InputIterator, typename Distance>
 	void advance (InputIterator& it, Distance n)
 	{
-		if (typeid(typename iterator_traits<InputIterator>::iterator_category) == typeid(random_access_iterator_tag))
-		{
+		//if (typeid(typename iterator_traits<InputIterator>::iterator_category) == typeid(random_access_iterator_tag))
 			it += n;
-		}
-		else
-		{
-			while (n-- > 0)
-				it++;
-			while (n++ > 0)
-				it--;
-		}
+		//else
+		//{
+		//	while (n-- > 0)
+		//		it++;
+		//	while (n++ > 0)
+		//		it--;
+		//}
 	}
 
 	template<typename InputIterator>
