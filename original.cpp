@@ -26,6 +26,7 @@ typename ft::enable_if<ft::is_integral<T>::value,bool>::type is_even (T i)
 
 int main()
 {
+	/*
 	ft::vector<int> mylist;
 	for (int i=0; i<10; i++)
 		mylist.push_back (i*10);
@@ -110,9 +111,9 @@ int main()
 	std::cout << "\tis_integral<float>::value: " << ft::is_integral<float>::value << std::endl;
 
 
-	/*
+	*
 	 *		VECTOR
-	 */
+	 *
 
 	std::cout << "VECTOR\n";
 	// Vector constructors
@@ -147,7 +148,7 @@ int main()
 	
 
 
-	/*
+	/
 	 *		Para fins de comparacao, o valor retornado pode variar entao eh
 	 *		impossivel comparar com outra saida
 	 *
@@ -172,7 +173,7 @@ int main()
 	it4 = vec.rend();
 	std::cout << "Rend: " << *it3 << "\tConst rend: " << *it4 << std::endl;
 
-	*/
+	*
 
 	//	CAPACITY
 	std::cout << "\n\tVector capacity\n";
@@ -238,28 +239,30 @@ int main()
 	std::cout << "\npop_back():\t\t";
 	for (ft::vector<int>::iterator it = second.begin(); it != second.end(); it++)
 		std::cout << *it << " ";
+	*/
 
 	ft::vector<int>a;
 	a.push_back(1);
+	/*
 	std::cout << "\npush_back(1) empty vector: ";
 	for (ft::vector<int>::iterator it = a.begin(); it != a.end(); it++)
 		std::cout << *it << " ";
-	std::cout << "Capacity: " << vec.capacity() << std::endl;
+	std::cout << "Capacity: " << a.capacity() << std::endl;
 	a.pop_back();
 	std::cout << "\npop_back() empty vector: ";
 	for (ft::vector<int>::iterator it = a.begin(); it != a.end(); it++)
 		std::cout << *it << " ";
-	a.clear();
-
-	std::cout << "\ninsert single: insert(a.begin(), 300), insert(a.begin(), 100, insert(a.begin() + 1, 200))\n";
+	*/
+	//a.clear();
+	//std::cout << "\ninsert single: insert(a.begin(), 300), insert(a.begin(), 100, insert(a.begin() + 1, 200))\n";
 	a.insert(a.begin(), 300);
-	a.insert(a.begin(), 100);
-	a.insert(a.begin() + 1, 200);
-	std::cout << "Capacity: " << vec.capacity() << std::endl;
+	//a.insert(a.begin(), 100);
+	//a.insert(a.begin() + 1, 200);
+	std::cout << "Capacity: " << a.capacity() << std::endl;
 	for (ft::vector<int>::iterator it = a.begin(); it != a.end(); it++)
 		std::cout << *it << " ";
+/*
 	std::cout << std::endl;
-	/*
 	ft::vector<int>::iterator it = vec.begin();
 	it = a.insert(a.begin() + 1, 110);
 	std::cout << "insert single: a.insert(it[1], 110) -- inicio no iterador retornado\n";

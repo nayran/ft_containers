@@ -217,7 +217,8 @@ namespace ft
 		{
 			if (n > _capacity)
 			{
-				/*vector aux(*this);
+				/*
+				vector aux(*this);
 
 				clear();
 				_alloc.deallocate(_vec, _capacity);
@@ -227,11 +228,13 @@ namespace ft
 				iterator it = begin();
 				while (itaux != aux.end())
 				{
-					//push_back(*itaux);
 					_alloc.construct(&(*it), *itaux);
 					it++;
 					itaux++;
-				}*/
+				}
+				//aux.clear();
+				//aux._alloc.deallocate(aux._vec, aux._capacity);
+				*/
 				size_type x = -1;
 				pointer aux = _alloc.allocate(n);
 				_capacity = n;
@@ -359,55 +362,47 @@ namespace ft
 		// single element: apenas um elemento
 		iterator insert (iterator position, const value_type& val)
 		{
+
+			/* WORKING
 			difference_type	diff = position - begin();
-			//size_type n = 0;
 			
 			// Mac version: while (_capacity <= _size)
 			//while (_capacity < _size )
+			vector aux(*this);
+			clear();
 			if (_capacity <= _size)
 				reserve(_size + 1);
-			iterator it = end();
-			while (it != begin() + diff)
-			{
-				_alloc.construct(&(*it), *(it - 1));
-				_alloc.destroy(&(*(it - 1)));
-				it--;
-			}
-			_alloc.construct(&(*it), val);
-			_size++;
-			return (it);
-			/*
-			if (size() == 0)
-			{
-				push_back(val);
-				return (begin());
-			}
-			difference_type	diff = position - begin();
-			vector aux(this->_size + 1, 0);
-			while (aux._capacity <= aux._size)
-				aux.reserve(aux._capacity + 1);
-
-			iterator itaux = aux.begin();
 			iterator it = begin();
-			while (it != end())
+			iterator itaux = aux.begin();
+			while (itaux != begin() + diff)
 			{
-				if (it == begin() + diff)
-				{
-					_alloc.destroy(&(*(itaux)));
-					_alloc.construct(&(*itaux), val);
-					//itaux++;
-				}
-				else
-				{
-				_alloc.destroy(&(*(itaux)));
-				_alloc.construct(&(*itaux), *(it));
-				}
-				itaux++;
+				_alloc.construct(&(*(it)), *itaux);
 				it++;
+				itaux++;
 			}
-			*this = aux;
-			return (begin() + diff);
+			//_alloc.construct(&(*(it)), val);
+			push_back(val);
+			while (itaux != end() - 1)
+			{
+				push_back(*itaux);
+				itaux++;
+			}
+			//_size++;
+			return (it);
 			*/
+			difference_type	diff = position - begin();
+
+			while (_capacity <= _size)
+				reserve(_capacity + 1);
+			iterator	iter = end();
+			for (; iter != begin() + diff; iter--)
+			{
+				_alloc.construct(&(*iter), *(iter - 1));
+				_alloc.destroy(&(*(iter - 1)));
+			}
+			_alloc.construct(&(*iter), val);
+			_size++;
+			return (iter);
 		};
 
 		// fill: n elementos val
@@ -416,13 +411,11 @@ namespace ft
 			// AQUI
 			if (n)
 			{
-				//difference_type diff = position - begin();
+				difference_type diff = position - begin();
 				if (_capacity <= _size + n)
 					reserve(_capacity + n + 1);
-				//while (--n)
-				position = end();
-				_alloc.construct(&(*position), val);
-				//insert(position, val);
+				while (--n)
+					insert(begin() + diff, val);
 			}
 		};
 
