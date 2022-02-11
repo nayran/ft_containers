@@ -413,13 +413,16 @@ namespace ft
 		// fill: n elementos val
 		void insert (iterator position, size_type n, const value_type& val)
 		{
+			// AQUI
 			if (n)
 			{
-				difference_type diff = position - begin();
-				if (_capacity <= _size + n + 1)
-					reserve(_size + n + 1);
-				while (n--)
-					insert(begin() + diff, val);
+				//difference_type diff = position - begin();
+				if (_capacity <= _size + n)
+					reserve(_capacity + n + 1);
+				//while (--n)
+				position = end();
+				_alloc.construct(&(*position), val);
+				//insert(position, val);
 			}
 		};
 
