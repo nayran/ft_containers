@@ -10,7 +10,7 @@ FLAGS = -g -Wall -Werror -Wextra #-std=c++98
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	@clang++ main.o -o $(NAME)
+	@clang++ -std=c++98 main.o -o $(NAME)
 	@clang++ original.o -o $(NAME1)
 
 %.o: %.cpp $(HEAD)

@@ -1,6 +1,6 @@
 #include "vector.hpp"
 #include "stack.hpp"
-//#include "map.hpp"
+#include "map.hpp"
 #include <exception>
 
 bool mycomp (char c1, char c2)

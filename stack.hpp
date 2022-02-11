@@ -6,30 +6,29 @@
 /*		
  *		[ STACK ]
  *			
- *			Adaptador de container que operam em pilha (stack),
- *			mais especificamente LIFO (Last In First Out).
- *			Stacks sao implementadas como adaptadores de container, são classes
- *			que usam um objeto encapsulado de um container especifico tornando-os 
- *			um container implicito. O container implicito pode ser qualquer um dos
- *			stds, desde que suporte as operacoes: empty, size, back, push_back e pop_back.
+ *			ADAPTADOR de container que operam em pilha (stack), mais especificamente LIFO
+ *		(Last In First Out). Stacks sao implementadas como adaptadores de container, são classes
+ *		que usam um objeto encapsulado de um container especifico tornando-os um container 
+ *		implicito. O container implicito pode ser qualquer um dos stds, desde que suporte as
+ *		operacoes: empty, size, back, push_back e pop_back.
  *
- *			Member types
- *				value_type, container_type, size_type
- *			Member functions
- *				Constructor, destructor
- *				Element Access
- *					top
- *				Capacity
- *					empty, size
- *				Modifiers
- *					push, pop
- *			Member objects
- *				Container C
- *			Non-member functions
- *				Relational Operators (==, !=, <, <=, >, >=)
+ *		Member types
+ *			value_type, container_type, size_type
+ *		Member functions
+ *			Constructor, destructor
+ *			Element Access
+ *				top
+ *			Capacity
+ *				empty, size
+ *			Modifiers
+ *				push, pop
+ *		Member objects
+ *			Container C
+ *		Non-member functions
+ *			Relational Operators (==, !=, <, <=, >, >=)
  *
- *			https://www.cplusplus.com/reference/stack/stack/
- *			https://en.cppreference.com/w/cpp/container/stack
+ *		https://www.cplusplus.com/reference/stack/stack/
+ *		https://en.cppreference.com/w/cpp/container/stack
  */
 
 namespace ft

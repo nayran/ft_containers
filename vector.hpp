@@ -6,7 +6,7 @@
 /*		
  *		[ VECTOR ]
  *
- *			Container sequencial que representa ponteiros que são dinamicamente alocados.
+ *			Container SEQUENCIAL que representa ponteiros que são dinamicamente alocados.
  *		Consomem mais memoria devido ao fato de gerenciar o armazenamento e crescer dinamicamente.
  *
  *		Member types
