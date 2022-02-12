@@ -8,7 +8,9 @@
 		  #include <iterator>
 		  #include <exception>
 		  #include <type_traits>
+		  #include <ctime>
 		  namespace ft = std;
+#include <ctime>
 
 bool mycomp (char c1, char c2)
 { return c1 < c2; }
@@ -26,6 +28,9 @@ typename ft::enable_if<ft::is_integral<T>::value,bool>::type is_even (T i)
 
 int main()
 {
+	time_t init, end;
+	time(&init);
+
 	ft::vector<int> mylist;
 	for (int i=0; i<10; i++)
 		mylist.push_back (i*10);
@@ -383,5 +388,7 @@ int main()
 	std::cout << "stack <= stack2: " << (stack >= stack2) << std::endl;
 
 
+	time(&end);
+	std::cout << "Time: " << end - init << std::endl;
 	return (0);
 }

@@ -1,4 +1,4 @@
-y=7
+y=3
 x=1
 clear
 echo "
@@ -7,9 +7,7 @@ echo "
 | |_    | |  | |  | | | |  \| | | | / _ \  | ||  \| |  _| | |_) \___ \ 
 |  _|   | |  | |__| |_| | |\  | | |/ ___ \ | || |\  | |___|  _ < ___) |
 |_|     |_|___\____\___/|_| \_| |_/_/   \_\___|_| \_|_____|_| \_\____/ 
-         |_____|                                                       
-
-		valgrind"
+         |_____|                                                       "
 echo
 
 while [ $x -le $y ]
@@ -24,6 +22,7 @@ do
 		  #include <iterator>
 		  #include <exception>
 		  #include <type_traits>
+		  #include <ctime>
 		  namespace ft = std;" > original.cpp
 	tail -n +5 main.cpp >> original.cpp
 	make re ;
@@ -54,3 +53,4 @@ fi
 
 rm out_ft
 rm out_std
+rm vgcore.*
