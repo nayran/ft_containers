@@ -81,6 +81,7 @@ int main()
 	std::cout << "\tLast element in mylist is: " << *it_int;
 	std::cout << ", distance until end: " << ft::distance(it_int,last) << std::endl;
 	
+	std::cout << "\n\nALGORITHM";
 	//  Equal and Lexicographical_compare
 	std::cout << "\nEqual and Lexicographical_compare\n";
 	char foo[]="apple";
@@ -108,6 +109,7 @@ int main()
 	std::cout << ft::lexicographical_compare(bar, bar+9, foo,foo+5,mycomp) << std::endl;
 
 	// Enable_if and is_integral
+	std::cout << "\n\nTYPE_TRAITS";
 	std::cout << "\nEnable_if and is_integral\n";
 	std::cout << "\tenable_if::is_odd(1): " << is_odd(1) << std::endl;
 	std::cout << "\tenable_if::is_even(1): " << is_even(1) << std::endl;
@@ -388,12 +390,9 @@ int main()
 	std::cout << "stack <= stack2: " << (stack >= stack2) << std::endl;
 
 
-	/*
-	 *		MAP
-	 */
 
-	std::cout << "\n\nMAP:\n";
-	// PAIR
+	// UTILITY
+	std::cout << "\n\nUTILITY" << std::endl;
 	std::cout << "\nPair" << std::endl;
 	ft::pair<int, double> p{42, 3.1415};
 	ft::pair<int, double> p2{42, 3.1415};
@@ -424,6 +423,14 @@ int main()
     auto mkpair= std::make_pair(n, n2[1]);
 	std::cout << "mkpair.first: " << mkpair.first << "\tmkpair.second: " << mkpair.second << std::endl;
 
+
+	/*
+	 *		MAP
+	 */
+
+	std::cout << "\n\nMAP:\n";
+	// PAIR
+	
 
 	time(&end);
 	std::cout << "\n\nTime: " << end - init << std::endl;

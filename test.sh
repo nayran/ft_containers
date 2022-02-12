@@ -29,8 +29,8 @@ do
 		  #include <exception>
 		  #include <type_traits>
 		  #include <ctime>
-		  namespace ft = std;" > std.cpp
-	tail -n +5 main.cpp >> std.cpp
+		  namespace ft = std;" > mainstd.cpp
+	tail -n +5 main.cpp >> mainstd.cpp
 	make re ;
 	./ft_containers > out_ft
 	if [ $? -ne 0 ]
