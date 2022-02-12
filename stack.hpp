@@ -93,7 +93,7 @@ namespace ft
 		// 
 		// https://stackoverflow.com/questions/1787143/template-friend-function-of-a-template-class
 		template <typename Type, typename Ctnr>
-			friend bool operator== (const stack<Type,Ctnr>& lhs, const stack<Type,Ctnr>& rhs);
+		friend bool operator== (const stack<Type,Ctnr>& lhs, const stack<Type,Ctnr>& rhs);
 		template <typename Type, typename Ctnr>
 		friend bool operator!= (const stack<Type,Ctnr>& lhs, const stack<Type,Ctnr>& rhs);
 		template <typename Type, typename Ctnr>
@@ -111,23 +111,28 @@ namespace ft
 	 *		==, !=, <, <=, >, >=
 	 */
 	template <class T, class Container>
-		bool operator== (const stack<T,Container>& lhs, const stack<T,Container>& rhs)
-		{ return (lhs._ctnr == rhs._ctnr); };
+	bool operator== (const stack<T,Container>& lhs, const stack<T,Container>& rhs)
+	{ return (lhs._ctnr == rhs._ctnr); };
+
 	template <class T, class Container>
-		bool operator!= (const stack<T,Container>& lhs, const stack<T,Container>& rhs)
-		{ return (lhs._ctnr != rhs._ctnr); };
+	bool operator!= (const stack<T,Container>& lhs, const stack<T,Container>& rhs)
+	{ return (lhs._ctnr != rhs._ctnr); };
+
 	template <class T, class Container>
-		bool operator<  (const stack<T,Container>& lhs, const stack<T,Container>& rhs)
-		{ return (lhs._ctnr < rhs._ctnr); };
+	bool operator<  (const stack<T,Container>& lhs, const stack<T,Container>& rhs)
+	{ return (lhs._ctnr < rhs._ctnr); };
+
 	template <class T, class Container>
-		bool operator<= (const stack<T,Container>& lhs, const stack<T,Container>& rhs)
-		{ return (lhs._ctnr <= rhs._ctnr); };
+	bool operator<= (const stack<T,Container>& lhs, const stack<T,Container>& rhs)
+	{ return (lhs._ctnr <= rhs._ctnr); };
+
 	template <class T, class Container>
-		bool operator>  (const stack<T,Container>& lhs, const stack<T,Container>& rhs)
-		{ return (lhs._ctnr > rhs._ctnr); };
+	bool operator>  (const stack<T,Container>& lhs, const stack<T,Container>& rhs)
+	{ return (lhs._ctnr > rhs._ctnr); };
+
 	template <class T, class Container>
-		bool operator>= (const stack<T,Container>& lhs, const stack<T,Container>& rhs)
-		{ return (lhs._ctnr >= rhs._ctnr); };
+	bool operator>= (const stack<T,Container>& lhs, const stack<T,Container>& rhs)
+	{ return (lhs._ctnr >= rhs._ctnr); };
 }
 
 #endif
