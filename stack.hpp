@@ -88,7 +88,7 @@ namespace ft
 			Container _ctnr;
 
 
-		// Friend function: para funcoes declaradas fora do escopo da classe poderem
+		// Friend function: para funcoes friend declaradas fora do escopo da classe poderem
 		//					acessar conteudos privados ou protegidos. 
 		// 
 		// https://stackoverflow.com/questions/1787143/template-friend-function-of-a-template-class

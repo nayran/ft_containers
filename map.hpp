@@ -2,6 +2,7 @@
 # define MAP_HPP
 
 #include "include/utils.hpp"
+#include "include/utility.hpp"
 
 /*		
  *		[ MAP ]

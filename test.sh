@@ -7,7 +7,13 @@ echo "
 | |_    | |  | |  | | | |  \| | | | / _ \  | ||  \| |  _| | |_) \___ \ 
 |  _|   | |  | |__| |_| | |\  | | |/ ___ \ | || |\  | |___|  _ < ___) |
 |_|     |_|___\____\___/|_| \_| |_/_/   \_\___|_| \_|_____|_| \_\____/ 
-         |_____|                                                       "
+         |_____|                                                       
+
+	cat main.cpp > std.cpp
+	make 
+	./ft_containers > out_ft
+	./std_containers > out_std
+	diff out_ft out_std"
 echo
 
 while [ $x -le $y ]
@@ -23,8 +29,8 @@ do
 		  #include <exception>
 		  #include <type_traits>
 		  #include <ctime>
-		  namespace ft = std;" > original.cpp
-	tail -n +5 main.cpp >> original.cpp
+		  namespace ft = std;" > std.cpp
+	tail -n +5 main.cpp >> std.cpp
 	make re ;
 	./ft_containers > out_ft
 	if [ $? -ne 0 ]
@@ -53,4 +59,3 @@ fi
 
 rm out_ft
 rm out_std
-rm vgcore.*

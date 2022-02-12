@@ -1,7 +1,7 @@
 NAME = ft_containers
 NAME1 = std_containers
 
-SRCS = main.cpp original.cpp
+SRCS = main.cpp std.cpp
 
 OBJS = $(SRCS:.cpp=.o)
 
@@ -11,7 +11,7 @@ all: $(NAME)
 
 $(NAME): $(OBJS)
 	@clang++ -std=c++98 main.o -o $(NAME)
-	@clang++ original.o -o $(NAME1)
+	@clang++ std.o -o $(NAME1)
 
 %.o: %.cpp $(HEAD)
 	@clang++ $(FLAGS) -c $< -o $@
