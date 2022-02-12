@@ -1,13 +1,11 @@
 NAME = ft_containers
 NAME1 = std_containers
 
-SRCS = main.cpp mainstd.cpp
-
-OBJS = $(SRCS:.cpp=.o)
+SRCS = main.cpp
 
 FLAGS = -g -Wall -Werror -Wextra #-std=c++98
 
-all: print $(NAME)
+all: print containers
 
 print:
 	clear
@@ -35,8 +33,11 @@ _____ _____   ____ ___  _   _ _____  _    ___ _   _ _____ ____  ____ \n\
 	@echo "#include <ctime>" >> mainstd.cpp
 	@echo "namespace ft = std;" >> mainstd.cpp
 	@tail -n +5 main.cpp >> mainstd.cpp
+	@clang++ $(FLAGS) -c mainstd.cpp -o mainstd.o
 
-$(NAME): $(OBJS)
+OBJS = $(SRCS:.cpp=.o)
+
+containers: $(OBJS) 
 	@clang++ -std=c++98 main.o -o $(NAME)
 	@clang++ mainstd.o -o $(NAME1)
 	@./ft_containers > out_ft
@@ -56,12 +57,13 @@ $(NAME): $(OBJS)
 		echo "\*************************/ \033[m";							\
 	fi
 
-%.o: %.cpp $(HEAD)
+
+%.o: %.cpp 
 	@clang++ $(FLAGS) -c $< -o $@
 
 clean:
-	@rm -rf $(OBJS) $(NAME) $(NAME1) mainstd.cpp out_ft out_std
+	@rm -rf $(OBJS) $(NAME) $(NAME1) mainstd.* out_ft out_std
 
 re: clean all
 
-.PHONY: all clean re
+.PHONY: all clean re 
