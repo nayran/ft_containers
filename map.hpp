@@ -3,6 +3,7 @@
 
 #include "include/utils.hpp"
 #include "include/utility.hpp"
+#include <functional>
 
 /*		
  *		[ MAP ]
@@ -40,13 +41,57 @@
 
 namespace ft
 {
-	/*
-	template < class Key, class T, class Compare = less<Key>, class Alloc = allocator<pair<const Key,T> > >
+	template < class Key, class T, class Compare = std::less<Key>,
+		class Alloc = std::allocator<pair<const Key,T> > >
 	class map
 	{
+	public:
+		/*
+		 *		MEMBER TYPES
+		 */
+		typedef Key												key_type;
+		typedef T												mapped_type;
+		typedef std::pair<const Key, T>							value_type;
+		typedef Compare											key_compare;
+		typedef Alloc											allocator_type;
+		typedef typename allocator_type::reference				reference;
+		typedef typename allocator_type::const_reference		const_reference;
+		typedef typename allocator_type::pointer				pointer;
+		typedef typename allocator_type::const_pointer			const_pointer;
+		class value_compare
+		: public std::binary_function<value_type, value_type, bool>
+		{
+			public:
+				key_compare	comp;
+				value_compare(key_compare c = key_compare()) : comp(c) {}
+				bool operator()(const value_type& x, const value_type& y) const
+				{ return (comp(x.first, y.first)); }
+		};
+
+		/*
+		 *		Constructors (empty, range, copy)
+		 *		Destructor
+		 *		Operator=
+		 */
+		// Empty: container vazio
+		explicit map (const key_compare& comp = key_compare(),
+			const allocator_type& alloc = allocator_type())
+		{};
+
+		// Range: constroi um container igual ao range (inicio - final)
+		template <class InputIterator>
+		map (InputIterator first, InputIterator last,
+				const key_compare& comp = key_compare(),
+				const allocator_type& alloc = allocator_type())
+		{};
+
+		// Copy: faz a copia de x
+		map (const map& x);
+
+		~map();
+		map& operator= (const map& x);
 
 	};
-	*/
 };
 
 #endif
