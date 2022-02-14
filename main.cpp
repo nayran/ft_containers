@@ -415,7 +415,6 @@ int main()
     pair = ft::make_pair(n, n2[1]);
 	std::cout << "mkpair.first: " << pair.first << "\tmkpair.second: " << pair.second << std::endl;
 
-
 	/*
 	 *		MAP
 	 */
@@ -425,6 +424,6 @@ int main()
 	
 
 	time(&end);
-	//std::cout << "\n\nTime: " << end - init << std::endl;
+	std::cout << "\n\nTime: " << end - init << std::endl;
 	return (0);
 }
