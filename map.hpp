@@ -72,7 +72,6 @@ namespace ft
 		 *		Constructors (empty, range, copy)
 		 *		Destructor
 		 *		Operator=
-		 */
 		// Empty: container vazio
 		explicit map (const key_compare& comp = key_compare(),
 			const allocator_type& alloc = allocator_type())
@@ -91,6 +90,7 @@ namespace ft
 		~map();
 		map& operator= (const map& x);
 
+		 */
 	};
 };
 

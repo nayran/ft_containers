@@ -3,7 +3,7 @@ NAME1 = std_containers
 
 SRCS = main.cpp
 
-FLAGS = -g -Wall -Werror -Wextra #-std=c++98
+FLAGS = -g -Wall -Werror -Wextra -std=c++98
 
 all: print containers
 
@@ -38,7 +38,7 @@ _____ _____   ____ ___  _   _ _____  _    ___ _   _ _____ ____  ____ \n\
 OBJS = $(SRCS:.cpp=.o)
 
 containers: $(OBJS) 
-	@clang++ -std=c++98 main.o -o $(NAME)
+	@clang++ main.o -o $(NAME)
 	@clang++ mainstd.o -o $(NAME1)
 	@./ft_containers > out_ft
 	@./std_containers > out_std

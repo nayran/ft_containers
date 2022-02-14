@@ -1,8 +1,14 @@
-#include "vector.hpp"
-#include "stack.hpp"
-#include "map.hpp"
-#include <exception>
-#include <ctime>
+#include <iostream>
+		  #include <string>
+		  #include <stdlib.h>
+		  #include <deque>
+		  #include <map>
+		  #include <stack>
+		  #include <vector>
+		  #include <iterator>
+		  #include <exception>
+		  #include <type_traits>
+		  namespace ft = std;
 
 bool mycomp (char c1, char c2)
 { return c1 < c2; }
@@ -20,9 +26,6 @@ typename ft::enable_if<ft::is_integral<T>::value,bool>::type is_even (T i)
 
 int main()
 {
-	time_t init, end;
-	time(&init);
-
 	ft::vector<int> mylist;
 	for (int i=0; i<10; i++)
 		mylist.push_back (i*10);
@@ -73,7 +76,6 @@ int main()
 	std::cout << "\tLast element in mylist is: " << *it_int;
 	std::cout << ", distance until end: " << ft::distance(it_int,last) << std::endl;
 	
-	std::cout << "\n\nALGORITHM";
 	//  Equal and Lexicographical_compare
 	std::cout << "\nEqual and Lexicographical_compare\n";
 	char foo[]="apple";
@@ -101,7 +103,6 @@ int main()
 	std::cout << ft::lexicographical_compare(bar, bar+9, foo,foo+5,mycomp) << std::endl;
 
 	// Enable_if and is_integral
-	std::cout << "\n\nTYPE_TRAITS";
 	std::cout << "\nEnable_if and is_integral\n";
 	std::cout << "\tenable_if::is_odd(1): " << is_odd(1) << std::endl;
 	std::cout << "\tenable_if::is_even(1): " << is_even(1) << std::endl;
@@ -382,49 +383,5 @@ int main()
 	std::cout << "stack <= stack2: " << (stack >= stack2) << std::endl;
 
 
-
-	// UTILITY
-	std::cout << "\n\nUTILITY" << std::endl;
-	std::cout << "\nPair" << std::endl;
-	ft::pair<int, double> p(42, 3.1415);
-	ft::pair<int, double> p2(42, 3.1415);
-	ft::pair<int, double> p3(42, 13);
-	std::cout << "pair.first: " << p.first << "\tpair.second: " << p.second << std::endl;
-	std::cout << "pair2.first: " << p2.first << "\tpair2.second: " << p2.second << std::endl;
-	std::cout << "pair3.first: " << p3.first << "\tpair3.second: " << p3.second << std::endl;
-	std::cout << "pair == pair2: " << (p == p2) << std::endl;
-	std::cout << "pair == pair3: " << (p == p3) << std::endl;
-	std::cout << "pair != pair2: " << (p != p2) << std::endl;
-	std::cout << "pair != pair3: " << (p != p3) << std::endl;
-	std::cout << "pair < pair2: " << (p < p2) << std::endl;
-	std::cout << "pair < pair3: " << (p < p3) << std::endl;
-	std::cout << "pair <= pair2: " << (p <= p2) << std::endl;
-	std::cout << "pair <= pair2: " << (p <= p2) << std::endl;
-	std::cout << "pair > pair2: " << (p > p2) << std::endl;
-	std::cout << "pair > pair3: " << (p > p3) << std::endl;
-	std::cout << "pair >= pair2: " << (p >= p2) << std::endl;
-	std::cout << "pair >= pair3: " << (p >= p3) << std::endl;
-	ft::pair<int, int> pair;
-	pair = p;
-	std::cout << "p = pair: " << pair.first << " " << pair.second << std::endl;
-
-	// Make_pair
-	std::cout << "\nMake pair" << std::endl;
-	int n = 1;
-    int n2[5] = {1, 2, 3, 4, 5};
-    pair = ft::make_pair(n, n2[1]);
-	std::cout << "mkpair.first: " << pair.first << "\tmkpair.second: " << pair.second << std::endl;
-
-
-	/*
-	 *		MAP
-	 */
-
-	std::cout << "\n\nMAP:\n";
-	// PAIR
-	
-
-	time(&end);
-	//std::cout << "\n\nTime: " << end - init << std::endl;
 	return (0);
 }
