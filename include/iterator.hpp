@@ -1,6 +1,10 @@
 #ifndef ITERATOR_HPP
 # define ITERATOR_HPP
 
+#include <stddef.h>
+#include <typeinfo>
+#include <iostream>
+
 /*
  *		[ ITERATOR ]
  *
@@ -18,10 +22,6 @@
  *		https://en.cppreference.com/w/cpp/header/iterator
  *
  */
-
-#include <stddef.h>
-#include <typeinfo>
-#include <iostream>
 
 namespace ft
 {
