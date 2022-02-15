@@ -35,8 +35,6 @@ namespace ft
 
 		pair (const first_type& a, const second_type& b) : first(a), second(b) {};
 
-		// copia explicitamente gerada pelo compilador, assim eh possivel
-		// copiar o ft::make_pair para um ft::pair.
 		pair& operator= (const pair& pr)
 		{
 			if (this == &pr)
@@ -46,6 +44,7 @@ namespace ft
 			return (*this);
 		};
 
+		// Destructor torna possivel igualar um ft::pair com um ft::makepair
 		~pair(){};
 	};
 
