@@ -37,14 +37,16 @@ namespace ft
 
 		// copia explicitamente gerada pelo compilador, assim eh possivel
 		// copiar o ft::make_pair para um ft::pair.
-		pair& operator= (const pair& pr) = default;
-		/*{
+		pair& operator= (const pair& pr)
+		{
 			if (this == &pr)
 				return (*this);
 			first = pr.first;
 			second = pr.second;
 			return (*this);
-		};*/
+		};
+
+		~pair(){};
 	};
 
 	template <class T1, class T2>
