@@ -3,6 +3,7 @@
 
 #include "include/utils.hpp"
 #include "include/utility.hpp"
+#include "include/rb_tree.hpp"
 #include <functional>
 
 /*		
@@ -68,6 +69,7 @@ namespace ft
 				{ return (comp(x.first, y.first)); }
 		};
 
+		rb_tree<int> rbt;
 		/*
 		 *		Constructors (empty, range, copy)
 		 *		Destructor
