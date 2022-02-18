@@ -4,7 +4,6 @@
 #include "include/utils.hpp"
 #include "include/utility.hpp"
 #include "include/rb_tree.hpp"
-#include <functional>
 
 /*		
  *		[ MAP ]
@@ -42,7 +41,7 @@
 
 namespace ft
 {
-	template < class Key, class T, class Compare = std::less<Key>,
+	template < class Key, class T, class Compare = ft::less<Key>,
 		class Alloc = std::allocator<pair<const Key,T> > >
 	class map
 	{
@@ -69,16 +68,17 @@ namespace ft
 				{ return (comp(x.first, y.first)); }
 		};
 
-		rb_tree<int> rbt;
 		/*
 		 *		Constructors (empty, range, copy)
 		 *		Destructor
 		 *		Operator=
+		 */
 		// Empty: container vazio
 		explicit map (const key_compare& comp = key_compare(),
 			const allocator_type& alloc = allocator_type())
-		{};
+			: _rbt(comp, alloc) {};
 
+		/*
 		// Range: constroi um container igual ao range (inicio - final)
 		template <class InputIterator>
 		map (InputIterator first, InputIterator last,
@@ -91,8 +91,11 @@ namespace ft
 
 		~map();
 		map& operator= (const map& x);
+		*/
 
-		 */
+	private:
+		rb_tree<value_type, value_compare> _rbt;
+
 	};
 };
 

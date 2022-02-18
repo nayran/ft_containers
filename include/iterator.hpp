@@ -256,7 +256,6 @@ namespace ft
 		explicit reverse_iterator (Iterator it) : current(it) {};
 		template <typename Iter>
 		reverse_iterator (const reverse_iterator<Iter>& rev_it) : current(rev_it.base()) {};
-		// destructor??
 		
 		iterator_type base() const
 		{ return (current); }
@@ -395,7 +394,6 @@ namespace ft
 		}
 		return (result);
 	}
-
 }
 
 #endif

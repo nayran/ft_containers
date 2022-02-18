@@ -26,6 +26,8 @@
  *				Iterator traits
  *			Functions
  *				Advance, distance
+ *			Tree Iterator*
+ *
  *
  *		<algorithm>
  *			ft::equal
@@ -96,6 +98,9 @@
  *
  *		<utility>
  *			ft::pair, ft::make_pair
+ *
+ *		<functional>
+ *			ft::binary_function, ft::less
  *
  */
 
