@@ -76,7 +76,7 @@ namespace ft
 		// Empty: container vazio
 		explicit map (const key_compare& comp = key_compare(),
 			const allocator_type& alloc = allocator_type())
-			: _rbt(comp, alloc) {};
+			: _rbt(),_alloc(alloc), _comp(comp) {};
 
 		/*
 		// Range: constroi um container igual ao range (inicio - final)
@@ -89,12 +89,15 @@ namespace ft
 		// Copy: faz a copia de x
 		map (const map& x);
 
-		~map();
 		map& operator= (const map& x);
 		*/
 
+		~map() {};
+
 	private:
-		rb_tree<value_type, value_compare> _rbt;
+		rb_tree<value_type, value_compare>	_rbt;
+		allocator_type						_alloc;
+		key_compare							_comp;
 
 	};
 };

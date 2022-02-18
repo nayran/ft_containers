@@ -139,16 +139,17 @@ namespace ft
 
 	public:
 		// Member types
-		typedef s_node<T>		node;
 		typedef T				value_type;
-		typedef Compare			compare;
 		typedef Alloc			allocator_type;
+		typedef Compare			compare;
+		typedef s_node<T>		node;
 		typedef size_t			size_type;
-		typedef value_type		*node_pointer;
+		typedef node			*node_pointer;
 		
 
 		// constructors (empty, normal, copy)
-		rb_tree()
+		
+		/*rb_tree()
 		{
 			_nil->color = BLACK;
 			_nil->right = nullptr;
@@ -157,16 +158,17 @@ namespace ft
 			_root = _nil;
 			_size = 0;
 		};
-
+*/
 		rb_tree(const allocator_type& alloc = allocator_type())
-		: _alloc(alloc), _size(0)
 		{
+			_alloc = alloc;
 			_nil = _alloc.allocate(1);
 			_alloc.construct(_nil, value_type());
 			_nil->parent = _nil;
 			_nil->right = _nil;
 			_nil->left = _nil;
 			_nil->color = BLACK;
+			_size = 0;
 			_root = _nil;
 		};
 
@@ -181,7 +183,7 @@ namespace ft
 		// destructor
 		~rb_tree()
 		{
-			clear();
+			clear(_root);
 			_alloc.destroy(_nil);
 			_alloc.deallocate(_nil, 1);
 		};
@@ -293,15 +295,15 @@ namespace ft
 		//		   novo no deve ser vermelho
 		void insert(T k)
 		{
-			node_pointer *aux = _alloc.allocate(1);
+			node_pointer aux = _alloc.allocate(1);
 			aux->parent = nullptr;
 			aux->key = k;
 			aux->left = _nil;
 			aux->right = _nil;
 			aux->color = RED;
 
-			node_pointer *y = nullptr;
-			node_pointer *x = _root;
+			node_pointer y = nullptr;
+			node_pointer x = _root;
 			// navega x ate uma folha e deixa y como pai de x
 			while (x != _nil)
 			{
@@ -335,10 +337,11 @@ namespace ft
 		{ return (_size); };
 
 	private:
-		node_pointer	*_root;
-		node_pointer	*_nil;
-		size_type		_size;
 		allocator_type	_alloc;
+		node_pointer	_root;
+		node_pointer	_nil;
+		size_type		_size;
+		compare			_compare;
 
 		// copia recursiva
 		void copy(rb_tree &rbt, node_pointer n, node_pointer nil)
@@ -351,16 +354,16 @@ namespace ft
 			}
 		};
 		// limpa arvore
-		void clear() const
+		void clear(node_pointer n)
 		{
 			if (_root != _nil)
 			{
-				clear(_root->left);
-				clear(_root->left);
+				_size--;
+				clear(n->left);
+				clear(n->right);
 				_alloc.destroy(_root);
 				_alloc.deallocate(_root, 1);
 			}
-			_size = 0;
 		};
 
 		/*
@@ -372,7 +375,7 @@ namespace ft
 		//	      y			  x
 		//		 /|			 /|
 		//		x			  y
-		void right_rotation(node *x)
+		void right_rotation(node_pointer x)
 		{
 			node_pointer y = x->left;
 			// puxa a direita do y para a esquerda do x
@@ -398,7 +401,7 @@ namespace ft
 		//	      x			  y
 		//		 /|			 /|
 		//		  y			x
-		void left_rotation(node *x)
+		void left_rotation(node_pointer x)
 		{
 			node_pointer y = x->right;
 			x->right = y->left;
