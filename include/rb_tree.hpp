@@ -43,7 +43,7 @@ namespace ft
 		s_node	*left;
 
 		s_node(const T & k)
-		: key(k), color(1), parent(nullptr), right(nullptr), left(nullptr){};
+		: key(k), color(BLACK), parent(nullptr), right(nullptr), left(nullptr){};
 	};
 
 	template <class T, class Compare, class Alloc = std::allocator<s_node<T> > >
@@ -61,7 +61,6 @@ namespace ft
 		
 
 		// constructors (normal, copy)
-		
 		rb_tree(const allocator_type& alloc = allocator_type())
 		{
 			_alloc = alloc;
@@ -104,30 +103,78 @@ namespace ft
 		 */
 
 		// SEARCH: procura uma key na arvore e retorna o no correspondente
-		node search(T k);
+		node_pointer search(node_pointer n, T k)
+		{
+			if (n == _nil || n->key == k)
+				return (n);
+			if (n->key > k)
+				return search(n->left, k);
+			return search(n->right, k);
+		};
 
 		// MINIMUM: retorna o no com o menor valor
-		node minimum(node n);
+		node_pointer minimum(node_pointer n)
+		{
+			while (n->left != _nil)
+				n = n->left;
+			return (n);
+		};
 
 		// MAXIMUM: retorna o no com o maior valor
-		node maximum(node n);
+		node_pointer maximum(node_pointer n)
+		{
+			while (n->right != _nil)
+				n = n->right;
+			return (n);
+		};
 
 		// PREDECESSOR/SUCCESSOR: como se todas as keys estivessem em ordem crescente, o predecessor
 		//						  equivale ao valor anterior e o successor ao proximo da key do no
 		//						  passador por parametro.
 		// predecessor
-		node_pointer predecessor(node_pointer n);
+		node_pointer predecessor(node_pointer n)
+		{
+			// se n->left nao for nulo, o valor anterior eh o mais a direita
+			// dentre o n->left;
+			if (n->left != _nil)
+				return (maximum(n->left));
+			// caso n->left for nulo e n tiver um sucessor(aux), entao aux eh o menor
+			// ancestral de n 
+			node_pointer aux = n->parent;
+			while (aux != _nil && n == aux->left)
+			{
+				n = aux;
+				aux = aux->left;
+			}
+			return (aux);
+		};
 
 		// successor 
-		node_pointer successor(node_pointer n);
+		node_pointer successor(node_pointer n)
+		{
+			// inverso do predecessor
+			if (n->right != _nil)
+				return (minimum(n->right));
+			node_pointer aux = n->parent;
+			while (aux != _nil && n == aux->right)
+			{
+				n = aux;
+				aux = aux->right;
+			}
+			return (aux);
+		};
 
+		// fix_uncle_parent: refaz codigo repetitivo
+		node_pointer fix_uncle_parent(node_pointer n, node_pointer uncle)
+		{
+			uncle->color = BLACK;
+			n->parent->color = BLACK;
+			if (n->parent->parent != _root)
+				n->parent->parent->color = RED;
+			return (n->parent->parent);
 
+		};
 		// fix_insert: arruma as cores da arvore
-		// MELHORAR CODIGO
-		// MELHORAR CODIGO
-		// MELHORAR CODIGO
-		// MELHORAR CODIGO
-		// MELHORAR CODIGO
 		void fix_insert(node_pointer n)
 		{
 			node_pointer uncle;
@@ -140,13 +187,7 @@ namespace ft
 					// se a cor do pai e do tio forem vermelhas, viram pretos e o vo vira vermelho
 					// se o no vo for root nao pode virar vermelho
 					if (uncle->color == RED)
-					{
-						uncle->color = BLACK;
-						n->parent->color = BLACK;
-						if (n->parent->parent != _root)
-							n->parent->parent->color = RED;
-						n = n->parent->parent;
-					}
+						n = fix_uncle_parent(n, uncle);
 					else
 					{
 						// se esta do lado esquerdo do pai, gira para a direita convertendo no caso
@@ -167,13 +208,7 @@ namespace ft
 					uncle = n->parent->parent->right;
 					// mesmo caso que para a esquerda
 					if (uncle->color == RED)
-					{
-						uncle->color = BLACK;
-						n->parent->color = BLACK;
-						if (n->parent->parent != _root)
-							n->parent->parent->color = RED;
-						n = n->parent->parent;
-					}
+						n = fix_uncle_parent(n, uncle);
 					else
 					{
 						// mesmo caso da esquerda mas muda as rotacoes
@@ -234,16 +269,59 @@ namespace ft
 		};
 
 		// DELETE: remove a key da arvore, depois checa se violou propriedades
-		bool delet(T k);
+		void delet(T k)
+		{
+			node_pointer n = _root;
+			node_pointer z = search(n, k);
+			node_pointer x, y;
+			if (z == _nil)
+				return ;
+			y = z;
+			bool y_color = y->color;
+			if (z->left == _nil)
+			{
+				x = z->right;
+				transplant(z, z->right);
+			}
+			else if (z->right == _nil)
+			{
+				x = z->left;
+				transplant(z, z->left);
+			}
+			else
+			{
+				y = minimum(z->right);
+				y_color = y->color;
+				x = y->right;
+				if (y->parent == z)
+					x->parent = y;
+				else
+				{
+					transplant(y, y->right);
+					y->right = z->right;
+					y->right->parent = y;
+				}
+				transplant(z, y);
+				y->left = z->left;
+				y->left->parent = y;
+				y->color = z->color;
+			}
+			_alloc.destroy(z);
+			_alloc.deallocate(z, 1);
+			if (y_color == BLACK)
+				fix_delete(x);
+		};
 
 		size_t get_size()
 		{ return (_size); };
 
+		node_pointer get_root()
+		{ return (_root); };
 
 
 		void printHelper(node_pointer root, std::string indent, bool last)
 		{
-		// print the tree structure on the screen
+			// print the tree structure on the screen
 			if (root != _nil)
 			{
 				std::cout<<indent;
@@ -262,13 +340,14 @@ namespace ft
 				printHelper(root->left, indent, false);
 				printHelper(root->right, indent, true);
 			}
-		// cout<<root->left->data<<endl;
 		}
+		
 		void print()
 		{
 			if (_root)
 				printHelper(this->_root, "", true);
 		}
+
 
 
 	private:

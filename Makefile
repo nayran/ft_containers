@@ -43,8 +43,8 @@ containers: $(OBJS)
 	@clang++ main.o -o $(NAME)
 	#@clang++ mainstd.o -o $(NAME1)
 	@./ft_containers > out_ft
-	@./std_containers > out_std
-	@diff out_ft out_std
+	#@./std_containers > out_std
+	#@diff out_ft out_std
 	@if [ $$? -ne 0 ]; then 												\
 		echo "\033[31m/*************************\\";						\
 		echo "|*			 *|";											\

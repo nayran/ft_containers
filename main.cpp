@@ -20,8 +20,8 @@ typename ft::enable_if<ft::is_integral<T>::value,bool>::type is_even (T i)
 
 int main()
 {
-	time_t init, end;
-	time(&init);
+	//time_t init, end;
+	//time(&init);
 
 	ft::vector<int> mylist;
 	for (int i=0; i<10; i++)
@@ -419,45 +419,43 @@ int main()
 	 *		MAP
 	 */
 
-	std::cout << "\n\nMAP:\n";
 	// PAIR
 	
-	ft::map<char,int> m;
-
-
+	std::cout << "\nRED BLACK TREE:\n";
 	/*
 	 *		RED BLACK TREE
 	 *
-	 *			 61
+	 *			 61b
 	 *			/  \
 	 *		   /    \
-	 *		  52	85
+	 *		  52b	85r
 	 *		 / |	/ \
-	 *		20 55  76  93
-	 *	   /	  / |   /\
-	 *	  16	 71 81 90 101
-	 *			/
-	 *		   65
+	 *		       76b 93b
+	 *	     	        \
+	 *	     	        100r
 	 */
 
 	ft::rb_tree<int,int> rbt;
 	rbt.insert(61);
 	rbt.insert(52);
 	rbt.insert(85);
-	rbt.insert(20);
-	rbt.insert(55);
-	rbt.insert(16);
 	rbt.insert(76);
 	rbt.insert(93);
-	rbt.insert(101);
-	rbt.insert(81);
-	rbt.insert(90);
-	rbt.insert(71);
-	rbt.insert(65);
 	rbt.print();
+	rbt.insert(100);
+	rbt.print();
+	std::cout << "minimum: " << rbt.minimum(rbt.get_root())->key << std::endl;
+	std::cout << "maximum: " << rbt.maximum(rbt.get_root())->key << std::endl;
+	ft::rb_tree<int,int>::node_pointer rbtp = rbt.search(rbt.get_root(), 76);
+	std::cout << "search(76): " << rbtp->key << std::endl;
+	std::cout << "inexistent search(64): " << rbt.search(rbt.get_root(), 64)->key << std::endl;
+	std::cout << "predecessor(64): " << rbt.predecessor(rbt.get_root())->key << std::endl;
+	std::cout << "successor(76): " << rbt.successor(rbtp)->key << std::endl;
 	
 	
-	time(&end);
-	std::cout << "\n\nTime: " << end - init << std::endl;
+	std::cout << "\nMAP:\n";
+	ft::map<char,int> m;
+	//time(&end);
+	//std::cout << "\nTime: " << end - init << std::endl;
 	return (0);
 }
