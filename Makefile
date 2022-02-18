@@ -34,14 +34,14 @@ _____ _____   ____ ___  _   _ _____  _    ___ _   _ _____ ____  ____ \n\
 	@echo "#include <type_traits>" >> mainstd.cpp
 	@echo "#include <ctime>" >> mainstd.cpp
 	@echo "namespace ft = std;" >> mainstd.cpp
-	@tail -n +5 main.cpp >> mainstd.cpp
-	@clang++ $(FLAGS) -c mainstd.cpp -o mainstd.o
+	#@tail -n +5 main.cpp >> mainstd.cpp
+	#@clang++ $(FLAGS) -c mainstd.cpp -o mainstd.o
 
 OBJS = $(SRCS:.cpp=.o)
 
 containers: $(OBJS) 
 	@clang++ main.o -o $(NAME)
-	@clang++ mainstd.o -o $(NAME1)
+	#@clang++ mainstd.o -o $(NAME1)
 	@./ft_containers > out_ft
 	@./std_containers > out_std
 	@diff out_ft out_std

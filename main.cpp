@@ -423,6 +423,38 @@ int main()
 	// PAIR
 	
 	ft::map<char,int> m;
+
+
+	/*
+	 *		RED BLACK TREE
+	 *
+	 *			 61
+	 *			/  \
+	 *		   /    \
+	 *		  52	85
+	 *		 / |	/ \
+	 *		20 55  76  93
+	 *	   /	  / |   /\
+	 *	  16	 71 81 90 101
+	 *			/
+	 *		   65
+	 */
+
+	ft::rb_tree<int,int> rbt;
+	rbt.insert(61);
+	rbt.insert(52);
+	rbt.insert(85);
+	rbt.insert(20);
+	rbt.insert(55);
+	rbt.insert(16);
+	rbt.insert(76);
+	rbt.insert(93);
+	rbt.insert(101);
+	rbt.insert(81);
+	rbt.insert(90);
+	rbt.insert(71);
+	rbt.insert(65);
+	rbt.print();
 	
 	
 	time(&end);
