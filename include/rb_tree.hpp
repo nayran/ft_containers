@@ -164,8 +164,8 @@ namespace ft
 			return (aux);
 		};
 
-		// fix_uncle_parent: refaz codigo repetitivo
-		node_pointer fix_uncle_parent(node_pointer n, node_pointer uncle)
+		// recolor_uncle_parent: refaz codigo repetitivo
+		node_pointer recolor_uncle_parent(node_pointer n, node_pointer uncle)
 		{
 			uncle->color = BLACK;
 			n->parent->color = BLACK;
@@ -174,8 +174,8 @@ namespace ft
 			return (n->parent->parent);
 
 		};
-		// fix_insert: arruma as cores da arvore
-		void fix_insert(node_pointer n)
+		// recolor_insert: arruma as cores da arvore
+		void recolor_insert(node_pointer n)
 		{
 			node_pointer uncle;
 			while (n->parent->color == RED)
@@ -187,7 +187,7 @@ namespace ft
 					// se a cor do pai e do tio forem vermelhas, viram pretos e o vo vira vermelho
 					// se o no vo for root nao pode virar vermelho
 					if (uncle->color == RED)
-						n = fix_uncle_parent(n, uncle);
+						n = recolor_uncle_parent(n, uncle);
 					else
 					{
 						// se esta do lado esquerdo do pai, gira para a direita convertendo no caso
@@ -208,7 +208,7 @@ namespace ft
 					uncle = n->parent->parent->right;
 					// mesmo caso que para a esquerda
 					if (uncle->color == RED)
-						n = fix_uncle_parent(n, uncle);
+						n = recolor_uncle_parent(n, uncle);
 					else
 					{
 						// mesmo caso da esquerda mas muda as rotacoes
@@ -265,51 +265,162 @@ namespace ft
 			if (aux->parent == nullptr)
 				aux->color = BLACK;
 			else if (!(aux->parent->parent == nullptr))
-				fix_insert(aux);
+				recolor_insert(aux);
 		};
 
-		// DELETE: remove a key da arvore, depois checa se violou propriedades
-		void delet(T k)
+
+		// coloca o y no lugar do x
+		void occupy(node_pointer x, node_pointer y)
 		{
-			node_pointer n = _root;
-			node_pointer z = search(n, k);
+			if (x->parent == nullptr)
+				_root = y;
+			else if (x == x->parent->left)
+				x->parent->left = y;
+			else
+				x->parent->right= y;
+			y->parent = x->parent;
+		};
+
+		// DELETE: remonta a arvore deixando os nos linkados adequadamente para
+		//		   remover o no especificado.
+		void del(T k)
+		{
+			node_pointer r = _root;
+			node_pointer n = search(r, k);
 			node_pointer x, y;
-			if (z == _nil)
+			// caso nao ache a key
+			if (n == _nil)
 				return ;
-			y = z;
-			bool y_color = y->color;
-			if (z->left == _nil)
+			bool n_color = n->color;
+			if (n->left == _nil)
 			{
-				x = z->right;
-				transplant(z, z->right);
+				// se esquerda do no for nulo, faz copia do filho da direita
+				// o no vira o filho da direita. Isola o no da direita para excluir.
+				x = n->right;
+				occupy(n, n->right);
 			}
-			else if (z->right == _nil)
+			else if (n->right == _nil)
 			{
-				x = z->left;
-				transplant(z, z->left);
+				// se direita do no for nulo, faz copia do filho da esquerda 
+				// o no vira o filho da esquerda
+				x = n->left;
+				occupy(n, n->left);
 			}
 			else
 			{
-				y = minimum(z->right);
-				y_color = y->color;
+				// se nenhum filho for nulo. 
+				// isola o no para o maximo a esquerda da subarvore direita
+				// e substitui
+				y = minimum(n->right);
+				n_color = y->color;
 				x = y->right;
-				if (y->parent == z)
+				if (y->parent == n)
 					x->parent = y;
 				else
 				{
-					transplant(y, y->right);
-					y->right = z->right;
+					occupy(y, y->right);
+					y->right = n->right;
 					y->right->parent = y;
 				}
-				transplant(z, y);
-				y->left = z->left;
+				occupy(n, y);
+				y->left = n->left;
 				y->left->parent = y;
-				y->color = z->color;
+				y->color = n->color;
 			}
-			_alloc.destroy(z);
-			_alloc.deallocate(z, 1);
-			if (y_color == BLACK)
-				fix_delete(x);
+			_alloc.destroy(n);
+			_alloc.deallocate(n, 1);
+			// se a cor do no que foi excluido for preta, precisa consertar a arvore.
+			// excluir ultimo no vermelho nao infringe regras.
+			if (n_color == BLACK)
+				recolor_delete(x);
+		};
+
+
+
+		// Recolor delete: arruma as cores da arvore apos a remocao do no comparando com irmao(s)
+		void recolor_delete(node_pointer n)
+		{
+			node_pointer s;
+
+			while (n != _root && n->color == BLACK)
+			{
+				// caso esteja a esquerda (menor que s)
+				if (n == n->parent->left)
+				{
+					s = n->parent->right;
+					// caso o irmao seja vermelho, irmao vira preto e pai vira vermelho
+					if (s->color == RED)
+					{
+						s->color = BLACK;
+						n->parent->color = RED;
+						left_rotation(n->parent);
+						s = n->parent->right;
+					}
+					// com certeza aqui o irmao(s) sera preto. Se os filhos do irmao forem pretos
+					// o irmao vira vermelho. Se o pai for vermelho, vira preto. A posicao do
+					// ponteiro vai para o pai.
+					if (s->left->color == BLACK && s->right->color == BLACK)
+					{
+						s->color = RED;
+						n = n->parent;
+					}
+					else
+					{
+						// Se o filho direito do irmao for preto, o filho esquerdo do irmao tb
+						// sera. Assim, irmao vira vermelho. Fazendo com que o irmao fique do lado
+						// direito.
+						if (s->right->color == BLACK)
+						{
+							s->left->color = BLACK;
+							s->color = RED;
+							right_rotation(s);
+							s = n->parent->right;
+						} 
+						// Se o irmao for preto, mas o filho direito do irmao eh vermelho.
+						// Irmao vai ter a mesma cor do pai, pai e filho direito do irmao viram
+						// pretos.
+						s->color = n->parent->color;
+						n->parent->color = BLACK;
+						s->right->color = BLACK;
+						left_rotation(n->parent);
+					}
+				}
+				else 
+				{
+					// exatamente a mesma coisa do acima, mas muda a direita pela esquerda.
+					s = n->parent->left;
+					if (s->color == RED)
+					{
+						s->color = BLACK;
+						n->parent->color = RED;
+						right_rotation(n->parent);
+						s = n->parent->left;
+					}
+					if (s->right->color == BLACK && s->left->color == BLACK)
+					{
+						s->color = RED;
+						n = n->parent;
+					}
+					else 
+					{
+						if (s->left->color == BLACK) 
+						{
+							s->right->color = BLACK;
+							s->color = RED;
+							left_rotation(s);
+							s = n->parent->left;
+						} 
+						s->color = n->parent->color;
+						n->parent->color = BLACK;
+						s->left->color = BLACK;
+						right_rotation(n->parent);
+					}
+				}
+				// aponta o ponteiro para root
+				n = _root;
+			}
+			// o root sempre eh preto.
+			n->color = BLACK;
 		};
 
 		size_t get_size()
@@ -318,37 +429,8 @@ namespace ft
 		node_pointer get_root()
 		{ return (_root); };
 
-
-		void printHelper(node_pointer root, std::string indent, bool last)
-		{
-			// print the tree structure on the screen
-			if (root != _nil)
-			{
-				std::cout<<indent;
-				if (last)
-				{
-					std::cout<<"R----";
-					indent += "     ";
-				}
-				else
-				{
-					std::cout<<"L----";
-					indent += "|    ";
-				}
-				std::string sColor = root->color?"RED":"BLACK";
-				std::cout<<root->key<<"("<<sColor<<")"<<std::endl;
-				printHelper(root->left, indent, false);
-				printHelper(root->right, indent, true);
-			}
-		}
-		
-		void print()
-		{
-			if (_root)
-				printHelper(this->_root, "", true);
-		}
-
-
+		node_pointer get_nil()
+		{ return (_nil); };
 
 	private:
 		allocator_type	_alloc;
