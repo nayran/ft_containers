@@ -20,7 +20,6 @@
  *		https://en.cppreference.com/w/c/types/ptrdiff_t
  *		https://www.cplusplus.com/reference/iterator/
  *		https://en.cppreference.com/w/cpp/header/iterator
- *
  */
 
 namespace ft

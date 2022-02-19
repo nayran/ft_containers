@@ -417,5 +417,9 @@ int main()
 	 */
 	std::cout << "\nMAP:\n";
 	ft::map<char,int> m;
+	m['a']=10;
+	//m['b']=30;
+	//m['c']=50;
+	//m['d']=70;
 	return (0);
 }

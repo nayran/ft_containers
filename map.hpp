@@ -49,15 +49,18 @@ namespace ft
 		/*
 		 *		MEMBER TYPES
 		 */
-		typedef Key												key_type;
 		typedef T												mapped_type;
-		typedef std::pair<const Key, T>							value_type;
-		typedef Compare											key_compare;
+		typedef Key												key_type;
 		typedef Alloc											allocator_type;
-		typedef typename allocator_type::reference				reference;
-		typedef typename allocator_type::const_reference		const_reference;
-		typedef typename allocator_type::pointer				pointer;
-		typedef typename allocator_type::const_pointer			const_pointer;
+		typedef Compare											key_compare;
+		typedef std::pair<const Key, T>							value_type;
+		typedef value_type										&reference;
+		typedef value_type										&const_reference;
+		typedef value_type										*pointer;
+		typedef value_type										*const_pointer;
+		typedef size_t											size_type;
+		typedef s_node<value_type>								node;
+		typedef node											*node_pointer;
 		class value_compare
 		: public std::binary_function<value_type, value_type, bool>
 		{
@@ -67,6 +70,10 @@ namespace ft
 				bool operator()(const value_type& x, const value_type& y) const
 				{ return (comp(x.first, y.first)); }
 		};
+		typedef typename rb_tree<value_type, value_compare>::iterator					iterator;
+		typedef typename rb_tree<value_type, value_compare>::const_iterator				const_iterator;
+		typedef typename rb_tree<value_type, value_compare>::reverse_iterator			reverse_iterator;
+		typedef typename rb_tree<value_type, value_compare>::const_reverse_iterator		const_reverse_iterator;
 
 		/*
 		 *		Constructors (empty, range, copy)
@@ -78,14 +85,15 @@ namespace ft
 			const allocator_type& alloc = allocator_type())
 			: _rbt(), _alloc(alloc), _comp(comp) {};
 
-		/*
 		// Range: constroi um container igual ao range (inicio - final)
 		template <class InputIterator>
 		map (InputIterator first, InputIterator last,
-				const key_compare& comp = key_compare(),
-				const allocator_type& alloc = allocator_type())
-		{};
+			const key_compare& comp = key_compare(),
+			const allocator_type& alloc = allocator_type())
+			: _rbt(), _alloc(alloc), _comp(comp)
+		{ insert(first, last); };
 
+		/*
 		// Copy: faz a copia de x
 		map (const map& x);
 
@@ -93,6 +101,105 @@ namespace ft
 		*/
 
 		~map() {};
+
+		//		Iterators
+		//			begin, end, rbegin, rend
+		
+		iterator begin()
+		{ return (_rbt._root); };
+
+		const_iterator begin() const
+		{ return (_rbt._root); };
+
+		iterator end()
+		{ return (_rbt._nil); };
+
+		const_iterator end() const
+		{ return (_rbt._nil); };
+
+		reverse_iterator rbegin();
+		const_reverse_iterator rbegin() const;
+		reverse_iterator rend();
+		const_reverse_iterator rend() const;
+
+		//		Capacity
+		//			empty, size, max_size
+		bool empty() const;
+		size_type size() const;
+		size_type max_size() const;
+		
+		//		Element Access
+		//			operator[]
+		mapped_type& operator[] (const key_type& k)
+		{
+			ft::pair<Key, T> p = ft::make_pair(k, mapped_type());
+			ft::pair<iterator, bool> r = insert(p);
+			return (*(r.first).second);
+			
+		};
+		
+		//		Modifiers
+		//			Insert, erase, swap, clear
+		
+		// Insert single
+		pair<iterator,bool> insert (const value_type& val);
+		// Insert hint
+		iterator insert (iterator position, const value_type& val);
+		// Insert range 
+		template <class InputIterator>
+		void insert (InputIterator first, InputIterator last)
+		{
+			while (first != last)
+			{
+				_rbt.insert(first);
+				first++;
+			}
+		};
+		// Erase
+		void erase (iterator position);
+		size_type erase (const key_type& k);
+		void erase (iterator first, iterator last);
+		// Swap
+		void swap (map& x);
+		// Clear
+		void clear();
+
+		//		Observers
+		//			key_comp, value_comp
+		
+		// Key_comp
+		key_compare key_comp() const;
+		// Value_comp
+		value_compare value_comp() const;
+
+		//		Operations
+		//			find, count, lower_bound, upper_bound, equal_range
+		
+		// Find
+		iterator find (const key_type& k)
+		{
+			return (_rbt.search(_rbt._root, k));
+		};
+		const_iterator find (const key_type& k) const
+		{
+			return (_rbt.search(_rbt._root, k));
+		};
+		// Count
+		size_type count (const key_type& k) const;
+		// Lower_bound
+		iterator lower_bound (const key_type& k);
+		const_iterator lower_bound (const key_type& k) const;
+		// Upper_bound
+		iterator upper_bound (const key_type& k);
+		const_iterator upper_bound (const key_type& k) const;
+		// Equal_range
+		pair<const_iterator,const_iterator> equal_range (const key_type& k) const;
+		pair<iterator,iterator>             equal_range (const key_type& k);
+		
+		//		Allocator
+		//			get_allocator
+		allocator_type get_allocator() const
+		{ return (_alloc); };
 
 	private:
 		rb_tree<value_type, value_compare>	_rbt;

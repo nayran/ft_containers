@@ -31,6 +31,9 @@
 
 namespace ft
 {
+	template <class Node>
+	class rbt_iterator;
+
 	/*
 	 *		NODE STRUCT
 	 */
@@ -49,15 +52,18 @@ namespace ft
 	template <class T, class Compare, class Alloc = std::allocator<s_node<T> > >
 	class rb_tree
 	{
-
 	public:
 		// Member types
-		typedef T				value_type;
-		typedef Alloc			allocator_type;
-		typedef Compare			compare;
-		typedef s_node<T>		node;
-		typedef size_t			size_type;
-		typedef node			*node_pointer;
+		typedef T										value_type;
+		typedef Alloc									allocator_type;
+		typedef Compare									compare;
+		typedef s_node<T>								node;
+		typedef size_t									size_type;
+		typedef node									*node_pointer;
+		typedef ft::rbt_iterator<node>					iterator;
+		typedef ft::rbt_iterator<node>					const_iterator;
+		typedef ft::reverse_iterator<iterator>			reverse_iterator;
+		typedef ft::reverse_iterator<const_iterator>	const_reverse_iterator;
 		
 
 		// constructors (normal, copy)
@@ -517,97 +523,110 @@ namespace ft
 			x->parent = y;
 		};
 	};
+
+	/*
+	 *			TREE ITERATOR
+	 */
+	template <class Node>
+	class rbt_iterator
+	{
+	public:
+		typedef Node									value_type;
+		typedef value_type								*node_pointer;
+		typedef Node const								data_type;
+		typedef data_type								&reference;
+		typedef data_type const							&const_reference;
+		typedef data_type								*pointer;
+		typedef data_type const							*const_pointer;
+		typedef typename std::ptrdiff_t					difference_type;
+		typedef ft::bidirectional_iterator_tag			iterator_category;
+		node_pointer									_node;
+
+		// constructors
+		rbt_iterator() : _node(NULL), _root(NULL), _nil(NULL) {};
+		
+		rbt_iterator(node_pointer node, node_pointer root, node_pointer nil)
+		: _node(node), _root(root), _nil(nil) {};
+
+		rbt_iterator(const rbt_iterator &rbit)
+		: _node(rbit._node), _root(rbit._root), _nil(rbit._nil) {};
+
+		// operator=
+		rbt_iterator& operator=(const rbt_iterator& rbit)
+		{
+			if (&rbit == this)
+				return (*this);
+			_node = rbit._node;
+			_root = rbit._root;
+			_nil = rbit._nil;
+			return (*this);
+		};
+
+		// destructor
+		~rbt_iterator() {};
+
+		//overload for const iterator
+		//operator rbt_iterator<value_type const>(void) const
+		//{ return rbt_iterator<value_type const>(_node, _root, _nil); };
+
+		bool operator==(const rbt_iterator &rbit) const
+		{ return (_node == rbit._node); };
+		
+		bool operator!=(const rbt_iterator &rbit) const
+		{ return (_node != rbit._node); };
+		
+		reference operator*()
+		{ return (_node->key); };
+
+		const_reference operator*() const
+		{ return (*(_node->key)); };
+
+		pointer operator->()
+		{ return (&(operator*())); };
+
+		const_pointer operator->() const
+		{ return (&(operator*())); };
+
+		rbt_iterator &operator++()
+		{
+			if (_node != _nil)
+				_node = successor(_node);
+			else
+				_node = minimum(_root);
+			return (*this);
+		};
+		
+		rbt_iterator &operator++(int)
+		{
+			rbt_iterator aux(*this);
+			++(*this);
+			return (aux);
+		}
+
+		rbt_iterator &operator--()
+		{
+			if (_node != _nil)
+				_node = _predecessor(_node);
+			else
+				_node = _maximum(_root);
+			return (*this);
+		}
+		
+		rbt_iterator &operator--(int)
+		{
+			rbt_iterator aux(*this);
+			--(*this);
+			return (aux);
+		}
+
+	private:
+		node_pointer	_root;
+		node_pointer	_nil;
+	};
 };
 
 #endif
 	
-
-	/*
-	 *		TREE_ITERATOR
-	 *
-	template <typename Node>
-	class tree_iterator
-	{
-	public:
-		typedef Node								value_type;
-		typedef value_type							*node_pointer;
-		typedef typename Node::value_type const		data_type;
-		typedef data_type							&reference;
-		typedef data_type const						&const_reference;
-		typedef data_type							*pointer;
-		typedef data_type const						*const_pointer;
-		
-
-		node_pointer		node;
-
-		// constructor
-		// operator=
-		tree_iterator()
-		: node(nullptr), _root(nullptr), _nil(nullptr) {};
-
-		tree_iterator(node_pointer n, node_pointer root, node_pointer nil)
-		: node(n), _root(root), _nil(nil) {};
-
-		tree_iterator(const tree_iterator &rbt)
-		: node(rbt.node), _root(rbt._root), _nil(rbt._nil) {};
-
-		// destructor
-		//~tree_iterator() {};
-
-		tree_iterator& operator= (const tree_iterator& ti)
-		{
-			if (ti == this)
-				return (*this);
-			this->node = ti.node;
-			this->_root = ti._root;
-			this->_nil = ti._nil;
-			return (*this);
-		};
-
-		// overloads
-		bool operator==(const tree_iterator &ti)
-		{ return (node == ti.node); };
-		
-		bool operator!=(const tree_iterator &ti)
-		{ return (node != ti.node); };
-
-		reference operator*()
-		{ return (node->key); }
-		
-		const_reference operator*() const
-		{ return (*(node->key)); }
-
-		
-		pointer operator->()
-		{ return (&(operator*())); }
-
-		const_pointer operator->(void) const
-		{ return (&(operator*())); }
-
-		tree_iterator &operator++()
-		{
-			if (node != _nil)
-				node = successor(node);
-			return (*this);
-		}
-
-		// PREDECESSOR/SUCCESSOR: como se todas as keys estivessem em ordem crescente, o predecessor
-		//						  equivale ao valor anterior e o successor ao proximo da key do no
-		//						  passador por parametro.
-		// successor 
-		node_pointer successor(node_pointer n)
-		{};
-		// predecessor
-		node_pointer predecessor(node_pointer n)
-		{};
-
-	private:
-		node_pointer _root;
-		node_pointer _nil;
-
-	};
-
-*/
 
 
 /*
