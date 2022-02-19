@@ -1,11 +1,11 @@
 #ifndef UTILS_HPP
 # define UTILS_HPP
 
-#include <deque>
 #include <stdlib.h>
 #include <string>
 #include <iostream>
 #include <memory>
+#include <exception>
 #include "iterator.hpp"
 #include "algorithm.hpp"
 #include "type_traits.hpp"

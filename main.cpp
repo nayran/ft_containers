@@ -1,8 +1,6 @@
 #include "vector.hpp"
 #include "stack.hpp"
 #include "map.hpp"
-#include <exception>
-#include <ctime>
 
 bool mycomp (char c1, char c2)
 { return c1 < c2; }
@@ -18,34 +16,8 @@ template <class T>
 typename ft::enable_if<ft::is_integral<T>::value,bool>::type is_even (T i)
 { return bool(!(i%2)); }
 		
-void print(ft::rb_tree<int, int>::node_pointer root, std::string indent, bool last, ft::rb_tree<int,int>::node_pointer nil)
-{
-	if (root != nil)
-	{
-		std::cout<<indent;
-		if (last)
-		{
-			std::cout<<"R----";
-			indent += "     ";
-		}
-		else
-		{
-			std::cout<<"L----";
-			indent += "|    ";
-		}
-		std::string sColor = root->color?"RED":"BLACK";
-		std::cout<<root->key<<"("<<sColor<<")"<<std::endl;
-		print(root->left, indent, false, nil);
-		print(root->right, indent, true, nil);
-	}
-}
-		
-
 int main()
 {
-	//time_t init, end;
-	//time(&init);
-
 	ft::vector<int> mylist;
 	for (int i=0; i<10; i++)
 		mylist.push_back (i*10);
@@ -391,8 +363,8 @@ int main()
 	std::cout << "\nstack.push(99); stack.top(): " << stack.top() << " stack.size(): " << stack.size() << std::endl;
 	stack.pop();
 	std::cout << "stack.pop(); stack.top(): " << stack.top() << " stack.size(): " << stack.size() << std::endl;
+
 	//RELATIONAL OPERATORS
-	
 	std::cout << "\nRelational operators\n";
 	std::cout << "stack == stack2: " << (stack == stack2) << std::endl;
 	std::cout << "stack == auxstack: " << (stack == auxstack) << std::endl;
@@ -440,44 +412,10 @@ int main()
     pair = ft::make_pair(n, n2[1]);
 	std::cout << "mkpair.first: " << pair.first << "\tmkpair.second: " << pair.second << std::endl;
 
-	
-	/*
-	 *		RED BLACK TREE
-	 *
-	 *			 61b
-	 *			/  \
-	 *		   /    \
-	 *		  52b	85b
-	 *				/ \
-	 *		       76r 93r
-	 */
-	std::cout << "\nRED BLACK TREE:\n";
-	ft::rb_tree<int,int> rbt;
-	rbt.insert(61);
-	rbt.insert(52);
-	rbt.insert(85);
-	rbt.insert(76);
-	rbt.insert(93);
-	print(rbt.get_root(), "", true, rbt.get_nil());
-	rbt.insert(100);
-	print(rbt.get_root(), "", true, rbt.get_nil());
-	rbt.del(85);
-	print(rbt.get_root(), "", true, rbt.get_nil());
-	std::cout << "minimum: " << rbt.minimum(rbt.get_root())->key << std::endl;
-	std::cout << "maximum: " << rbt.maximum(rbt.get_root())->key << std::endl;
-	ft::rb_tree<int,int>::node_pointer rbtp = rbt.search(rbt.get_root(), 76);
-	std::cout << "search(76): " << rbtp->key << std::endl;
-	std::cout << "inexistent search(64): " << rbt.search(rbt.get_root(), 64)->key << std::endl;
-	std::cout << "predecessor(76): " << rbt.predecessor(rbt.get_root())->key << std::endl;
-	std::cout << "successor(76): " << rbt.successor(rbtp)->key << std::endl;
-	
-	
 	/*
 	 *		MAP
 	 */
 	std::cout << "\nMAP:\n";
 	ft::map<char,int> m;
-	//time(&end);
-	//std::cout << "\nTime: " << end - init << std::endl;
 	return (0);
 }

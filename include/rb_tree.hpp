@@ -517,7 +517,7 @@ namespace ft
 			x->parent = y;
 		};
 	};
-}
+};
 
 #endif
 	
@@ -609,3 +609,58 @@ namespace ft
 
 */
 
+
+/*
+void print(ft::rb_tree<int, int>::node_pointer root, std::string indent, bool last, ft::rb_tree<int,int>::node_pointer nil)
+{
+	if (root != nil)
+	{
+		std::cout<<indent;
+		if (last)
+		{
+			std::cout<<"R----";
+			indent += "     ";
+		}
+		else
+		{
+			std::cout<<"L----";
+			indent += "|    ";
+		}
+		std::string sColor = root->color?"RED":"BLACK";
+		std::cout<<root->key<<"("<<sColor<<")"<<std::endl;
+		print(root->left, indent, false, nil);
+		print(root->right, indent, true, nil);
+	}
+}
+
+	*
+	 *		RED BLACK TREE
+	 *
+	 *			 61b
+	 *			/  \
+	 *		   /    \
+	 *		  52b	85b
+	 *				/ \
+	 *		       76r 93r
+	 *
+	std::cout << "\nRED BLACK TREE:\n";
+	ft::rb_tree<int,int> rbt;
+	rbt.insert(61);
+	rbt.insert(52);
+	rbt.insert(85);
+	rbt.insert(76);
+	rbt.insert(93);
+	print(rbt.get_root(), "", true, rbt.get_nil());
+	rbt.insert(100);
+	print(rbt.get_root(), "", true, rbt.get_nil());
+	rbt.del(85);
+	print(rbt.get_root(), "", true, rbt.get_nil());
+	std::cout << "minimum: " << rbt.minimum(rbt.get_root())->key << std::endl;
+	std::cout << "maximum: " << rbt.maximum(rbt.get_root())->key << std::endl;
+	ft::rb_tree<int,int>::node_pointer rbtp = rbt.search(rbt.get_root(), 76);
+	std::cout << "search(76): " << rbtp->key << std::endl;
+	std::cout << "inexistent search(64): " << rbt.search(rbt.get_root(), 64)->key << std::endl;
+	std::cout << "predecessor(76): " << rbt.predecessor(rbt.get_root())->key << std::endl;
+	std::cout << "successor(76): " << rbt.successor(rbtp)->key << std::endl;
+	
+	*/

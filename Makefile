@@ -17,11 +17,14 @@ _____ _____   ____ ___  _   _ _____  _    ___ _   _ _____ ____  ____ \n\
 | |_    | |  | |  | | | |  \\| | | | / _ \\  | ||  \\| |  _| | |_) \\___ \\ \n\
 |  _|   | |  | |__| |_| | |\\  | | |/ ___ \\ | || |\\  | |___|  _ < ___) | \n\
 |_|     |_|___\\____\\___/|_| \\_| |_/_/   \\_\\___|_| \\_|_____|_| \\_\\____/ \n\
-         |_____|"
+         |_____|\
+		\
+	todo: vec.at(4), diff time std ft, map"
 	@echo "cat main.cpp > mainstd.cpp"
 	@echo "make"
 	@echo "./ft_containers > out_ft"
 	@echo "./std_containers > out_std"
+	@echo "diff out_ft out_std"
 	@echo "#include <iostream>" > mainstd.cpp
 	@echo "#include <string>" >> mainstd.cpp
 	@echo "#include <stdlib.h>" >> mainstd.cpp
@@ -34,17 +37,17 @@ _____ _____   ____ ___  _   _ _____  _    ___ _   _ _____ ____  ____ \n\
 	@echo "#include <type_traits>" >> mainstd.cpp
 	@echo "#include <ctime>" >> mainstd.cpp
 	@echo "namespace ft = std;" >> mainstd.cpp
-	#@tail -n +5 main.cpp >> mainstd.cpp
-	#@clang++ $(FLAGS) -c mainstd.cpp -o mainstd.o
+	@tail -n +4 main.cpp >> mainstd.cpp
+	@clang++ $(FLAGS) -c mainstd.cpp -o mainstd.o
 
 OBJS = $(SRCS:.cpp=.o)
 
 containers: $(OBJS) 
 	@clang++ main.o -o $(NAME)
-	#@clang++ mainstd.o -o $(NAME1)
+	@clang++ mainstd.o -o $(NAME1)
 	@./ft_containers > out_ft
-	#@./std_containers > out_std
-	#@diff out_ft out_std
+	@./std_containers > out_std
+	@diff out_ft out_std
 	@if [ $$? -ne 0 ]; then 												\
 		echo "\033[31m/*************************\\";						\
 		echo "|*			 *|";											\
