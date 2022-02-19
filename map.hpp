@@ -53,7 +53,7 @@ namespace ft
 		typedef Key												key_type;
 		typedef Alloc											allocator_type;
 		typedef Compare											key_compare;
-		typedef std::pair<const Key, T>							value_type;
+		typedef ft::pair<Key, T>								value_type;
 		typedef value_type										&reference;
 		typedef value_type										&const_reference;
 		typedef value_type										*pointer;
@@ -93,10 +93,11 @@ namespace ft
 			: _rbt(), _alloc(alloc), _comp(comp)
 		{ insert(first, last); };
 
-		/*
 		// Copy: faz a copia de x
-		map (const map& x);
+		map (const map& x)
+		: _rbt(rb_tree<value_type, value_compare>(x._rbt)) {};
 
+		/*
 		map& operator= (const map& x);
 		*/
 
@@ -106,16 +107,16 @@ namespace ft
 		//			begin, end, rbegin, rend
 		
 		iterator begin()
-		{ return (_rbt._root); };
+		{ return (_rbt.get_root()); };
 
 		const_iterator begin() const
-		{ return (_rbt._root); };
+		{ return (_rbt.get_root()); };
 
 		iterator end()
-		{ return (_rbt._nil); };
+		{ return (_rbt.get_nil()); };
 
 		const_iterator end() const
-		{ return (_rbt._nil); };
+		{ return (_rbt.get_nil()); };
 
 		reverse_iterator rbegin();
 		const_reverse_iterator rbegin() const;
@@ -132,17 +133,39 @@ namespace ft
 		//			operator[]
 		mapped_type& operator[] (const key_type& k)
 		{
-			ft::pair<Key, T> p = ft::make_pair(k, mapped_type());
-			ft::pair<iterator, bool> r = insert(p);
-			return (*(r.first).second);
-			
+			ft::pair<key_type, mapped_type> p = ft::make_pair(k, mapped_type());
+			node_pointer n = _rbt.search(_rbt.get_root(), p);
+			if (n != _rbt.get_nil())
+				return (n->key.second);
+			else
+				return (insert(p).first._node->key.second);
 		};
 		
 		//		Modifiers
 		//			Insert, erase, swap, clear
 		
 		// Insert single
-		pair<iterator,bool> insert (const value_type& val);
+		pair<iterator,bool> insert (const value_type& val)
+		{
+			node_pointer i = _rbt.s_node(val);
+			_rbt.insert(_rbt.get_root(), val);
+			ft::pair<iterator, bool> x = _rbt.search(_rbt.get_root(), val);
+			if (!x.second)
+				return(ft::make_pair(iterator(x.first, _rbt.get_root(), _rbt.get_nil()), true));
+			else
+			{
+				_rbt._size++;
+				if (i->parent == _rbt._nil)
+					i->color = BLACK;
+				else
+					_rbt.recolor_insert(i);
+				_rbt._root = i;
+				while (i->parent != _rbt.get_nil())
+					i = i->parent;
+				return (ft::make_pair(iterator(i, _rbt.get_root(), _rbt.get_nil()), true));
+			}
+
+		};
 		// Insert hint
 		iterator insert (iterator position, const value_type& val);
 		// Insert range 
@@ -176,14 +199,11 @@ namespace ft
 		//			find, count, lower_bound, upper_bound, equal_range
 		
 		// Find
-		iterator find (const key_type& k)
-		{
-			return (_rbt.search(_rbt._root, k));
-		};
-		const_iterator find (const key_type& k) const
-		{
-			return (_rbt.search(_rbt._root, k));
-		};
+		iterator find (const key_type& k);
+			//return (_rbt.search(_rbt._root, k));
+		const_iterator find (const key_type& k) const;
+		//	return (_rbt.search(_rbt._root, k));
+		
 		// Count
 		size_type count (const key_type& k) const;
 		// Lower_bound
@@ -202,9 +222,9 @@ namespace ft
 		{ return (_alloc); };
 
 	private:
-		rb_tree<value_type, value_compare>	_rbt;
-		allocator_type						_alloc;
-		key_compare							_comp;
+		rb_tree<value_type, value_compare>			_rbt;
+		allocator_type								_alloc;
+		key_compare									_comp;
 
 	};
 };
