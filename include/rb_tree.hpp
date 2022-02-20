@@ -104,6 +104,31 @@ namespace ft
 			return (*this);
 		};
 
+		// ITERATORS
+		iterator begin()
+		{ return (iterator(_minimum(_root), _root, _nil)); };
+
+		const_iterator begin() const
+		{ return (const_iterator(_minimum(_root), _root, _nil)); };
+
+		iterator end()
+		{ return (iterator(_nil, _root, _nil)); };
+
+		const_iterator end() const
+		{ return (const_iterator(_nil, _root, _nil)); };
+
+		reverse_iterator rbegin()
+		{ return (reverse_iterator(end())); };
+
+		const_reverse_iterator rbegin() const
+		{ return (const_reverse_iterator(end())); };
+
+		reverse_iterator rend()
+		{ return (reverse_iterator(begin())); };
+
+		const_reverse_iterator rend() const
+		{ return (const_reverse_iterator(begin())); };
+
 		/*
 		 *		Operacoes: search, minimum, maximum, predecessor, successor, insert, delete
 		 */

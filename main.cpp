@@ -418,8 +418,12 @@ int main()
 	std::cout << "\nMAP:\n";
 	ft::map<char,int> m;
 	m['a']=10;
-	//m['b']=30;
-	//m['c']=50;
-	//m['d']=70;
+	m['b']=30;
+	m['c']=50;
+	m['d']=70;
+	std::cout << m['a'];
+	std::cout << m['b'];
+	std::cout << m['c'];
+	std::cout << m['d'];
 	return (0);
 }

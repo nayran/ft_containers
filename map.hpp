@@ -107,21 +107,28 @@ namespace ft
 		//			begin, end, rbegin, rend
 		
 		iterator begin()
-		{ return (_rbt.get_root()); };
+		{ return (_rbt.begin()); };
 
 		const_iterator begin() const
-		{ return (_rbt.get_root()); };
+		{ return (_rbt.begin()); };
 
 		iterator end()
-		{ return (_rbt.get_nil()); };
+		{ return (_rbt.end()); };
 
 		const_iterator end() const
-		{ return (_rbt.get_nil()); };
+		{ return (_rbt.end()); };
 
-		reverse_iterator rbegin();
-		const_reverse_iterator rbegin() const;
-		reverse_iterator rend();
-		const_reverse_iterator rend() const;
+		reverse_iterator rbegin()
+		{ return (_rbt.rbegin()); };
+
+		const_reverse_iterator rbegin() const
+		{ return (_rbt.rbegin()); };
+
+		reverse_iterator rend()
+		{ return (_rbt.rend()); };
+
+		const_reverse_iterator rend() const
+		{ return (_rbt.rend()); };
 
 		//		Capacity
 		//			empty, size, max_size
@@ -133,12 +140,14 @@ namespace ft
 		//			operator[]
 		mapped_type& operator[] (const key_type& k)
 		{
-			ft::pair<key_type, mapped_type> p = ft::make_pair(k, mapped_type());
-			node_pointer n = _rbt.search(_rbt.get_root(), p);
-			if (n != _rbt.get_nil())
-				return (n->key.second);
+			iterator i = find(k);
+			if (i != end())
+				return (i._node->key.second);
 			else
-				return (insert(p).first._node->key.second);
+			{
+				std::cout << "AQUI" << k, ft::make_pair(k, mapped_type()).first;
+				return (insert(ft::make_pair(k, mapped_type())).first._node->key.second);
+			}
 		};
 		
 		//		Modifiers
@@ -147,25 +156,17 @@ namespace ft
 		// Insert single
 		pair<iterator,bool> insert (const value_type& val)
 		{
-			node_pointer i = _rbt.s_node(val);
-			_rbt.insert(_rbt.get_root(), val);
-			ft::pair<iterator, bool> x = _rbt.search(_rbt.get_root(), val);
-			if (!x.second)
-				return(ft::make_pair(iterator(x.first, _rbt.get_root(), _rbt.get_nil()), true));
+			iterator x(_rbt.search(_rbt.get_root(), val), _rbt.get_root(), _rbt.get_nil());
+			if (x != end())
+				return (ft::make_pair(x, false));
 			else
 			{
-				_rbt._size++;
-				if (i->parent == _rbt._nil)
-					i->color = BLACK;
-				else
-					_rbt.recolor_insert(i);
-				_rbt._root = i;
-				while (i->parent != _rbt.get_nil())
-					i = i->parent;
-				return (ft::make_pair(iterator(i, _rbt.get_root(), _rbt.get_nil()), true));
+				_rbt.insert(val);
+				iterator y(_rbt.search(_rbt.get_root(), val), _rbt.get_root(), _rbt.get_nil());
+				return (ft::make_pair(y, true));
 			}
-
 		};
+
 		// Insert hint
 		iterator insert (iterator position, const value_type& val);
 		// Insert range 
@@ -199,10 +200,20 @@ namespace ft
 		//			find, count, lower_bound, upper_bound, equal_range
 		
 		// Find
-		iterator find (const key_type& k);
-			//return (_rbt.search(_rbt._root, k));
-		const_iterator find (const key_type& k) const;
-		//	return (_rbt.search(_rbt._root, k));
+		iterator find (const key_type& k)
+		{
+			node_pointer n = _rbt.search(_rbt.get_root(), ft::make_pair(k, mapped_type()));
+			if (!n)
+				return (end());
+			return (iterator(n, _rbt.get_root(), _rbt.get_nil()));
+		}
+		const_iterator find (const key_type& k) const
+		{
+			node_pointer n = _rbt.search(_rbt.get_root(), ft::make_pair(k, mapped_type()));
+			if (!n)
+				return (end());
+			return (const_iterator(n, _rbt.get_root(), _rbt.get_nil()));
+		}
 		
 		// Count
 		size_type count (const key_type& k) const;
