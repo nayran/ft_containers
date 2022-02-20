@@ -415,15 +415,19 @@ int main()
 	/*
 	 *		MAP
 	 */
-	std::cout << "\nMAP:\n";
-	ft::map<char,int> m;
-	m['a']=10;
-	m['b']=30;
-	m['c']=50;
-	m['d']=70;
-	std::cout << m['a'];
-	std::cout << m['b'];
-	std::cout << m['c'];
-	std::cout << m['d'];
+	{
+		std::cout << "\nMAP:\n";
+		ft::map<char,int> m;
+		ft::pair<char,int> p = ft::make_pair('a', 10);
+		m.insert(p);
+		//m['a']=10;
+		//m['b']=30;
+		//m['c']=50;
+		//m['d']=70;
+		std::cout << m['a'];
+		//std::cout << m['b'];
+		//std::cout << m['c'];
+		//std::cout << m['d'];
+	}
 	return (0);
 }

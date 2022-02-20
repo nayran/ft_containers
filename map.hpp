@@ -53,7 +53,7 @@ namespace ft
 		typedef Key												key_type;
 		typedef Alloc											allocator_type;
 		typedef Compare											key_compare;
-		typedef ft::pair<Key, T>								value_type;
+		typedef ft::pair<key_type, mapped_type>					value_type;
 		typedef value_type										&reference;
 		typedef value_type										&const_reference;
 		typedef value_type										*pointer;
@@ -97,9 +97,15 @@ namespace ft
 		map (const map& x)
 		: _rbt(rb_tree<value_type, value_compare>(x._rbt)) {};
 
-		/*
-		map& operator= (const map& x);
-		*/
+		map& operator= (const map& x)
+		{
+			if (&x == this)
+				return (*this);
+			_alloc = x._alloc;
+			_comp = x._comp;
+			_rbt = x._rbt;
+			return (*this);
+		};
 
 		~map() {};
 
@@ -141,13 +147,13 @@ namespace ft
 		mapped_type& operator[] (const key_type& k)
 		{
 			iterator i = find(k);
-			if (i != end())
-				return (i._node->key.second);
-			else
+			if (i == end())
 			{
-				std::cout << "AQUI" << k, ft::make_pair(k, mapped_type()).first;
-				return (insert(ft::make_pair(k, mapped_type())).first._node->key.second);
+				_rbt.insert(ft::make_pair(k, mapped_type()));
+				i = find(k);
 			}
+			std::cout << (_rbt.search(_rbt.get_root(), ft::make_pair(k, mapped_type())))->key.second;
+			return (i._node->key.second);
 		};
 		
 		//		Modifiers
@@ -156,6 +162,7 @@ namespace ft
 		// Insert single
 		pair<iterator,bool> insert (const value_type& val)
 		{
+			std::cout << val.second;
 			iterator x(_rbt.search(_rbt.get_root(), val), _rbt.get_root(), _rbt.get_nil());
 			if (x != end())
 				return (ft::make_pair(x, false));
@@ -214,7 +221,7 @@ namespace ft
 				return (end());
 			return (const_iterator(n, _rbt.get_root(), _rbt.get_nil()));
 		}
-		
+
 		// Count
 		size_type count (const key_type& k) const;
 		// Lower_bound
@@ -226,7 +233,7 @@ namespace ft
 		// Equal_range
 		pair<const_iterator,const_iterator> equal_range (const key_type& k) const;
 		pair<iterator,iterator>             equal_range (const key_type& k);
-		
+
 		//		Allocator
 		//			get_allocator
 		allocator_type get_allocator() const
