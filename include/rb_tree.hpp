@@ -39,11 +39,12 @@ namespace ft
 	 */
 	template <typename T>
 	struct s_node {
-		T		key;
-		bool	color;
-		s_node	*parent;
-		s_node	*right;
-		s_node	*left;
+		typedef T	value_type;
+		T			key;
+		bool		color;
+		s_node		*parent;
+		s_node		*right;
+		s_node		*left;
 
 		s_node(const T & k)
 		: key(k), color(BLACK), parent(nullptr), right(nullptr), left(nullptr){};
@@ -57,7 +58,7 @@ namespace ft
 		typedef T										value_type;
 		typedef Alloc									allocator_type;
 		typedef Compare									compare;
-		typedef s_node<T>								node;
+		typedef s_node<value_type>						node;
 		typedef size_t									size_type;
 		typedef node									*node_pointer;
 		typedef ft::rbt_iterator<node>					iterator;
@@ -136,7 +137,8 @@ namespace ft
 		// SEARCH: procura uma key na arvore e retorna o no correspondente
 		node_pointer search(node_pointer n, T k)
 		{
-			if (n == _nil || n->key == k)
+			
+			if (n == _nil || n->key.first == k.first)
 				return (n);
 			if (n->key > k)
 				return search(n->left, k);
@@ -297,6 +299,7 @@ namespace ft
 				aux->color = BLACK;
 			else if (!(aux->parent->parent == nullptr))
 				recolor_insert(aux);
+			_size++;
 		};
 
 
@@ -463,12 +466,40 @@ namespace ft
 		node_pointer get_nil()
 		{ return (_nil); };
 
+
+		void print2(node_pointer root, std::string indent, bool last)
+		{
+	if (root != _nil)
+	{
+		std::cout<<indent;
+		if (last)
+		{
+			std::cout<<"R----";
+			indent += "     ";
+		}
+		else
+		{
+			std::cout<<"L----";
+			indent += "|    ";
+		}
+		std::string sColor = root->color?"RED":"BLACK";
+		std::cout<<root->key<<"("<<sColor<<")"<<std::endl;
+		print2(root->left, indent, false);
+		print2(root->right, indent, true);
+	}
+}
+
+	void print() {
+    	print2(this->_root, "", true);
+	}
+
+
 	private:
 		allocator_type	_alloc;
 		node_pointer	_root;
 		node_pointer	_nil;
 		size_type		_size;
-		compare			_compare;
+		//compare			_compare;
 
 		// copia recursiva
 		void copy(rb_tree &rbt, node_pointer n, node_pointer nil)
@@ -558,7 +589,7 @@ namespace ft
 	public:
 		typedef Node									value_type;
 		typedef value_type								*node_pointer;
-		typedef Node const								data_type;
+		typedef typename Node::value_type const			data_type;
 		typedef data_type								&reference;
 		typedef data_type const							&const_reference;
 		typedef data_type								*pointer;

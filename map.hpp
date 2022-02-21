@@ -59,8 +59,8 @@ namespace ft
 		typedef value_type										*pointer;
 		typedef value_type										*const_pointer;
 		typedef size_t											size_type;
-		typedef s_node<value_type>								node;
-		typedef node											*node_pointer;
+		//typedef s_node<value_type>								node;
+		//typedef node											*node_pointer;
 		class value_compare
 		: public std::binary_function<value_type, value_type, bool>
 		{
@@ -152,7 +152,7 @@ namespace ft
 				_rbt.insert(ft::make_pair(k, mapped_type()));
 				i = find(k);
 			}
-			std::cout << (_rbt.search(_rbt.get_root(), ft::make_pair(k, mapped_type())))->key.second;
+			//std::cout << i._node->key.second;
 			return (i._node->key.second);
 		};
 		
@@ -162,20 +162,22 @@ namespace ft
 		// Insert single
 		pair<iterator,bool> insert (const value_type& val)
 		{
-			std::cout << val.second;
 			iterator x(_rbt.search(_rbt.get_root(), val), _rbt.get_root(), _rbt.get_nil());
 			if (x != end())
 				return (ft::make_pair(x, false));
 			else
 			{
 				_rbt.insert(val);
+				//std::cout << _rbt.search(_rbt.get_root(), val)->key.first;
+				//std::cout << _rbt.search(_rbt.get_root(), val)->key.second;
 				iterator y(_rbt.search(_rbt.get_root(), val), _rbt.get_root(), _rbt.get_nil());
+				//std::cout << y._node->key.second;
 				return (ft::make_pair(y, true));
 			}
 		};
 
 		// Insert hint
-		iterator insert (iterator position, const value_type& val);
+		/*iterator insert (iterator position, const value_type& val);
 		// Insert range 
 		template <class InputIterator>
 		void insert (InputIterator first, InputIterator last)
@@ -185,7 +187,7 @@ namespace ft
 				_rbt.insert(first);
 				first++;
 			}
-		};
+		};*/
 		// Erase
 		void erase (iterator position);
 		size_type erase (const key_type& k);
@@ -209,17 +211,14 @@ namespace ft
 		// Find
 		iterator find (const key_type& k)
 		{
-			node_pointer n = _rbt.search(_rbt.get_root(), ft::make_pair(k, mapped_type()));
-			if (!n)
-				return (end());
-			return (iterator(n, _rbt.get_root(), _rbt.get_nil()));
+			//std::cout << "ff: " << ft::make_pair(k, mapped_type()).first << ft::make_pair(k, mapped_type()).second;
+			//std::cout << "find: " << _rbt.search(_rbt.get_root(), make_pair(k, mapped_type()))->key.second << "ff\n";
+			return (iterator(_rbt.search(_rbt.get_root(), make_pair(k, mapped_type())), _rbt.get_root(), _rbt.get_nil()));
 		}
+
 		const_iterator find (const key_type& k) const
 		{
-			node_pointer n = _rbt.search(_rbt.get_root(), ft::make_pair(k, mapped_type()));
-			if (!n)
-				return (end());
-			return (const_iterator(n, _rbt.get_root(), _rbt.get_nil()));
+			return (const_iterator(_rbt.search(_rbt.get_root(), ft::make_pair(k, mapped_type())), _rbt.get_root(), _rbt.get_nil()));
 		}
 
 		// Count
