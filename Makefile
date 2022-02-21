@@ -5,7 +5,7 @@ SRCS = main.cpp
 
 # mainstd deve rodar em c++11 pelo is_integral
 # a main normal roda em c++98, ver target "containers"
-FLAGS = -g -Wall -Werror -Wextra -std=c++11
+FLAGS = -g -Wall -Werror -Wextra -std=c++98
 
 all: print containers
 
