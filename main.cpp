@@ -474,6 +474,12 @@ int main()
 
 		// operations (find, count, lower_bound, upper_bound, equal_range)
 		std::cout << "\nm.find('b')->second: " << m.find('b')->second;
+		std::cout << "\nm.count('b'): " << m.count('b');
+		std::cout << "\nm.count('k'): " << m.count('k');
+		std::cout << "\nm.lower_bound('c'): " << m.lower_bound('c')->first << ":" << m.lower_bound('c')->second;
+		std::cout << "\nm.upper_bound('c'): " << m.upper_bound('c')->first << ":" << m.upper_bound('c')->second;
+		std::cout << "\nm.equal_range('c').first: " << m.equal_range('c').first->first << ":" << m.equal_range('c').first->second;;
+		std::cout << "\nm.equal_range('c').second: " << m.equal_range('c').second->first << ":" << m.equal_range('c').second->second;;
 	}
 	return (0);
 }

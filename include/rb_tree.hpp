@@ -78,6 +78,7 @@ namespace ft
 			_nil->left = _nil;
 			_nil->color = BLACK;
 			_size = 0;
+			_compare = compare();
 			_root = _nil;
 		};
 
@@ -86,6 +87,7 @@ namespace ft
 			_alloc = rbt._alloc;
 			_nil = rbt._nil;
 			_size = rbt._size;
+			_compare = rbt._compare;
 			copy(*this, rbt._root, rbt._nil);
 		}
 
@@ -135,7 +137,7 @@ namespace ft
 		 */
 
 		// SEARCH: procura uma key na arvore e retorna o no correspondente
-		node_pointer search(node_pointer n, T k)
+		node_pointer search(node_pointer n, T k) const
 		{
 			
 			if (n == _nil || n->key.first == k.first)
@@ -516,6 +518,53 @@ namespace ft
 			_root = _nil;
 			_size = 0;
 		}
+		
+		iterator lower_bound (T k)
+		{
+			iterator it = begin();
+			while(it != end() && _compare(*it, k))
+				it++;
+			return (it);
+		}
+		
+		const_iterator lower_bound (T k) const
+		{
+			const_iterator it = begin();
+			while(it != end() && _compare(*it, k))
+				it++;
+			return (it);
+		}
+		
+		iterator upper_bound (T k)
+		{
+			iterator it = begin();
+			while(it != end())
+			{
+				if (_compare(k, *it))
+					return (it);
+				it++;
+			}
+			return (end());
+		}
+		
+		const_iterator upper_bound (T k) const
+		{
+			const_iterator it = begin();
+			while(it != end())
+			{
+				if (_compare(k, *it))
+					return (it);
+				it++;
+			}
+			return (end());
+		}
+
+		size_type count (T k) const
+		{
+			if (search(_root, k) != _nil)
+				return (1);
+			return (0);
+		}
 
 		size_t max_size() const
 		{ return (_alloc.max_size()); };
@@ -535,7 +584,7 @@ namespace ft
 		node_pointer	_root;
 		node_pointer	_nil;
 		size_type		_size;
-		//compare			_compare;
+		compare			_compare;
 
 		// copia recursiva
 		void copy(rb_tree &rbt, node_pointer n, node_pointer nil)

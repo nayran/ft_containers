@@ -265,24 +265,48 @@ namespace ft
 		iterator find (const key_type& k)
 		{
 			return (iterator(_rbt.search(_rbt.get_root(), make_pair(k, mapped_type())), _rbt.get_root(), _rbt.get_nil()));
-		}
+		};
 
 		const_iterator find (const key_type& k) const
 		{
 			return (const_iterator(_rbt.search(_rbt.get_root(), ft::make_pair(k, mapped_type())), _rbt.get_root(), _rbt.get_nil()));
-		}
+		};
 
-		// Count
-		size_type count (const key_type& k) const;
-		// Lower_bound
-		iterator lower_bound (const key_type& k);
-		const_iterator lower_bound (const key_type& k) const;
-		// Upper_bound
-		iterator upper_bound (const key_type& k);
-		const_iterator upper_bound (const key_type& k) const;
-		// Equal_range
-		pair<const_iterator,const_iterator> equal_range (const key_type& k) const;
-		pair<iterator,iterator>             equal_range (const key_type& k);
+		// Count: procura por elementos equivalente a k e retorna o numero de equivalentes
+		size_type count (const key_type& k) const
+		{ return (_rbt.count(ft::make_pair(k, mapped_type()))); };
+
+		// Lower_bound: retorna um iterador para o primeiro elemento que a key 
+		// nao eh considerada ir antes de k (pode ser igual ou maior).
+		// Usa key_comp para determinar isso.
+		iterator lower_bound (const key_type& k)
+		{ return (_rbt.lower_bound(ft::make_pair(k, mapped_type()))); };
+		
+		const_iterator lower_bound (const key_type& k) const
+		{ return (_rbt.lower_bound(ft::make_pair(k, mapped_type()))); };
+
+		// Upper_bound: elemento depois de k. sempre que key_comp voltar true
+		iterator upper_bound (const key_type& k)
+		{ return (_rbt.upper_bound(ft::make_pair(k, mapped_type()))); };
+
+		const_iterator upper_bound (const key_type& k) const
+		{ return (_rbt.upper_bound(ft::make_pair(k, mapped_type()))); };
+
+		// Equal_range: retorna os limites (bounds) que tenham um equivalente de k
+		//				primeiro elemento eh lower_bound, segundo eh upper_bound.
+		pair<const_iterator,const_iterator> equal_range (const key_type& k) const
+		{
+			const_iterator lower = lower_bound(k);
+			const_iterator upper = upper_bound(k);
+			return (ft::make_pair(lower, upper));
+		};
+
+		pair<iterator,iterator>             equal_range (const key_type& k)
+		{
+			iterator lower = lower_bound(k);
+			iterator upper = upper_bound(k);
+			return (ft::make_pair(lower, upper));
+		};
 
 		//		Allocator
 		//			get_allocator
