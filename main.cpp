@@ -445,13 +445,35 @@ int main()
 		// capacity (empty, size, max_size)
 		std::cout << "\nsize: " << m.size() << " empty: " << m.empty() << " max_size: " << m.max_size() << std::endl;
 
-		// modifiers
+		// modifiers (insert, erase, swap, clear)
 		p = ft::make_pair ('e', 100);
 		m.insert(p);
 		std::cout << "m.insert('e', 100): " << m['a'] << " " << m['b'] << " " << m['c'] << " " << m['d'] << " " << m['e'];
 		ft::map<char,int>::iterator it = m.begin();
 		m.insert(it, ft::pair<char,int>('f', 120));
 		std::cout << "\nm.insert(it, pair('f', 120)): " << m['a'] << " " << m['b'] << " " << m['c'] << " " << m['d'] << " " << m['e'] << " " << m['f'];
+
+		m.erase(m.find('f'));
+		std::cout << "\nm.erase(iterator'f'): " << m['f'];
+		m.erase('e');
+		std::cout << "\nm.erase('e'): " << m['e'];
+		m.erase(m.find('b'), m.find('d'));
+		std::cout << "\nm.erase(iterator 'b', iterator 'd'): " << m['a'] << " " << m['b'] << " " << m['c'] << " " << m['d'] << std::endl;
+
+		m.swap(m2);
+		std::cout << "m.swap(m2)\n\tm: ";
+		for (ft::map<char,int>::iterator it=m.begin(); it!=m.end(); ++it)
+			std::cout << it->first << ":" << it->second << ' ';
+		std::cout << "\n\tm2: ";
+		for (ft::map<char,int>::iterator it=m2.begin(); it!=m2.end(); ++it)
+			std::cout << it->first << ":" << it->second << ' ';
+		m2.clear();
+		std::cout << "\nm2.clear(): " << m2.empty();
+		for (ft::map<char,int>::iterator it=m2.begin(); it!=m2.end(); ++it)
+			std::cout << it->first << ":" << it->second << ' ';
+
+		// operations (find, count, lower_bound, upper_bound, equal_range)
+		std::cout << "\nm.find('b')->second: " << m.find('b')->second;
 	}
 	return (0);
 }

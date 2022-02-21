@@ -494,6 +494,29 @@ namespace ft
 			n->color = BLACK;
 		};
 
+		void swap(rb_tree &x)
+		{
+			node_pointer root = _root;
+			node_pointer nil = _nil;
+			size_type size = _size;
+			allocator_type alloc = _alloc;
+			_root = x._root;
+			_nil = x._nil;
+			_size = x._size;
+			_alloc = x._alloc;
+			x._root = root;
+			x._nil = nil;
+			x._size = size;
+			x._alloc = alloc;
+		}
+
+		void clear()
+		{
+			clear(_root);
+			_root = _nil;
+			_size = 0;
+		}
+
 		size_t max_size() const
 		{ return (_alloc.max_size()); };
 
@@ -527,16 +550,15 @@ namespace ft
 		// limpa arvore
 		void clear(node_pointer n)
 		{
+			if (n == NULL)
+				n = _root;
 			if (n != _nil)
 			{
-				_size--;
 				clear(n->left);
 				clear(n->right);
-				if (n)
-				{
-					_alloc.destroy(n);
-					_alloc.deallocate(n, 1);
-				}
+				_size--;
+				_alloc.destroy(n);
+				_alloc.deallocate(n, 1);
 			}
 		};
 

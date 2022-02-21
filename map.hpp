@@ -204,14 +204,49 @@ namespace ft
 			}
 		};
 
-		// Erase
-		void erase (iterator position);
-		size_type erase (const key_type& k);
-		void erase (iterator first, iterator last);
+		// Erase: apaga o no
+		void erase (iterator position)
+		{ 
+			if (position._node != _rbt.get_nil())
+				_rbt.del(position._node->key);
+		};
+
+		size_type erase (const key_type& k)
+		{
+			size_type d = 0;
+			if (_rbt.search(_rbt.get_root(), ft::make_pair(k, mapped_type())) != _rbt.get_nil())
+			{
+				_rbt.del(ft::make_pair(k, mapped_type()));
+				d = 1;
+			}
+			return (d);
+		};
+
+		// apaga todos menos o ultimo
+		void erase (iterator first, iterator last)
+		{ 
+			while (first != last)
+			{
+				_rbt.del(first._node->key);
+				first++;
+			}
+		};
+
 		// Swap
-		void swap (map& x);
+		void swap (map& x)
+		{
+			_rbt.swap(x._rbt);
+			allocator_type auxa = x._alloc;
+			key_compare auxc = x._comp;
+			x._alloc = _alloc;
+			x._comp = _comp;
+			_alloc = auxa;
+			_comp = auxc;
+		};
+		
 		// Clear
-		void clear();
+		void clear()
+		{ _rbt.clear(); };
 
 		//		Observers
 		//			key_comp, value_comp
