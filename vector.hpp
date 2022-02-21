@@ -114,14 +114,6 @@ namespace ft
 		// Destructor: destroi todos elementos do container e desaloca toda o armazenamento alocado.
 		~vector() 
 		{
-			/*
-			iterator it = begin();
-
-			while (it != end())
-			{
-				_alloc.destroy(&(*it));
-				it++;
-			}*/
 			clear();
 			_alloc.deallocate(_vec, _capacity);
 		};
@@ -217,24 +209,6 @@ namespace ft
 		{
 			if (n > _capacity)
 			{
-				/*
-				vector aux(*this);
-
-				clear();
-				_alloc.deallocate(_vec, _capacity);
-				_vec = _alloc.allocate(n);
-				_capacity = n;
-				iterator itaux = aux.begin();
-				iterator it = begin();
-				while (itaux != aux.end())
-				{
-					_alloc.construct(&(*it), *itaux);
-					it++;
-					itaux++;
-				}
-				//aux.clear();
-				//aux._alloc.deallocate(aux._vec, aux._capacity);
-				*/
 				size_type x = -1;
 				pointer aux = _alloc.allocate(n);
 				_capacity = n;
@@ -354,7 +328,6 @@ namespace ft
 		void pop_back()
 		{
 			_alloc.destroy(&(*end()));
-			//if (_size > 0)
 			_size--;
 		};
 
@@ -398,7 +371,6 @@ namespace ft
 			size_type dist = ft::distance(first, last);
 			difference_type diff = begin() - position;
 
-			//while (_capacity <= _size + s)
 			if (_capacity <= _size + dist)
 				reserve(_size + dist + 1);
 			dist = 0;

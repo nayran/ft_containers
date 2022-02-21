@@ -59,8 +59,6 @@ namespace ft
 		typedef value_type										*pointer;
 		typedef value_type										*const_pointer;
 		typedef size_t											size_type;
-		//typedef s_node<value_type>								node;
-		//typedef node											*node_pointer;
 		class value_compare
 		: public std::binary_function<value_type, value_type, bool>
 		{

@@ -198,11 +198,10 @@ int main()
 	//	ELEMENT ACCESS
 	std::cout << "\n\tElement access\n";
 	
-	//vec = vec2;
 	std::cout << "vec[2]: " << vec[2] << std::endl;
 	try {
 		std::cout << "vec.at(2): " << vec.at(2) << std::endl;
-		//std::cout << "vec.at(4): " << vec.at(4) << std::endl;
+		std::cout << "vec.at(4): " << vec.at(4) << std::endl;
 	}
 	catch (std::exception& out) {
 		std::cout << out.what() << std::endl;
@@ -252,7 +251,6 @@ int main()
 	for (ft::vector<int>::iterator it = a.begin(); it != a.end(); it++)
 		std::cout << *it << " ";
 	std::cout << std::endl;
-	//ft::vector<int>::iterator it = vec.begin();
 	it = a.insert(a.begin() + 1, 110);
 	std::cout << "insert single: a.insert(it[1], 110) -- inicio no iterador retornado\n";
 	for (; it != a.end(); it++)
