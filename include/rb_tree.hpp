@@ -107,10 +107,10 @@ namespace ft
 
 		// ITERATORS
 		iterator begin()
-		{ return (iterator(_minimum(_root), _root, _nil)); };
+		{ return (iterator(minimum(_root), _root, _nil)); };
 
 		const_iterator begin() const
-		{ return (const_iterator(_minimum(_root), _root, _nil)); };
+		{ return (const_iterator(minimum(_root), _root, _nil)); };
 
 		iterator end()
 		{ return (iterator(_nil, _root, _nil)); };
@@ -177,7 +177,7 @@ namespace ft
 			while (aux != _nil && n == aux->left)
 			{
 				n = aux;
-				aux = aux->left;
+				aux = aux->parent;
 			}
 			return (aux);
 		};
@@ -192,7 +192,7 @@ namespace ft
 			while (aux != _nil && n == aux->right)
 			{
 				n = aux;
-				aux = aux->right;
+				aux = aux->parent;
 			}
 			return (aux);
 		};
@@ -267,13 +267,14 @@ namespace ft
 		void insert(T k)
 		{
 			node_pointer aux = _alloc.allocate(1);
-			aux->parent = nullptr;
-			aux->key = k;
+			_alloc.construct(aux, k);
+			//aux->key = k;
+			aux->parent = _nil;
 			aux->left = _nil;
 			aux->right = _nil;
 			aux->color = RED;
 
-			node_pointer y = nullptr;
+			node_pointer y = _nil;
 			node_pointer x = _root;
 			// navega x ate uma folha e deixa y como pai de x
 			while (x != _nil)
@@ -286,7 +287,7 @@ namespace ft
 			}
 			// adiciona o no criado na posicao correta
 			aux->parent = y;
-			if (y == nullptr)
+			if (y == _nil)
 				_root = aux;
 			else if (aux->key < y->key)
 				y->left = aux;
@@ -295,9 +296,9 @@ namespace ft
 			// se o no criado for root (nao tiver pai), ele esta na posicao certa mas o root
 			// sempre eh preto se o avo for o root, ele esta correto. Para outras excecoes
 			// a arvore deve ser consertada.
-			if (aux->parent == nullptr)
+			if (aux->parent == _nil)
 				aux->color = BLACK;
-			else if (!(aux->parent->parent == nullptr))
+			else if (!(aux->parent->parent == _nil))
 				recolor_insert(aux);
 			_size++;
 		};
@@ -306,7 +307,7 @@ namespace ft
 		// coloca o y no lugar do x
 		void occupy(node_pointer x, node_pointer y)
 		{
-			if (x->parent == nullptr)
+			if (x->parent == _nil)
 				_root = y;
 			else if (x == x->parent->left)
 				x->parent->left = y;
@@ -610,8 +611,6 @@ namespace ft
 		// operator=
 		rbt_iterator& operator=(const rbt_iterator& rbit)
 		{
-			if (&rbit == this)
-				return (*this);
 			_node = rbit._node;
 			_root = rbit._root;
 			_nil = rbit._nil;
@@ -646,13 +645,13 @@ namespace ft
 		rbt_iterator &operator++()
 		{
 			if (_node != _nil)
-				_node = successor(_node);
+				_node = successor();
 			else
 				_node = minimum(_root);
 			return (*this);
 		};
 		
-		rbt_iterator &operator++(int)
+		rbt_iterator operator++(int)
 		{
 			rbt_iterator aux(*this);
 			++(*this);
@@ -662,13 +661,13 @@ namespace ft
 		rbt_iterator &operator--()
 		{
 			if (_node != _nil)
-				_node = _predecessor(_node);
+				_node = predecessor();
 			else
-				_node = _maximum(_root);
+				_node = maximum(_root);
 			return (*this);
 		}
 		
-		rbt_iterator &operator--(int)
+		rbt_iterator operator--(int)
 		{
 			rbt_iterator aux(*this);
 			--(*this);
@@ -678,6 +677,50 @@ namespace ft
 	private:
 		node_pointer	_root;
 		node_pointer	_nil;
+		
+		node_pointer predecessor()
+		{
+			node_pointer n = _node;
+			if (n->left != _nil)
+				return (maximum(n->left));
+			node_pointer aux = n->parent;
+			while (aux != _nil && n == aux->left)
+			{
+				n = aux;
+				aux = aux->parent;
+			}
+			return (aux);
+		};
+
+		node_pointer successor()
+		{
+			node_pointer n = _node;
+			if (n->right != _nil)
+				return (minimum(n->right));
+			node_pointer aux = n->parent;
+			while (aux != _nil && aux->right == n)
+			{
+				n = aux;
+				aux = aux->parent;
+			}
+			return (aux);
+		};
+		
+		node_pointer minimum(node_pointer n)
+		{
+			while (n->left != _nil)
+				n = n->left;
+			return (n);
+		};
+
+		node_pointer maximum(node_pointer n)
+		{
+			while (n->right != _nil)
+				n = n->right;
+			return (n);
+		};
+
+
 	};
 };
 

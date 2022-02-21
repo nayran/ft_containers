@@ -152,7 +152,6 @@ namespace ft
 				_rbt.insert(ft::make_pair(k, mapped_type()));
 				i = find(k);
 			}
-			//std::cout << i._node->key.second;
 			return (i._node->key.second);
 		};
 		
@@ -168,26 +167,24 @@ namespace ft
 			else
 			{
 				_rbt.insert(val);
-				//std::cout << _rbt.search(_rbt.get_root(), val)->key.first;
-				//std::cout << _rbt.search(_rbt.get_root(), val)->key.second;
 				iterator y(_rbt.search(_rbt.get_root(), val), _rbt.get_root(), _rbt.get_nil());
-				//std::cout << y._node->key.second;
 				return (ft::make_pair(y, true));
 			}
 		};
 
 		// Insert hint
-		/*iterator insert (iterator position, const value_type& val);
+		//iterator insert (iterator position, const value_type& val);
+
 		// Insert range 
 		template <class InputIterator>
 		void insert (InputIterator first, InputIterator last)
 		{
 			while (first != last)
 			{
-				_rbt.insert(first);
+				_rbt.insert(*first);
 				first++;
 			}
-		};*/
+		};
 		// Erase
 		void erase (iterator position);
 		size_type erase (const key_type& k);
@@ -211,8 +208,6 @@ namespace ft
 		// Find
 		iterator find (const key_type& k)
 		{
-			//std::cout << "ff: " << ft::make_pair(k, mapped_type()).first << ft::make_pair(k, mapped_type()).second;
-			//std::cout << "find: " << _rbt.search(_rbt.get_root(), make_pair(k, mapped_type()))->key.second << "ff\n";
 			return (iterator(_rbt.search(_rbt.get_root(), make_pair(k, mapped_type())), _rbt.get_root(), _rbt.get_nil()));
 		}
 
