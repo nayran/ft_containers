@@ -100,7 +100,7 @@ namespace ft
 		// operator=
 		rb_tree &operator=(rb_tree const &rbt)
 		{
-			clear();
+			clear(_root);
 			copy(*this, rbt._root, rbt._nil);
 			return (*this);
 		};

@@ -425,15 +425,12 @@ int main()
 		m['d']=70;
 		m.insert(p);
 		ft::map<char,int> m2(m.begin(),m.end());
+		ft::map<char,int> m3(m2);
+		
 
-		std::cout << "\nm['a'] = " << m.find('a')->second;
-		std::cout << "\nm['b'] = " << m.find('b')->second;
-		std::cout << "\nm['c'] = " << m.find('c')->second;
-		std::cout << "\nm['d'] = " << m.find('d')->second;
-		std::cout << "\nm2['a'] = " << m2.find('a')->second;
-		std::cout << "\nm2['b'] = " << m2.find('b')->second;
-		std::cout << "\nm2['c'] = " << m2.find('c')->second;
-		std::cout << "\nm2['d'] = " << m2.find('d')->second;
+		std::cout << "\nm['a':10, 'b':30, 'c':50, 'd':70] = " << m.find('a')->second << " " << m.find('b')->second << " " << m.find('c')->second << " " << m.find('d')->second;
+		std::cout << "\nm2(m.begin(), m.end())= " << m2.find('a')->second << " " << m2.find('b')->second << " " << m2.find('c')->second << " " << m2.find('d')->second;
+		std::cout << "\nm3(m2) = " << m3.find('a')->second << " " << m3.find('b')->second << " " << m3.find('c')->second << " " << m3.find('d')->second;
 	}
 	return (0);
 }

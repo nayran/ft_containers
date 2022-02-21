@@ -94,8 +94,10 @@ namespace ft
 		{ insert(first, last); };
 
 		// Copy: faz a copia de x
-		map (const map& x)
-		: _rbt(rb_tree<value_type, value_compare>(x._rbt)) {};
+		map (const map& x) {
+			_rbt = x._rbt;
+			_alloc = x._alloc;
+			_comp = x._comp;};
 
 		map& operator= (const map& x)
 		{
@@ -181,7 +183,6 @@ namespace ft
 		{
 			while (first != last)
 			{
-				std::cout << first->second;
 				_rbt.insert(*first);
 				first++;
 			}
