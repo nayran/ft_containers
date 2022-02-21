@@ -426,10 +426,14 @@ int main()
 		m.insert(p);
 		ft::map<char,int> m2(m.begin(),m.end());
 
-		std::cout << "\nm['a'] = " << m2.find('a')->second;
-		std::cout << "\nm['b'] = " << m2.find('b')->second;
-		std::cout << "\nm['c'] = " << m2.find('c')->second;
-		std::cout << "\nm['d'] = " << m2.find('d')->second;
+		std::cout << "\nm['a'] = " << m.find('a')->second;
+		std::cout << "\nm['b'] = " << m.find('b')->second;
+		std::cout << "\nm['c'] = " << m.find('c')->second;
+		std::cout << "\nm['d'] = " << m.find('d')->second;
+		std::cout << "\nm2['a'] = " << m2.find('a')->second;
+		std::cout << "\nm2['b'] = " << m2.find('b')->second;
+		std::cout << "\nm2['c'] = " << m2.find('c')->second;
+		std::cout << "\nm2['d'] = " << m2.find('d')->second;
 	}
 	return (0);
 }

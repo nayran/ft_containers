@@ -181,6 +181,7 @@ namespace ft
 		{
 			while (first != last)
 			{
+				std::cout << first->second;
 				_rbt.insert(*first);
 				first++;
 			}

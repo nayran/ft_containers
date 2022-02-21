@@ -267,8 +267,7 @@ namespace ft
 		void insert(T k)
 		{
 			node_pointer aux = _alloc.allocate(1);
-			_alloc.construct(aux, k);
-			//aux->key = k;
+			aux->key = k;
 			aux->parent = _nil;
 			aux->left = _nil;
 			aux->right = _nil;
@@ -547,7 +546,7 @@ namespace ft
 			// iguala os pais
 			y->parent = x->parent;
 			// verifica se eh root, caso nao seja, y sera adicionado ao lado certo do seu novo pai
-			if (x->parent == nullptr) 
+			if (x->parent == _nil) 
 				_root = y;
 			else if (x == x->parent->right)
 				x->parent->right = y;
@@ -570,7 +569,7 @@ namespace ft
 			if (y->left != _nil)
 				y->left->parent = x;
 			y->parent = x->parent;
-			if (x->parent == nullptr)
+			if (x->parent == _nil)
 				_root = y;
 			else if (x == x->parent->left)
 				x->parent->left = y;
@@ -611,6 +610,8 @@ namespace ft
 		// operator=
 		rbt_iterator& operator=(const rbt_iterator& rbit)
 		{
+			if (&rbit == this)
+ 				return (*this);
 			_node = rbit._node;
 			_root = rbit._root;
 			_nil = rbit._nil;
