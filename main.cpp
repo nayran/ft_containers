@@ -412,13 +412,17 @@ int main()
     pair = ft::make_pair(n, n2[1]);
 	std::cout << "mkpair.first: " << pair.first << "\tmkpair.second: " << pair.second << std::endl;
 
+
+
+
 	/*
 	 *		MAP
 	 */
 	{
-		std::cout << "\nMAP:\n";
+		std::cout << "\n\nMAP:\n";
 		// constructors
 		ft::map<char,int> m;
+		std::cout << "size: " << m.size() << " empty: " << m.empty();
 		ft::pair<char,int> p = ft::make_pair('a', 10);
 		m['b']=30;
 		m['c']=50;
@@ -428,9 +432,26 @@ int main()
 		ft::map<char,int> m3(m2);
 		
 
-		std::cout << "\nm['a':10, 'b':30, 'c':50, 'd':70] = " << m.find('a')->second << " " << m.find('b')->second << " " << m.find('c')->second << " " << m.find('d')->second;
-		std::cout << "\nm2(m.begin(), m.end())= " << m2.find('a')->second << " " << m2.find('b')->second << " " << m2.find('c')->second << " " << m2.find('d')->second;
-		std::cout << "\nm3(m2) = " << m3.find('a')->second << " " << m3.find('b')->second << " " << m3.find('c')->second << " " << m3.find('d')->second;
+		// constructors e operator[]
+		std::cout << "\nm['a':10, 'b':30, 'c':50, 'd':70]: " << m['a'] << " " << m['b'] << " " << m['c'] << " " << m['d'];
+		std::cout << "\nm2(m.begin(), m.end()): " << m2['a'] << " " << m2['b']<< " " << m2['c'] << " " << m2['d'];
+		std::cout << "\nm3(m2): " << m3['a'] << " " << m3['b'] << " " << m3['c'] << " " << m3['d'];
+
+		//operator=
+		ft::map<char,int> aux;
+		aux = m;
+		std::cout << "\naux = m: " << aux['a'] << " " << aux['b'] << " " << aux['c'] << " " << aux['d'];
+
+		// capacity (empty, size, max_size)
+		std::cout << "\nsize: " << m.size() << " empty: " << m.empty() << " max_size: " << m.max_size() << std::endl;
+
+		// modifiers
+		p = ft::make_pair ('e', 100);
+		m.insert(p);
+		std::cout << "m.insert('e', 100): " << m['a'] << " " << m['b'] << " " << m['c'] << " " << m['d'] << " " << m['e'];
+		ft::map<char,int>::iterator it = m.begin();
+		m.insert(it, ft::pair<char,int>('f', 120));
+		std::cout << "\nm.insert(it, pair('f', 120)): " << m['a'] << " " << m['b'] << " " << m['c'] << " " << m['d'] << " " << m['e'] << " " << m['f'];
 	}
 	return (0);
 }

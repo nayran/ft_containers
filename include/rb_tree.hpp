@@ -302,6 +302,43 @@ namespace ft
 			_size++;
 		};
 
+		// Insert hint
+		void position_insert(node_pointer y, T k)
+		{
+			node_pointer aux = _alloc.allocate(1);
+			aux->key = k;
+			aux->parent = _nil;
+			aux->left = _nil;
+			aux->right = _nil;
+			aux->color = RED;
+
+			node_pointer x = _root;
+			// navega x ate uma folha e deixa y como pai de x
+			while (x != _nil)
+			{
+				y = x;
+				if (aux->key < x->key)
+					x = x->left;
+				else
+					x = x->right;
+			}
+			// adiciona o no criado na posicao correta
+			aux->parent = y;
+			if (y == _nil)
+				_root = aux;
+			else if (aux->key < y->key)
+				y->left = aux;
+			else
+				y->right = aux;
+			// se o no criado for root (nao tiver pai), ele esta na posicao certa mas o root
+			// sempre eh preto se o avo for o root, ele esta correto. Para outras excecoes
+			// a arvore deve ser consertada.
+			if (aux->parent == _nil)
+				aux->color = BLACK;
+			else if (!(aux->parent->parent == _nil))
+				recolor_insert(aux);
+			_size++;
+		};
 
 		// coloca o y no lugar do x
 		void occupy(node_pointer x, node_pointer y)
@@ -457,7 +494,10 @@ namespace ft
 			n->color = BLACK;
 		};
 
-		size_t get_size()
+		size_t max_size() const
+		{ return (_alloc.max_size()); };
+
+		size_t get_size() const
 		{ return (_size); };
 
 		node_pointer get_root()
@@ -465,33 +505,6 @@ namespace ft
 
 		node_pointer get_nil()
 		{ return (_nil); };
-
-
-		void print2(node_pointer root, std::string indent, bool last)
-		{
-	if (root != _nil)
-	{
-		std::cout<<indent;
-		if (last)
-		{
-			std::cout<<"R----";
-			indent += "     ";
-		}
-		else
-		{
-			std::cout<<"L----";
-			indent += "|    ";
-		}
-		std::string sColor = root->color?"RED":"BLACK";
-		std::cout<<root->key<<"("<<sColor<<")"<<std::endl;
-		print2(root->left, indent, false);
-		print2(root->right, indent, true);
-	}
-}
-
-	void print() {
-    	print2(this->_root, "", true);
-	}
 
 
 	private:
@@ -516,7 +529,7 @@ namespace ft
 		{
 			if (n != _nil)
 			{
-				//_size--;
+				_size--;
 				clear(n->left);
 				clear(n->right);
 				if (n)

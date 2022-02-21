@@ -140,9 +140,18 @@ namespace ft
 
 		//		Capacity
 		//			empty, size, max_size
-		bool empty() const;
-		size_type size() const;
-		size_type max_size() const;
+		bool empty() const
+		{
+			if (_rbt.get_size() == 0)
+				return (true);
+			return (false);
+		};
+
+		size_type size() const
+		{ return (_rbt.get_size()); };
+
+		size_type max_size() const
+		{ return (_rbt.max_size()); };
 		
 		//		Element Access
 		//			operator[]
@@ -174,8 +183,15 @@ namespace ft
 			}
 		};
 
-		// Insert hint
-		//iterator insert (iterator position, const value_type& val);
+		// Insert hint: otimiza a insercao se position aponta para o elemento que
+		//				vai preceder o elemento inserido. 
+		//				Position eh so uma dica(hint), nao forca a arvore a colocar
+		//				nessa posicao.
+		iterator insert (iterator position, const value_type& val)
+		{
+			_rbt.position_insert(position._node, val);
+			return(iterator(_rbt.search(_rbt.get_root(), make_pair(val.first, val.second)), _rbt.get_root(), _rbt.get_nil()));
+		};
 
 		// Insert range 
 		template <class InputIterator>
@@ -187,6 +203,7 @@ namespace ft
 				first++;
 			}
 		};
+
 		// Erase
 		void erase (iterator position);
 		size_type erase (const key_type& k);
@@ -200,9 +217,11 @@ namespace ft
 		//			key_comp, value_comp
 		
 		// Key_comp
-		key_compare key_comp() const;
+		key_compare key_comp() const
+		{ return (_comp); };
 		// Value_comp
-		value_compare value_comp() const;
+		value_compare value_comp() const
+		{ return (value_compare()); };
 
 		//		Operations
 		//			find, count, lower_bound, upper_bound, equal_range
