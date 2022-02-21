@@ -5,7 +5,7 @@ SRCS = main.cpp
 
 # mainstd deve rodar em c++11 pelo is_integral
 # a main normal roda em c++98, ver target "containers"
-FLAGS = -g -Wall -Werror -Wextra -std=c++98
+FLAGS = -g -Wall -Werror -Wextra
 
 all: print containers
 
@@ -62,7 +62,7 @@ containers: $(OBJS)
 
 
 %.o: %.cpp 
-	@clang++ $(FLAGS) -c $< -o $@
+	@clang++ $(FLAGS) -std=c++98 -c $< -o $@
 
 clean:
 	@rm -rf $(OBJS) $(NAME) $(NAME1) mainstd.* out_ft out_std

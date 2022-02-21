@@ -47,7 +47,7 @@ namespace ft
 		s_node		*left;
 
 		s_node(const T & k)
-		: key(k), color(BLACK), parent(nullptr), right(nullptr), left(nullptr){};
+		: key(k), color(BLACK), parent(NULL), right(NULL), left(NULL){};
 	};
 
 	template <class T, class Compare, class Alloc = std::allocator<s_node<T> > >
