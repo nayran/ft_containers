@@ -566,6 +566,25 @@ namespace ft
 			return (0);
 		}
 
+		void erase(iterator first, iterator last)
+		{
+			while (first != last)
+			{
+				node_pointer n = first._node;
+				first++;
+				if (n != _nil)
+				{
+					_root->parent = NULL;
+					del(n);
+					_nil->parent = _root;
+					_nil->left = _root;
+					_nil->right = _root;
+					if (_root)
+						_root->parent = _nil;
+				}
+			}
+		};
+
 		size_t max_size() const
 		{ return (_alloc.max_size()); };
 
@@ -599,13 +618,12 @@ namespace ft
 		// limpa arvore
 		void clear(node_pointer n)
 		{
-			if (n == NULL)
+			if (!n)
 				n = _root;
 			if (n != _nil)
 			{
 				clear(n->left);
 				clear(n->right);
-				_size--;
 				_alloc.destroy(n);
 				_alloc.deallocate(n, 1);
 			}
@@ -782,7 +800,8 @@ namespace ft
 			node_pointer n = _node;
 			if (n->right != _nil)
 				return (minimum(n->right));
-			node_pointer aux = n->parent;
+			node_pointer aux = _nil;
+			aux = n->parent;
 			while (aux != _nil && aux->right == n)
 			{
 				n = aux;
