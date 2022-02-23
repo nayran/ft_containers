@@ -493,6 +493,14 @@ int main()
 		std::cout << "\nm.upper_bound('c'): " << m.upper_bound('c')->first << ":" << m.upper_bound('c')->second;
 		std::cout << "\nm.equal_range('c').first: " << m.equal_range('c').first->first << ":" << m.equal_range('c').first->second;;
 		std::cout << "\nm.equal_range('c').second: " << m.equal_range('c').second->first << ":" << m.equal_range('c').second->second << std::endl << std::endl;
+
+		// non-member overloads
+		std::cout << "map == map2: " << (m == aux) << std::endl;
+		std::cout << "map != map2: " << (m != aux) << std::endl;
+		std::cout << "map < map2: " << (m < aux) << std::endl;
+		std::cout << "map <= map2: " << (m <= aux) << std::endl;
+		std::cout << "map > map2: " << (m > aux) << std::endl;
+		std::cout << "map >= map2: " << (m >= aux) << std::endl;
 	}
 
 	return (0);

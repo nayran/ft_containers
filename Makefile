@@ -20,8 +20,8 @@ _____ _____   ____ ___  _   _ _____  _    ___ _   _ _____ ____  ____ \n\
 OBJS = $(SRCS:.cpp=.o)
 
 containers: $(OBJS) 
-	@clang++ main.o -std=c++98 -o $(NAME)
-	@clang++ main.o -DSTL=1 -o $(NAME1)
+	@clang++ $(OBJS) -std=c++98 -o $(NAME)
+	@clang++ $(OBJS) -DSTL=1 -o $(NAME1)
 
 %.o: %.cpp 
 	@clang++ $(FLAGS) -c $< -o $@

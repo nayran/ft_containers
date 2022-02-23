@@ -280,7 +280,7 @@ namespace ft
 			while (x != _nil)
 			{
 				y = x;
-				if (aux->key < x->key)
+				if (comp(aux->key, x->key))
 					x = x->left;
 				else
 					x = x->right;
@@ -289,7 +289,7 @@ namespace ft
 			aux->parent = y;
 			if (y == _nil)
 				_root = aux;
-			else if (aux->key < y->key)
+			else if (comp(aux->key, y->key))
 				y->left = aux;
 			else
 				y->right = aux;
