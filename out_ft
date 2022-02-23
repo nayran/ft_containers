@@ -1,0 +1,17 @@
+
+
+MAP:
+
+m.erase(iterator 'c', iterator 'a'): 10 0 0 70
+m.swap(m2)
+	m: a:10 b:30 c:50 d:70 
+	m2: a:10 b:0 c:0 d:70 e:100 f:120 
+m2.clear(): 1
+m.find('b')->second: 30
+m.count('b'): 1
+m.count('k'): 0
+m.lower_bound('c'): c:50
+m.upper_bound('c'): d:70
+m.equal_range('c').first: c:50
+m.equal_range('c').second: d:70
+

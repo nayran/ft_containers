@@ -566,25 +566,6 @@ namespace ft
 			return (0);
 		}
 
-		void erase(iterator first, iterator last)
-		{
-			while (first != last)
-			{
-				node_pointer n = first._node;
-				first++;
-				if (n != _nil)
-				{
-					_root->parent = NULL;
-					del(n);
-					_nil->parent = _root;
-					_nil->left = _root;
-					_nil->right = _root;
-					if (_root)
-						_root->parent = _nil;
-				}
-			}
-		};
-
 		size_t max_size() const
 		{ return (_alloc.max_size()); };
 
