@@ -223,12 +223,13 @@ namespace ft
 		// apaga todos menos o ultimo
 		void erase (iterator first, iterator last)
 		{ 
+			iterator next = first; 
 			while (first != last)
 			{
+				next++;
 				_rbt.del(first._node->key);
-				first++;
+				first = next;
 			}
-			//_rbt.erase(first, last);
 		};
 
 		// Swap

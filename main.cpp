@@ -18,7 +18,6 @@ typename ft::enable_if<ft::is_integral<T>::value,bool>::type is_even (T i)
 		
 int main()
 {
-	/*
 	ft::vector<int> mylist;
 	for (int i=0; i<10; i++)
 		mylist.push_back (i*10);
@@ -104,11 +103,9 @@ int main()
 	std::cout << "\tis_integral<char>::value: " << ft::is_integral<char>::value << std::endl;
 	std::cout << "\tis_integral<float>::value: " << ft::is_integral<float>::value << std::endl;
 
-*/
 	/*
 	 *		VECTOR
 	 */
-/*
 
 	std::cout << "VECTOR\n";
 	// Vector constructors
@@ -140,7 +137,6 @@ int main()
 	for (ft::vector<int>::iterator it = second.begin(); it != second.end(); it++)
 		std::cout << *it << " ";
 	std::cout << std::endl;
-*/	
 
 
 	/*
@@ -168,7 +164,8 @@ int main()
 	it4 = vec.rend();
 	std::cout << "Rend: " << *it3 << "\tConst rend: " << *it4 << std::endl;
 	*/
-/*
+	
+
 	//	CAPACITY
 	std::cout << "\n\tVector capacity\n";
 	std::cout << "Size: " << vec.size() << std::endl;
@@ -413,7 +410,6 @@ int main()
 	std::cout << "mkpair.first: " << pair.first << "\tmkpair.second: " << pair.second << std::endl;
 
 
-*/
 
 	/*
 	 *		MAP
@@ -422,7 +418,7 @@ int main()
 		std::cout << "\n\nMAP:\n";
 		// constructors
 		ft::map<char,int> m;
-		//std::cout << "size: " << m.size() << " empty: " << m.empty();
+		std::cout << "size: " << m.size() << " empty: " << m.empty();
 		ft::pair<char,int> p = ft::make_pair('a', 10);
 		m['b']=30;
 		m['c']=50;
@@ -432,7 +428,6 @@ int main()
 		ft::map<char,int> m3(m2);
 		
 
-		/*
 		// constructors e operator[]
 		std::cout << "\nm['a':10, 'b':30, 'c':50, 'd':70]: " << m['a'] << " " << m['b'] << " " << m['c'] << " " << m['d'];
 		std::cout << "\nm2(m.begin(), m.end()): " << m2['a'] << " " << m2['b']<< " " << m2['c'] << " " << m2['d'];
@@ -446,20 +441,19 @@ int main()
 		// capacity (empty, size, max_size)
 		std::cout << "\nsize: " << m.size() << " empty: " << m.empty() << " max_size: " << m.max_size() << std::endl;
 
-*/
 		// modifiers (insert, erase, swap, clear)
 		p = ft::make_pair ('e', 100);
 		m.insert(p);
-		//std::cout << "\nm.insert('e', 100): " << m['a'] << " " << m['b'] << " " << m['c'] << " " << m['d'] << " " << m['e'];
+		std::cout << "\nm.insert('e', 100): " << m['a'] << " " << m['b'] << " " << m['c'] << " " << m['d'] << " " << m['e'];
 		ft::map<char,int>::iterator it = m.begin();
 		m.insert(it, ft::pair<char,int>('f', 120));
-		//std::cout << "\nm.insert(it, pair('f', 120)): " << m['a'] << " " << m['b'] << " " << m['c'] << " " << m['d'] << " " << m['e'] << " " << m['f'];
-		//m.erase(m.find('f'));
-		//std::cout << "\nm.erase(iterator'f'): " << m['f'];
-		//m.erase('e');
-		//std::cout << "\nm.erase('e'): " << m['e'];
+		std::cout << "\nm.insert(it, pair('f', 120)): " << m['a'] << " " << m['b'] << " " << m['c'] << " " << m['d'] << " " << m['e'] << " " << m['f'];
+		m.erase(m.find('f'));
+		std::cout << "\nm.erase(iterator'f'): " << m['f'];
+		m.erase('e');
+		std::cout << "\nm.erase('e'): " << m['e'];
 		m.erase(m.find('b'), m.find('d'));
-		std::cout << "\nm.erase(iterator 'c', iterator 'a'): " << m['a'] << " " << m['b'] << " " << m['c'] << " " << m['d'] << std::endl;
+		std::cout << "\nm.erase(iterator 'b', iterator 'd'): " << m['a'] << " " << m['b'] << " " << m['c'] << " " << m['d'] << std::endl;
 		m.swap(m2);
 		std::cout << "m.swap(m2)\n\tm: ";
 		for (ft::map<char,int>::iterator it=m.begin(); it!=m.end(); ++it)

@@ -139,7 +139,6 @@ namespace ft
 		// SEARCH: procura uma key na arvore e retorna o no correspondente
 		node_pointer search(node_pointer n, T k) const
 		{
-			
 			if (n == _nil || n->key.first == k.first)
 				return (n);
 			if (n->key > k)
@@ -358,8 +357,7 @@ namespace ft
 		//		   remover o no especificado.
 		void del(T k)
 		{
-			node_pointer r = _root;
-			node_pointer n = search(r, k);
+			node_pointer n = search(_root, k);
 			node_pointer x, y;
 			// caso nao ache a key
 			if (n == _nil)
@@ -704,10 +702,6 @@ namespace ft
 		// destructor
 		~rbt_iterator() {};
 
-		//overload for const iterator
-		//operator rbt_iterator<value_type const>(void) const
-		//{ return rbt_iterator<value_type const>(_node, _root, _nil); };
-
 		bool operator==(const rbt_iterator &rbit) const
 		{ return (_node == rbit._node); };
 		
@@ -729,7 +723,20 @@ namespace ft
 		rbt_iterator &operator++()
 		{
 			if (_node != _nil)
-				_node = successor();
+			{
+				if (_node->right != _nil)
+				{
+					_node = minimum(_node->right);
+					return (*this);
+				}
+				node_pointer aux = _node->parent;
+				while (aux != _nil && aux->right == _node)
+				{
+					_node = aux;
+					aux = aux->parent;
+				}
+				_node = aux;
+			}
 			else
 				_node = minimum(_root);
 			return (*this);
@@ -745,7 +752,20 @@ namespace ft
 		rbt_iterator &operator--()
 		{
 			if (_node != _nil)
-				_node = predecessor();
+			{
+				if (_node->left != _nil)
+				{
+					_node = maximum(_node->left);
+					return (*this);
+				}
+				node_pointer aux = _node->parent;
+				while (aux != _nil && _node == aux->left)
+				{
+					_node = aux;
+					aux = aux->parent;
+				}
+				_node = aux;
+			}
 			else
 				_node = maximum(_root);
 			return (*this);
@@ -761,35 +781,6 @@ namespace ft
 	private:
 		node_pointer	_root;
 		node_pointer	_nil;
-		
-		node_pointer predecessor()
-		{
-			node_pointer n = _node;
-			if (n->left != _nil)
-				return (maximum(n->left));
-			node_pointer aux = n->parent;
-			while (aux != _nil && n == aux->left)
-			{
-				n = aux;
-				aux = aux->parent;
-			}
-			return (aux);
-		};
-
-		node_pointer successor()
-		{
-			node_pointer n = _node;
-			if (n->right != _nil)
-				return (minimum(n->right));
-			node_pointer aux = _nil;
-			aux = n->parent;
-			while (aux != _nil && aux->right == n)
-			{
-				n = aux;
-				aux = aux->parent;
-			}
-			return (aux);
-		};
 		
 		node_pointer minimum(node_pointer n)
 		{
