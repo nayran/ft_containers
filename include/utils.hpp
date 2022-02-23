@@ -5,6 +5,7 @@
 #include <string>
 #include <iostream>
 #include <memory>
+#include <deque>
 #include <exception>
 #include "iterator.hpp"
 #include "algorithm.hpp"

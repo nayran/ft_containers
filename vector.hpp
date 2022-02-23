@@ -445,7 +445,7 @@ namespace ft
 			return (_alloc);
 		};
 		
-	private:
+	protected:
 		allocator_type  _alloc;
 		size_type		_size;
 		size_type		_capacity;

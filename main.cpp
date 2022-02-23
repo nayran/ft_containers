@@ -1,6 +1,18 @@
-#include "vector.hpp"
-#include "stack.hpp"
-#include "map.hpp"
+#if 1
+	#include <iostream>
+	#include <string>
+	#include <deque>
+	#include <map>
+	#include <stack>
+	#include <vector>
+	#include <list>
+	namespace ft = std;
+#else
+	#include <list>
+	#include <map.hpp>
+	#include <stack.hpp>
+	#include <vector.hpp>
+#endif
 
 bool mycomp (char c1, char c2)
 { return c1 < c2; }
@@ -26,6 +38,9 @@ int main()
 	std::cout << "Iterator\n";
 	std::cout << "\tIterator++: ";
 	ft::vector<int>::iterator it = mylist.begin();
+	ft::vector<int>::const_iterator constit = mylist.begin();
+	if (it == constit)
+		std::cout << "Const and normal are comparables\n";
 	for (int i=0; i<10; i++)
 	{
 		std::cout << *it << " ";
@@ -373,7 +388,11 @@ int main()
 	std::cout << "stack <= auxstack: " << (stack >= auxstack) << std::endl;
 	std::cout << "stack <= stack2: " << (stack >= stack2) << std::endl;
 
-
+	// List inside stack
+	std::list<int> l;
+	ft::stack<int, std::list<int> > s_l(l);
+	s_l.push(10);
+	std::cout << "list inside stack: " << s_l.top() << std::endl;
 
 	// UTILITY
 	std::cout << "\n\nUTILITY" << std::endl;
@@ -475,5 +494,6 @@ int main()
 		std::cout << "\nm.equal_range('c').first: " << m.equal_range('c').first->first << ":" << m.equal_range('c').first->second;;
 		std::cout << "\nm.equal_range('c').second: " << m.equal_range('c').second->first << ":" << m.equal_range('c').second->second << std::endl << std::endl;
 	}
+
 	return (0);
 }
